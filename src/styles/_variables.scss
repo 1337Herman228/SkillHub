@@ -1,0 +1,49 @@
+:root {
+    --light-black: #2d2f31;
+    --dark-grey: #6a6f73;
+    --white: #ffffff;
+    --light-grey: #f7f9fa;
+    --grey: #d1d7dc;
+    --orange: #fca016;
+    --light-purple: #e18bff;
+    --purple: #916ded;
+    --dark-purple: #a435f0;
+    --dark-purple-accent: #b556f5;
+    --light-green: #acd2cc;
+    --light-red: #fcbca0;
+    --red: rgb(248, 34, 34);
+    --black-transparent: #2b292933;
+
+    --border-width: 1px;
+
+    --border-black: var(--border-width) solid var(--light-black);
+    --border-grey: var(--border-width) solid var(--grey);
+    --border-purple: var(--border-width) solid var(--dark-purple);
+    --border-white: var(--border-width) solid var(--white);
+    --border-red: var(--border-width) solid var(--red);
+
+    --border-radius-large: 50px;
+    --border-radius-medium: 25px;
+    --border-radius-small: 15px;
+    --border-radius-extra-small: 5px;
+
+    --font-family-base: "Inter", sans-serif;
+
+    --section-padding-y-large: 100px;
+    --section-padding-y-medium: 65px;
+    --section-padding-y-small: 35px;
+
+    --container-width: 1920px;
+    --container-width-reduced: 600px;
+
+    --container-padding-x: 25px;
+    --container-padding-x-reduced: 0px;
+
+    --input-height: 47px;
+
+    --button-height-large: 70px;
+    --button-height-medium: 47px;
+    --button-height-small: 40px;
+
+    --transition-duration: 0.2s;
+}

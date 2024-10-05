@@ -1,0 +1,89 @@
+@use "mixins" as *;
+@use "variables" as *;
+@use "media" as *;
+
+:root {
+    --text-main-color: var(--light-black);
+    --background-main-color: var(--white);
+
+    scrollbar-color: var(--dark-purple) transparent;
+}
+
+::selection {
+    background-color: var(--dark-purple); /* Цвет фона выделения */
+    color: var(--white); /* Цвет текста выделения */
+}
+
+body {
+    @include fluid-text(18, 16);
+
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    line-height: 1.28;
+    color: var(--text-main-color);
+    background-color: var(--background-main-color);
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a,
+button,
+input,
+textarea,
+svg * {
+    transition-duration: var(--transition-duration);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 500;
+}
+
+h1 {
+    @include fluid-text(60, 43);
+}
+
+h2 {
+    @include fluid-text(50, 36);
+}
+
+h3,
+.h3 {
+    @include fluid-text(30, 26);
+}
+
+h4 {
+    @include fluid-text(20, 18);
+}
+
+hr {
+    border: 0 !important;
+    border-top: var(--border-black) !important;
+}
+
+// .main-body {
+//     --padding-top: 70px;
+
+//     padding-top: var(--padding-top);
+
+//     @include tablet {
+//         --padding-top: 60px;
+//     }
+//     @include mobile {
+//         --padding-top: 70px;
+//     }
+// }
+
+.display-none {
+    display: none !important;
+}
