@@ -1,0 +1,13 @@
+@use "../../../styles/variables" as *;
+
+.full-screen-spinner {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.blackout {
+    background-color: var(--black-transparent);
+}
