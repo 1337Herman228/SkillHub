@@ -1,0 +1,85 @@
+.skeleton-navbar {
+    width: 100%;
+    height: 70px;
+    background-color: #e0e0e0; /* Цвет фона для скелетона */
+    display: flex;
+    align-items: center; /* Центрируем элементы по вертикали */
+    padding: 0 40px; /* Отступы слева и справа */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+}
+
+.skeleton-logo {
+    width: 170px; /* Ширина логотипа */
+    height: 30px; /* Высота логотипа */
+    background-color: #b0b0b0; /* Цвет для логотипа */
+    border-radius: 4px; /* Скругление углов */
+    margin-right: clamp(50px, 5.5vw, 100px); /* Отступ справа */
+    animation: pulse 1.5s infinite; /* Анимация пульсации */
+}
+
+.skeleton-title {
+    width: 40vw; /* Ширина текста */
+    height: 30px; /* Высота текста */
+    background-color: #b0b0b0; /* Цвет для текста */
+    border-radius: 4px; /* Скругление углов */
+    margin-right: auto; /* Сжимает отступы справа */
+    animation: pulse 1.5s infinite; /* Анимация пульсации */
+}
+
+.skeleton-item {
+    width: 300px; /* Ширина элемента */
+    height: 30px; /* Высота элемента */
+    margin: 0 10px; /* Отступы между элементами */
+    margin-left: 30px;
+    background-color: #b0b0b0; /* Цвет для элемента */
+    border-radius: 4px; /* Скругление углов */
+    animation: pulse 1.5s infinite; /* Анимация пульсации */
+}
+
+.skeleton-icon {
+    flex-shrink: 0;
+    width: 30px; /* Ширина иконки */
+    height: 30px; /* Высота иконки */
+    margin: 0 10px; /* Отступы между иконками */
+    background-color: #b0b0b0; /* Цвет для иконки */
+    border-radius: 50%; /* Круглая форма иконки */
+    animation: pulse 1.5s infinite; /* Анимация пульсации */
+}
+
+@keyframes pulse {
+    0% {
+        background-color: #b0b0b0;
+    }
+    50% {
+        background-color: #d0d0d0; /* Светлее на 50% */
+    }
+    100% {
+        background-color: #b0b0b0;
+    }
+}
+
+.skeleton-navbar-mobile {
+    width: 100%;
+    height: 48px; /* Высота для мобильной навигационной панели */
+    background-color: #e0e0e0; /* Цвет фона для скелетона */
+    display: flex;
+    align-items: center; /* Центрируем элементы по вертикали */
+    padding: 0 10px; /* Отступы слева и справа */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+
+    .skeleton-title {
+        flex: 1; /* Занимает оставшееся пространство */
+        height: 24px; /* Высота текста */
+        background-color: #b0b0b0; /* Цвет для текста */
+        border-radius: 4px; /* Скругление углов */
+        margin: 0 10px; /* Отступы между элементами */
+    }
+
+    .skeleton-icon {
+        width: 30px; /* Ширина иконки */
+        height: 30px; /* Высота иконки */
+        background-color: #b0b0b0; /* Цвет для иконки */
+        border-radius: 50%; /* Круглая форма иконки */
+        animation: pulse 1.5s infinite; /* Анимация пульсации */
+    }
+}

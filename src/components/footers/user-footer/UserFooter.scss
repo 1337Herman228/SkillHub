@@ -1,0 +1,95 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.footer {
+    margin-top: auto;
+    background-color: var(--light-black);
+
+    &__inner {
+        padding: 24px 50px;
+        color: var(--white);
+
+        @include mobile {
+            padding: 25px 25px;
+        }
+
+        .top-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 0.5px 0 var(--dark-grey);
+            padding-bottom: 20px;
+
+            @include tablet {
+                align-items: start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            &__left-side {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .text-title {
+                    font-size: 26px;
+                    font-weight: 700;
+                    line-height: 1;
+
+                    @include mobile {
+                        font-size: 20px;
+                    }
+                }
+
+                .text-description {
+                    font-size: 18px;
+                    font-weight: 300;
+
+                    @include mobile {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            &__right-side {
+                &-button {
+                }
+            }
+        }
+
+        .navigation {
+            padding-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: clamp(50px, 5.5vw, 100px);
+
+            @include tablet {
+                gap: clamp(30px, 4vw, 80px);
+            }
+
+            &__Logo {
+                font-family: "Michroma";
+                line-height: 1;
+                font-size: 32px;
+
+                @include tablet {
+                    font-size: 26px;
+                }
+            }
+
+            &__links {
+                display: flex;
+            }
+
+            &__link {
+                padding: 5px 12px;
+                font-size: 19px;
+
+                @include tablet {
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+}

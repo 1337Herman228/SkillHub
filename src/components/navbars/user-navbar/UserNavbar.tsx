@@ -4,8 +4,28 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import "./UserNavbar.scss";
 import { useMediaQuery } from "react-responsive";
+import useHttp from "@/lib/hooks/useHttp";
+import { useSession } from "next-auth/react";
+import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/store/store";
+import { setUser } from "@/lib/redux/slices/userSlice";
+import UserNavbarSkeleton from "@/components/skeletons/user-navbar-skeleton/UserNavbarSkeleton";
+import Greetings from "@/components/profile/greetings/Greetings";
+import ProfileModal from "@/components/modals/profile-modal/ProfileModal";
+import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverModalOpenBtn";
+import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
 
 const UserNavbar = () => {
+    const btnProfileRef = useRef(null);
+    const btnMessagesRef = useRef(null);
+
+    const { requestJson, error, isLoading } = useHttp();
+    const dispatch = useAppDispatch();
+
+    const { data: session, status } = useSession();
+    const sessionData: ExtendedSession | null = session;
+    const token = sessionData?.user?.authenticationResponse?.token;
+
     const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
 
     const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -13,6 +33,28 @@ const UserNavbar = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] =
+        useState<boolean>(false);
+    const [isMessagesModalOpen, setIsMessagesModalOpen] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        fetchUser();
+    }, [session]);
+
+    const fetchUser = async () => {
+        if (token && sessionData?.user?.userId) {
+            console.log("fetchUser");
+            console.log("token", token);
+            const userData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`
+            );
+            dispatch(setUser(userData));
+        }
+    };
+
+    const user = useAppSelector((state) => state.user.user);
 
     const handleClickOutsideSidebar = (event: MouseEvent) => {
         if (
@@ -50,6 +92,8 @@ const UserNavbar = () => {
         };
     }, []);
 
+    if (isLoading || !user) return <UserNavbarSkeleton />;
+
     return (
         <header className="header">
             <nav className="header__inner container hidden-mobile">
@@ -86,26 +130,49 @@ const UserNavbar = () => {
                     </div>
 
                     <ul className="header-icons">
-                        <button className="header-icons__button" type="button">
-                            <img
-                                className="header-icons__button-img"
-                                loading="lazy"
-                                alt=""
-                                src="svg/bell.svg"
-                                width={32}
-                                height={32}
+                        <HoverModalOpenBtn
+                            className="header-icons__button"
+                            btnRef={btnMessagesRef}
+                            stateSetter={setIsMessagesModalOpen}
+                        >
+                            <Link href="/profile">
+                                <img
+                                    className="header-icons__button-img"
+                                    loading="lazy"
+                                    alt=""
+                                    src="svg/bell.svg"
+                                    width={32}
+                                    height={32}
+                                />
+                            </Link>
+                            <MessagesModal
+                                openBtnRef={btnMessagesRef}
+                                isOpen={isMessagesModalOpen}
+                                setStateFunc={setIsMessagesModalOpen}
                             />
-                        </button>
-                        <button className="header-icons__button" type="button">
-                            <img
-                                className="header-icons__button-img"
-                                loading="lazy"
-                                alt=""
-                                src="svg/profile.svg"
-                                width={35}
-                                height={35}
-                            />
-                        </button>
+                        </HoverModalOpenBtn>
+                        <HoverModalOpenBtn
+                            className="header-icons__button"
+                            btnRef={btnProfileRef}
+                            stateSetter={setIsProfileModalOpen}
+                        >
+                            <Link href="/profile">
+                                <img
+                                    className="header-icons__button-img"
+                                    loading="lazy"
+                                    alt=""
+                                    src="svg/profile.svg"
+                                    width={35}
+                                    height={35}
+                                />
+                                <ProfileModal
+                                    openBtnRef={btnProfileRef}
+                                    user={user}
+                                    isOpen={isProfileModalOpen}
+                                    setStateFunc={setIsProfileModalOpen}
+                                />
+                            </Link>
+                        </HoverModalOpenBtn>
                     </ul>
                 </div>
             </nav>
@@ -203,26 +270,15 @@ const UserNavbar = () => {
                         />
                     </button>
                     <nav className="menu">
-                        <div className="menu__greetings">
-                            <img
-                                className="menu__greetings-img"
-                                loading="lazy"
-                                alt=""
-                                src="svg/profile.svg"
-                                width={55}
-                                height={55}
-                            />
-                            <div className="menu__greetings-text">
-                                <span className="menu__greetings-text-big">
+                        <Greetings
+                            textBig={
+                                <>
                                     Здравствуйте,
                                     <br /> Имя Фамилия!
-                                </span>
-
-                                <span className="menu__greetings-text-small">
-                                    С возвращением!
-                                </span>
-                            </div>
-                        </div>
+                                </>
+                            }
+                            textSmall="С возвращением!"
+                        />
                         <ul className="menu__list">
                             <Link href="#">
                                 <li className="menu__list-item">Курсы</li>
