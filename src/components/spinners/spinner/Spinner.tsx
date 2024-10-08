@@ -29,8 +29,8 @@ const Spinner = ({
                 cx="50"
                 cy="50"
                 r="35"
-                stroke-width={strokeWidth}
-                stroke-dasharray="165 100"
+                strokeWidth={strokeWidth}
+                strokeDasharray="165 100"
             >
                 <animateTransform
                     attributeName="transform"

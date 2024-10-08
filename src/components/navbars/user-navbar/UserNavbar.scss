@@ -9,7 +9,7 @@
     background-color: var(--white);
     padding: 10px 24px;
     // box-shadow: 0 0.2px 0 var(--light-black);
-    border: var(--border-black);
+    border-bottom: var(--border-black);
 
     @include tablet {
         padding: 10px 0px;
@@ -159,13 +159,17 @@
 
             .header-icons {
                 display: flex;
-                gap: 25px;
+
                 &__button {
+                    position: relative;
                     @include reset-button;
                     cursor: pointer;
+                    padding-inline: 12px;
 
-                    @include hover {
-                        opacity: 0.7;
+                    &-img {
+                        @include hover {
+                            opacity: 0.7;
+                        }
                     }
                 }
             }
@@ -227,36 +231,6 @@
     }
 
     .menu {
-        &__greetings {
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            gap: 10px;
-            border-bottom: var(--border-grey);
-            background-color: var(--light-grey);
-
-            &-img {
-            }
-
-            &-text {
-                display: flex;
-                flex-direction: column;
-                gap: 4px;
-
-                &-big {
-                    font-size: 12px;
-                    font-weight: 700;
-                    line-height: 1.3;
-                }
-
-                &-small {
-                    font-size: 10px;
-                    font-weight: 300;
-                }
-            }
-        }
-
         &__list {
             &-item {
                 font-size: 15px;

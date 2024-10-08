@@ -1,0 +1,42 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.hover-modal-container {
+    position: absolute;
+    z-index: 5000;
+    right: 0;
+    padding: 20px;
+    padding-right: 0;
+    box-sizing: border-box;
+    opacity: 0; /* Начальное состояние */
+    transform: scale(0.8); /* Начальный масштаб */
+    visibility: hidden; /* Скрыто по умолчанию */
+    display: block; /* Отображаем элемент */
+
+    &.visible {
+        opacity: 1; /* Полная видимость при появлении */
+        transform: scale(1); /* Полный масштаб */
+        visibility: visible; /* Делаем видимым */
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease; /* Плавный переход */
+    }
+
+    .hover-modal {
+        border: var(--border-grey);
+        background-color: var(--white);
+    }
+}
+
+/* Определяем анимацию для появления */
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,32 @@
+@use "../../../styles/variables" as *;
+
+.greetings {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: var(--border-grey);
+    background-color: var(--light-grey);
+
+    &__img {
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        &-big {
+            text-align: start;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        &-small {
+            text-align: start;
+            font-size: 10px;
+            font-weight: 300;
+        }
+    }
+}

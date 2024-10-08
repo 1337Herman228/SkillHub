@@ -1,0 +1,44 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.profile-modal {
+    .main-profile-link {
+        @include hover {
+            color: var(--dark-purple);
+        }
+    }
+
+    .user-name {
+        font-size: 16px;
+    }
+
+    .user-email {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--dark-grey);
+    }
+
+    .ellipse-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 160px;
+    }
+
+    .link-list {
+        padding: 8px 0px;
+        display: flex;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            border-bottom: var(--border-grey);
+        }
+
+        &__item {
+            text-align: start;
+            font-size: 15px;
+            font-weight: 400;
+            padding: 8px 16px;
+        }
+    }
+}

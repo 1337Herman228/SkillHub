@@ -22,6 +22,10 @@ body {
     line-height: 1.28;
     color: var(--text-main-color);
     background-color: var(--background-main-color);
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 table {
@@ -71,19 +75,44 @@ hr {
     border-top: var(--border-black) !important;
 }
 
-// .main-body {
-//     --padding-top: 70px;
-
-//     padding-top: var(--padding-top);
-
-//     @include tablet {
-//         --padding-top: 60px;
-//     }
-//     @include mobile {
-//         --padding-top: 70px;
-//     }
-// }
-
 .display-none {
     display: none !important;
+}
+
+.purple-hover {
+    transition: color var(--transition-duration);
+    @include hover {
+        color: var(--dark-purple);
+    }
+}
+
+.purple-button {
+    @include reset-button;
+    color: var(--white);
+    background-color: var(--dark-purple);
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px 25px;
+    cursor: pointer;
+
+    @include hover {
+        background-color: var(--dark-purple-accent);
+    }
+}
+
+.transparent-white-button {
+    @include reset-button;
+    color: var(--white);
+    background-color: transparent;
+    border: var(--border-white);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px 15px;
+    cursor: pointer;
+
+    @include hover {
+        color: var(--light-black);
+        background-color: var(--light-grey);
+    }
 }
