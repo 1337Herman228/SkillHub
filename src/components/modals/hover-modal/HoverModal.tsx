@@ -6,6 +6,7 @@ interface HoverModalProps {
     isOpen: boolean;
     setStateFunc: (state: boolean) => void;
     openBtnRef: any;
+    style?: React.CSSProperties;
 }
 
 const HoverModal = ({
@@ -13,6 +14,7 @@ const HoverModal = ({
     isOpen,
     setStateFunc,
     openBtnRef,
+    style,
 }: HoverModalProps) => {
     const elementRef = useRef<HTMLDivElement>(null);
 
@@ -29,11 +31,6 @@ const HoverModal = ({
             if (isOutRight) elementRef.current.classList.add("right-out");
             if (isOutTop) elementRef.current.classList.add("top-out");
             if (isOutBottom) elementRef.current.classList.add("bottom-out");
-
-            console.log("isOutLeft", isOutLeft, rect.left);
-            console.log("isOutRight", isOutRight);
-            console.log("isOutTop", isOutTop);
-            console.log("isOutBottom", isOutBottom);
         }
     };
 
@@ -43,6 +40,7 @@ const HoverModal = ({
 
     return (
         <div
+            style={style}
             ref={elementRef}
             className={`hover-modal-container ${isOpen ? "visible" : "hidden"}`}
             onMouseOut={(e: React.MouseEvent<HTMLDivElement>) => {

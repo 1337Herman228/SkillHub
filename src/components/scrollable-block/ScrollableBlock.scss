@@ -1,28 +1,106 @@
 @use "../../styles/variables" as *;
+@use "../../styles/media" as *;
+@use "../../styles/mixins" as *;
 
-.scrollable-container {
-    display: flex;
-    overflow: auto;
-    overflow-y: hidden;
-    scrollbar-width: none; /* Скрыть скроллбар */
-    scroll-snap-type: x mandatory; /* Включить прилипания */
-    touch-action: manipulation; /* Разрешить только манипуляции */
-    -webkit-overflow-scrolling: touch; /* Плавная прокрутка для iOS */
-    width: 100%; /* Ширина контейнера */
+.scrollable-block {
+    position: relative;
+    max-width: 1250px;
+    width: 95vw;
 
-    .item {
-        flex: 0 0 auto; /* Элементы не будут сжиматься */
-        width: 200px; /* Ширина каждого элемента */
-        height: 100px; /* Высота каждого элемента */
-        scroll-snap-align: start; /* Элементы будут "прилипать" к началу */
-        background-color: lightblue; /* Цвет элемента */
-        margin-right: 10px; /* Отступ между элементами */
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    @include tablet {
+        width: 93vw;
+    }
 
-        &:last-child {
-            margin-right: 0; /* Отступ между последним элементом */
+    @include mobile {
+        width: 90vw;
+    }
+
+    .scrollable-container {
+        display: grid;
+
+        --gap: 20px; //расстояние между карточками
+        --cards-count: 3; // кол-во карточек
+
+        // Формула, чтобы ширины столбца соответствовала кол-ву карточек
+        grid-auto-columns: calc((100% - (var(--cards-count) - 1) * var(--gap)) / var(--cards-count));
+
+        grid-template-rows: 1;
+        grid-auto-flow: column;
+        gap: var(--gap);
+
+        overflow: auto;
+        overflow-y: hidden;
+        scrollbar-width: none; /* Скрыть скроллбар */
+        scroll-snap-type: x mandatory; /* Включить прилипания */
+        touch-action: manipulation; /* Разрешить только манипуляции */
+        -webkit-overflow-scrolling: touch; /* Плавная прокрутка для iOS */
+        width: 100%; /* Ширина контейнера */
+
+        @include tablet {
+            --cards-count: 2;
         }
+
+        @include mobile {
+            --cards-count: 1.4;
+            --gap: 15px;
+        }
+
+        .item {
+            flex: 0 0 auto; /* Элементы не будут сжиматься */
+            scroll-snap-align: start; /* Элементы будут "прилипать" к началу */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .move-btn {
+        position: relative;
+        @include reset-button;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        width: 48px;
+        aspect-ratio: 1;
+        background-color: var(--light-black);
+        border: var(--border-grey);
+        box-shadow: 0px 0px 5px var(--dark-grey);
+        z-index: 5000;
+
+        &:disabled {
+            display: none;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        .arrow-img {
+            position: relative;
+
+            &--left {
+                right: 1px;
+            }
+
+            &--right {
+                left: 1px;
+            }
+        }
+    }
+
+    .btn-back {
+        position: absolute;
+        left: 7px;
+        top: 50%;
+        translate: 0 -50%;
+    }
+
+    .btn-next {
+        position: absolute;
+        right: 7px;
+        top: 0;
+        top: 50%;
+        translate: 0 -50%;
     }
 }

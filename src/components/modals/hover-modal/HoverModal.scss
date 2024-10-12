@@ -18,7 +18,9 @@
         opacity: 1; /* Полная видимость при появлении */
         transform: scale(1); /* Полный масштаб */
         visibility: visible; /* Делаем видимым */
-        transition: opacity 0.2s ease, transform 0.2s ease; /* Плавный переход */
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease; /* Плавный переход */
     }
 
     .hover-modal {
