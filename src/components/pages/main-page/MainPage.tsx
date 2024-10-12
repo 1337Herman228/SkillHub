@@ -13,11 +13,28 @@ import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
 import { IContinueCourse } from "@/interfaces/types";
 import ContinueCourseCard from "@/components/cards/continue-course-card/ContinueCourseCard";
-import ScrollableBlock from "@/components/scrollable-block/ScrollableBlock";
-
-const userCourses: any = null;
+import ScrollableBlock, {
+    Item,
+} from "@/components/scrollable-block/ScrollableBlock";
 
 const MainPage = () => {
+    const isDesktop = useMediaQuery({ query: "(min-width: 1025px)" });
+    const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
+    const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+    const chooseScrollQuantity = () => {
+        if (isDesktop) {
+            return 3;
+        }
+        if (isTablet) {
+            return 2;
+        }
+        if (isMobile) {
+            return 1;
+        }
+        return 1;
+    };
+
     const { requestJson, error, isLoading } = useHttp();
     const isMobileDevice = useMediaQuery({ query: "(max-width: 768px)" });
     const user = useAppSelector((state) => state.user.user);
@@ -137,18 +154,23 @@ const MainPage = () => {
                             </Link>
                         </>
                     ) : (
-                        // <div className="continue-courses__content">
-                        //     {userCourses.map((course) => (
-                        //         <ContinueCourseCard course={course} />
-                        //     ))}
-                        //     {userCourses.map((course) => (
-                        //         <ContinueCourseCard course={course} />
-                        //     ))}
-                        //     {userCourses.map((course) => (
-                        //         <ContinueCourseCard course={course} />
-                        //     ))}
-                        // </div>
-                        <ScrollableBlock itemsToScroll={1} />
+                        <div className="continue-courses__content">
+                            <ScrollableBlock
+                                itemsToScroll={chooseScrollQuantity()}
+                            >
+                                {userCourses.map((course) => (
+                                    <Item
+                                        style={{ paddingTop: 7 }}
+                                        key={course.course.courseId}
+                                    >
+                                        <ContinueCourseCard
+                                            key={course.course.courseId}
+                                            course={course}
+                                        />
+                                    </Item>
+                                ))}
+                            </ScrollableBlock>
+                        </div>
                     )}
                 </div>
             </section>

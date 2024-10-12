@@ -21,6 +21,7 @@
 
     &__advice {
         position: relative;
+
         .advice-img {
             object-position: center;
             object-fit: cover;
@@ -119,8 +120,6 @@
 
             &__content {
                 padding-top: 20px;
-                display: flex;
-                gap: 20px;
             }
         }
     }

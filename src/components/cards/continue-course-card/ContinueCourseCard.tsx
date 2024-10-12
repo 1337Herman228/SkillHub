@@ -38,6 +38,7 @@ const ContinueCourseCard = ({ course }: ContinueCourseCardProps) => {
                                 percentage={course.progressInPercents}
                             />
                             <HoverModal
+                                style={{ top: "-100px" }}
                                 openBtnRef={btnMessagesRef}
                                 isOpen={isMessagesModalOpen}
                                 setStateFunc={setIsMessagesModalOpen}

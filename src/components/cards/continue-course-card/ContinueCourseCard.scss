@@ -2,17 +2,18 @@
 @use "../../../styles/mixins" as *;
 
 .continue-course-card {
-    width: 320px;
-    // height: 240px;
+    width: 100%;
     border: var(--border-black);
     transition-duration: var(--transition-duration);
 
     &:hover {
         transition-duration: var(--transition-duration);
-        translate: 5px -5px;
+        translate: 0px -7px;
+        opacity: 0.9;
     }
 
     &__img {
+        width: 100%;
     }
 
     &__info {
