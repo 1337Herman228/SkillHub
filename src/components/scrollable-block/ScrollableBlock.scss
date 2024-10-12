@@ -1,0 +1,28 @@
+@use "../../styles/variables" as *;
+
+.scrollable-container {
+    display: flex;
+    overflow: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Скрыть скроллбар */
+    scroll-snap-type: x mandatory; /* Включить прилипания */
+    touch-action: manipulation; /* Разрешить только манипуляции */
+    -webkit-overflow-scrolling: touch; /* Плавная прокрутка для iOS */
+    width: 100%; /* Ширина контейнера */
+
+    .item {
+        flex: 0 0 auto; /* Элементы не будут сжиматься */
+        width: 200px; /* Ширина каждого элемента */
+        height: 100px; /* Высота каждого элемента */
+        scroll-snap-align: start; /* Элементы будут "прилипать" к началу */
+        background-color: lightblue; /* Цвет элемента */
+        margin-right: 10px; /* Отступ между элементами */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:last-child {
+            margin-right: 0; /* Отступ между последним элементом */
+        }
+    }
+}

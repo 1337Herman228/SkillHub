@@ -1,0 +1,27 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.progress-circle-container {
+    position: relative;
+
+    .progress-circle {
+        transform: rotate(90deg) scaleX(-1);
+
+        &__main-circle {
+        }
+    }
+
+    .trophy {
+        svg *[fill] {
+            fill: var(--orange);
+        }
+
+        path {
+            fill: var(--orange);
+        }
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        translate: -50% -50%;
+    }
+}

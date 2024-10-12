@@ -116,6 +116,12 @@
                     margin-top: 10px;
                 }
             }
+
+            &__content {
+                padding-top: 20px;
+                display: flex;
+                gap: 20px;
+            }
         }
     }
 }

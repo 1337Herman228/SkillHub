@@ -1,0 +1,8 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.course-card {
+    display: grid;
+    grid-template-columns: 40% 60%;
+}

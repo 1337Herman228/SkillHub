@@ -1,0 +1,37 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.custom-search {
+    position: relative;
+
+    &__image {
+        position: absolute;
+        top: 13px;
+        left: 17px;
+    }
+
+    &__input {
+        width: 400px;
+        border-radius: 2px;
+        border: var(--border-black);
+        height: 46px;
+        padding-left: 50px;
+        padding-bottom: 3px;
+        background-color: var(--light-grey);
+
+        &:focus {
+            outline: none;
+            border: var(--border-purple);
+        }
+
+        &::placeholder {
+            font-size: 16px;
+            color: var(--light-black);
+        }
+
+        @include tablet {
+            width: clamp(160px, 21vw, 300px);
+        }
+    }
+}

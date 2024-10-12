@@ -18,14 +18,26 @@
         opacity: 1; /* Полная видимость при появлении */
         transform: scale(1); /* Полный масштаб */
         visibility: visible; /* Делаем видимым */
-        transition:
-            opacity 0.2s ease,
-            transform 0.2s ease; /* Плавный переход */
+        transition: opacity 0.2s ease, transform 0.2s ease; /* Плавный переход */
     }
 
     .hover-modal {
+        display: inline-block;
         border: var(--border-grey);
         background-color: var(--white);
+    }
+
+    &.left-out {
+        left: 0 !important;
+    }
+    &.right-out {
+        right: 0 !important;
+    }
+    &.top-out {
+        bottom: 0 !important;
+    }
+    &.bottom-out {
+        top: 0 !important;
     }
 }
 

@@ -25,7 +25,7 @@ const ProfileModal = ({
             isOpen={isOpen}
             setStateFunc={setStateFunc}
         >
-            <div className="profile-modal hidden-tablet">
+            <div className="profile-modal">
                 <div style={{ width: 260 }}>
                     <Link className="main-profile-link" href={"/profile"}>
                         <Greetings

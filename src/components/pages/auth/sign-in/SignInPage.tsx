@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
@@ -22,7 +22,7 @@ const SignInPage = () => {
     const { data: session } = useSession();
     const sessionData: ExtendedSession | null = session;
 
-    const [isOk, setIsOk] = React.useState<boolean>(false);
+    const [isOk, setIsOk] = useState<boolean>(false);
 
     const {
         unregister,
@@ -43,6 +43,14 @@ const SignInPage = () => {
 
         if (response?.status === 200 && response.ok) {
             setIsOk(true);
+
+            // if (sessionData?.user?.role === "admin" && isOk) {
+            //     router.push("/admin");
+            // } else if (sessionData?.user?.role === "teacher" && isOk) {
+            //     router.push("/teacher");
+            // } else if (sessionData?.user?.role === "user" && isOk) {
+            //     router.push("/");
+            // }
         } else {
             errorAuthNotification();
         }

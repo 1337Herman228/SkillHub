@@ -1,0 +1,36 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.all-courses {
+    &__dashboard {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 50px;
+
+        @include tablet {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dashboard-text {
+            &__title {
+                line-height: 1;
+                margin-bottom: 5px;
+            }
+
+            &__description {
+            }
+        }
+
+        .dashboard-search {
+            @include tablet {
+                width: 100%;
+            }
+        }
+    }
+
+    &__content {
+    }
+}
