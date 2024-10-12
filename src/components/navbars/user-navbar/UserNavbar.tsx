@@ -14,8 +14,11 @@ import Greetings from "@/components/profile/greetings/Greetings";
 import ProfileModal from "@/components/modals/profile-modal/ProfileModal";
 import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverModalOpenBtn";
 import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
+import { usePathname } from "next/navigation";
 
 const UserNavbar = () => {
+    const pathname = usePathname();
+
     const btnProfileRef = useRef(null);
     const btnMessagesRef = useRef(null);
 
@@ -31,6 +34,8 @@ const UserNavbar = () => {
     const sidebarRef = useRef<HTMLDivElement | null>(null);
     const mobileSearchRef = useRef<HTMLInputElement | null>(null);
 
+    const user = useAppSelector((state) => state.user.user);
+
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
     const [isProfileModalOpen, setIsProfileModalOpen] =
@@ -38,23 +43,54 @@ const UserNavbar = () => {
     const [isMessagesModalOpen, setIsMessagesModalOpen] =
         useState<boolean>(false);
 
+    //Для единождой загрузки пользователя
+    const isUserLoadedRef = useRef(true);
     useEffect(() => {
-        fetchUser();
+        if (isUserLoadedRef.current) {
+            fetchUser();
+        }
     }, [session]);
 
     const fetchUser = async () => {
         if (token && sessionData?.user?.userId) {
-            console.log("fetchUser");
-            console.log("token", token);
+            // console.log("fetchUser");
+            // console.log("token", token);
             const userData = await requestJson(
                 token,
                 `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`
             );
             dispatch(setUser(userData));
+            isUserLoadedRef.current = false;
         }
     };
 
-    const user = useAppSelector((state) => state.user.user);
+    useEffect(() => {
+        markCurrentLink(pathname);
+    }, [pathname, isLoading, user]);
+
+    const markCurrentLink = (currentUrl: string | null) => {
+        const links: any = document.querySelectorAll(".link-to-check");
+
+        for (var i = 0; i < links.length; i++) {
+            links[i].classList.remove("current-link");
+            const url = "http://localhost:3000" + currentUrl;
+
+            if (
+                url === "http://localhost:3000/" &&
+                links[i].href === "http://localhost:3000/"
+            ) {
+                links[i].classList.add("current-link");
+                continue;
+            }
+
+            if (
+                url.includes(links[i].href) &&
+                links[i].href !== "http://localhost:3000/"
+            ) {
+                links[i].classList.add("current-link");
+            }
+        }
+    };
 
     const handleClickOutsideSidebar = (event: MouseEvent) => {
         if (
@@ -98,14 +134,20 @@ const UserNavbar = () => {
         <header className="header">
             <nav className="header__inner container hidden-mobile">
                 <div className="header__inner-left">
-                    <Link className="header-logo" href="/">
+                    <Link className="header-logo link-to-check" href="/">
                         SkillHub
                     </Link>
                     <ul className="header-nav">
-                        <Link className="header-nav__item" href="#">
+                        <Link
+                            className="header-nav__item link-to-check"
+                            href="/all-courses"
+                        >
                             Курсы
                         </Link>
-                        <Link className="header-nav__item" href="#">
+                        <Link
+                            className="header-nav__item link-to-check"
+                            href="my-education"
+                        >
                             Мое обучение
                         </Link>
                     </ul>
@@ -216,7 +258,10 @@ const UserNavbar = () => {
                     />
                 </div>
                 <div className="nav-mobile-part">
-                    <Link className="nav-mobile-part__logo" href="/">
+                    <Link
+                        className="nav-mobile-part__logo link-to-check"
+                        href="/"
+                    >
                         SkillHub
                     </Link>
                 </div>
@@ -280,10 +325,15 @@ const UserNavbar = () => {
                             textSmall="С возвращением!"
                         />
                         <ul className="menu__list">
-                            <Link href="#">
-                                <li className="menu__list-item">Курсы</li>
+                            <Link className="link-to-check" href="/all-courses">
+                                <li className="menu__list-item link-to-check">
+                                    Курсы
+                                </li>
                             </Link>
-                            <Link href="#">
+                            <Link
+                                className="link-to-check"
+                                href="/my-education"
+                            >
                                 <li className="menu__list-item">
                                     Мое обучение
                                 </li>

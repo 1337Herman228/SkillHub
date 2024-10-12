@@ -116,3 +116,22 @@ hr {
         background-color: var(--light-grey);
     }
 }
+
+.title {
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 700;
+
+    @include tablet {
+        font-size: 24px;
+    }
+
+    @include mobile {
+        font-size: 32px;
+    }
+}
+
+.title-description {
+    font-size: 16px;
+    font-weight: 400;
+}

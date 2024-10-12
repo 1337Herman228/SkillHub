@@ -1,0 +1,5 @@
+@use "../../../styles/mixins" as *;
+
+.hover-modal-open-btn {
+    @include reset-button;
+}

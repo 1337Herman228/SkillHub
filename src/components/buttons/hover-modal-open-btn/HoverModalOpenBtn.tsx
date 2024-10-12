@@ -1,5 +1,7 @@
 "use client";
 
+import "./HoverModalOpenBtn.scss";
+
 interface HoverModalOpenBtnProps {
     children: React.ReactNode;
     btnRef: any;
@@ -36,7 +38,7 @@ const HoverModalOpenBtn = ({
                     stateSetter(false);
                 }
             }}
-            className={className}
+            className={className + " hover-modal-open-btn"}
             type="button"
         >
             {children}

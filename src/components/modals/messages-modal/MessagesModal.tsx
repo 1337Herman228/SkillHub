@@ -21,7 +21,7 @@ const MessagesModal = ({
             isOpen={isOpen}
             setStateFunc={setStateFunc}
         >
-            <div className="messages-modal hidden-tablet">
+            <div className="messages-modal">
                 <div className="messages-modal__title">Уведомления</div>
                 <div
                     className={`messages-modal__content ${

@@ -1,0 +1,47 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.continue-course-card {
+    width: 320px;
+    // height: 240px;
+    border: var(--border-black);
+    transition-duration: var(--transition-duration);
+
+    &:hover {
+        transition-duration: var(--transition-duration);
+        translate: 5px -5px;
+    }
+
+    &__img {
+    }
+
+    &__info {
+        padding: 16px 20px;
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        align-items: center;
+
+        .course-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-wrap: nowrap;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .course-progress-container {
+            justify-self: end;
+            display: grid;
+            place-items: center;
+            .course-progress {
+                position: relative;
+
+                .progress-modal {
+                    min-width: 300px;
+                    padding: 16px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
