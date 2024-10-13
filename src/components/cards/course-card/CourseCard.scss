@@ -3,6 +3,158 @@
 @use "../../../styles/mixins" as *;
 
 .course-card {
+    max-width: 1250px;
+    // width: 90vw;
+    border: var(--border-black);
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.212);
+    transition-duration: var(--transition-duration);
+    // padding: 25px;
+
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 500px auto;
+
+    @media (max-width: 1150px) {
+        grid-template-columns: 450px auto;
+    }
+
+    @include tablet {
+        grid-template-rows: 1fr auto;
+        grid-template-columns: auto;
+    }
+
+    &:hover {
+        transition-duration: var(--transition-duration);
+        translate: 0px -7px;
+        opacity: 0.9;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        @include tablet {
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: auto;
+        }
+    }
+
+    .course-info-container {
+        display: grid;
+        grid-template-columns: auto 60px;
+
+        .course-info {
+            padding: 25px 15px 25px 40px;
+            display: flex;
+            flex-direction: column;
+            // gap: 12px;
+            gap: 10px;
+
+            @include tablet {
+                padding: 15px;
+                padding-bottom: 5px;
+                gap: 5px;
+            }
+
+            .light-text {
+                font-size: 16px;
+                font-weight: 400;
+
+                @include tablet {
+                    font-size: 14px;
+                }
+            }
+
+            .bold-text {
+                font-weight: 700;
+            }
+
+            &__course-name {
+                text-wrap: wrap;
+                line-height: 1.2;
+                font-size: 32px;
+                font-weight: 700;
+
+                @include tablet {
+                    font-size: 20px;
+                }
+            }
+
+            &__description {
+            }
+
+            &__author {
+            }
+
+            &__last-update {
+            }
+
+            &__time-lessons-level {
+            }
+
+            &__rate {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                --star-size: 16px;
+
+                .ant-rate-star-full .ant-rate-star-first,
+                .ant-rate-star-full .ant-rate-star-second {
+                    color: var(--orange); /* Цвет активных звезд */
+                    font-size: var(--star-size);
+                }
+                .ant-rate-star-zero .ant-rate-star-first,
+                .ant-rate-star-zero .ant-rate-star-second {
+                    color: var(--grey); /* Цвет неактивных звезд */
+                    font-size: var(--star-size);
+                }
+                .ant-rate-star-half .ant-rate-star-first {
+                    color: var(--orange); /* Цвет первой половины */
+                    font-size: var(--star-size);
+                }
+                .ant-rate-star-half .ant-rate-star-second {
+                    color: var(--grey); /* Цвет второй половины */
+                    font-size: var(--star-size);
+                }
+
+                .reviews-count {
+                    font-size: 13px;
+                    line-height: 1;
+                }
+            }
+
+            &__btn {
+                padding-top: 5px;
+            }
+        }
+    }
+
+    .course-progress-container {
+        padding-block: 25px;
+        padding-right: 15px;
+
+        @include tablet {
+            padding-block: 15px;
+        }
+
+        .course-progress {
+            position: relative;
+
+            .percentage {
+                padding-top: 2px;
+                font-size: 12px;
+            }
+
+            .progress-modal {
+                min-width: 300px;
+                padding: 16px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .tablet-access-btn-container {
+        padding: 0 15px 10px;
+    }
 }

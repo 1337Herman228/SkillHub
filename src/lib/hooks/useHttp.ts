@@ -40,7 +40,7 @@ const useHttp = () => {
             token: string,
             url: string,
             method = "GET",
-            body = null,
+            body: any = null,
             headers = {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",

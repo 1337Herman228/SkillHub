@@ -33,7 +33,7 @@ export interface ICourse {
     skillLevel: "START" | "NORMAL" | "PRO" | "ALL";
     shortDescription: string;
     longDescription: string;
-    lastUpdate: Date;
+    lastUpdate: string;
 }
 
 export interface IUserProgress {
@@ -46,4 +46,26 @@ export interface IContinueCourse {
     progressInPercents: number;
     completedLessonsCount: number;
     allLessonsCount: number;
+}
+
+export interface IAllCourse {
+    course: ICourse;
+    duration: number;
+    allLessonsCount: number;
+    rating: number;
+    reviewsCount: number;
+    status: "NO_REQUEST" | "PENDING" | "APPROVED" | "REJECTED";
+}
+
+export interface ICourseAcces {
+    accessId: number;
+    user: IUser;
+    course: ICourse;
+    requestDate: Date;
+    grantedDate: Date;
+    status: IAccessStatus;
+}
+
+export interface IAccessStatus {
+    status: "PENDING" | "APPROVED" | "REJECTED";
 }

@@ -4,6 +4,7 @@
 
 .all-courses {
     &__dashboard {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -11,6 +12,7 @@
 
         @include tablet {
             flex-direction: column;
+            align-items: start;
             gap: 10px;
         }
 
@@ -31,6 +33,45 @@
         }
     }
 
+    &__loading {
+        max-width: 1250px;
+        width: 90vw;
+        height: 70vh;
+        display: grid;
+        place-items: center;
+    }
+
     &__content {
+        padding-top: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        @include tablet {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+
+        gap: 25px;
+    }
+
+    &__not-found {
+        max-width: 1250px;
+        width: 90vw;
+        height: 70vh;
+        display: grid;
+        place-items: center;
+        font-size: 40px;
+        font-weight: 700;
+
+        @include tablet {
+            font-size: 32px;
+        }
+
+        @include mobile {
+            font-size: 26px;
+        }
     }
 }
