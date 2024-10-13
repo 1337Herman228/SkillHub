@@ -35,12 +35,12 @@ const MainPage = () => {
         return 1;
     };
 
-    const { requestJson, error, isLoading } = useHttp();
+    const { requestJson, error } = useHttp();
     const isMobileDevice = useMediaQuery({ query: "(max-width: 768px)" });
     const user = useAppSelector((state) => state.user.user);
 
     // const [userProgress, setUserProgress] = useState<any>(null);
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const sessionData: ExtendedSession | null = session;
     const token = sessionData?.user?.authenticationResponse?.token;
 

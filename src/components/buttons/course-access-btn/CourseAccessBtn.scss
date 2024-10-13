@@ -1,0 +1,51 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.access-btn {
+    @include reset-button;
+    font-weight: 600;
+    font-size: 14px;
+    padding-block: 10px;
+    max-width: 490px;
+    width: 100%;
+    cursor: pointer;
+
+    @include tablet {
+        font-size: 12px;
+        padding-block: 7px;
+    }
+
+    &--no-request {
+        background-color: var(--light-black);
+        color: var(--white);
+
+        @include hover {
+            background-color: var(--dark-purple);
+        }
+    }
+
+    &--approved {
+        background-color: var(--dark-purple);
+        color: var(--white);
+    }
+
+    &--pending {
+        background-color: var(--dark-grey);
+        color: var(--white);
+    }
+
+    &--rejected {
+        background-color: var(--red);
+        color: var(--white);
+
+        @include hover {
+            background-color: var(--dark-purple);
+        }
+    }
+
+    &--loading {
+        padding-block: 9px 5px;
+        background-color: var(--dark-grey);
+    }
+}
