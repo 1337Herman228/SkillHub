@@ -37,6 +37,7 @@ export async function middleware(req: NextRequest) {
     }
 }
 
+// Добавлять новый маршрут при добавлении новой страницы
 export const config = {
-    matcher: ["/", "/admin/:path*", "/teacher/:path*"],
+    matcher: ["/", "/admin/:path*", "/teacher/:path*", "/profile"],
 };

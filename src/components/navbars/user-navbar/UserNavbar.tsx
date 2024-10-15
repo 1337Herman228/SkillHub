@@ -53,8 +53,6 @@ const UserNavbar = () => {
 
     const fetchUser = async () => {
         if (token && sessionData?.user?.userId) {
-            // console.log("fetchUser");
-            // console.log("token", token);
             const userData = await requestJson(
                 token,
                 `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`

@@ -2,7 +2,7 @@ export interface IUser {
     userId: number | null;
     person: IPerson | null;
     role: IRole | null;
-    login: string | null;
+    login: string;
     diamonds: number | null;
 }
 
