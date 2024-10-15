@@ -135,3 +135,18 @@ hr {
     font-size: 16px;
     font-weight: 400;
 }
+
+.black-submit-button {
+    @include reset-button;
+    background-color: var(--light-black);
+    color: var(--white);
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 11px 14px 12px;
+    cursor: pointer;
+
+    @include hover {
+        background-color: var(--dark-purple);
+    }
+}
