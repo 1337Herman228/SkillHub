@@ -1,6 +1,6 @@
 "use client";
 
-import MainProfileForm from "@/components/forms/profile-forms/main-profile-form/MainProfileForm";
+import WantToTeachForm from "@/components/forms/profile-forms/want-to-teach-form/WantToTeachForm";
 import Spinner from "@/components/spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";
@@ -10,18 +10,18 @@ import { FieldValues, useForm } from "react-hook-form";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
-const MainForm = () => {
+const WantToTeach = () => {
     const [api, contextHolder] = notification.useNotification();
     const errorNotification = (type: NotificationType) => {
         api[type]({
             message: "Ошибка",
-            description: "Что-то пошло не так",
+            description: "Вы уже отправили заявку!",
         });
     };
     const successNotification = (type: NotificationType) => {
         api[type]({
             message: "Успешно",
-            description: "Данные успешно изменены",
+            description: "Запрос на становление преподавателем отправлен!",
         });
     };
 
@@ -34,21 +34,26 @@ const MainForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { getAndDispatchUser, putProfileInfo, isLoading } = useFetch();
+    const { addBecomeTeacherRequest } = useFetch();
 
     const formSubmit = async (data: FieldValues) => {
         if (user) {
             try {
-                await putProfileInfo(data, user);
-                await getAndDispatchUser();
-                successNotification("success");
+                const response = await addBecomeTeacherRequest(data, user);
+
+                console.log("response", response);
+                if (response === "BAD_REQUEST") {
+                    errorNotification("error");
+                } else if (response === "OK") {
+                    successNotification("success");
+                }
             } catch {
                 errorNotification("error");
             }
         }
     };
 
-    if (!user || isLoading) {
+    if (!user) {
         return (
             <div
                 style={{
@@ -81,7 +86,7 @@ const MainForm = () => {
             >
                 {contextHolder}
             </ConfigProvider>
-            <MainProfileForm
+            <WantToTeachForm
                 formSubmit={formSubmit}
                 register={register}
                 unregister={unregister}
@@ -93,4 +98,4 @@ const MainForm = () => {
     );
 };
 
-export default MainForm;
+export default WantToTeach;

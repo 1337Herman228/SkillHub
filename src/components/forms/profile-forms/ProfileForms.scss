@@ -1,0 +1,19 @@
+@use "../../../styles/media" as *;
+@use "../../../styles/variables" as *;
+
+.form-container-profile {
+    max-width: 660px;
+    margin: 60px auto;
+    padding-inline: 30px;
+
+    @include mobile {
+        margin: 20px auto;
+        padding-inline: 25px;
+    }
+
+    .form {
+        .submit-btn {
+            margin-top: 10px;
+        }
+    }
+}

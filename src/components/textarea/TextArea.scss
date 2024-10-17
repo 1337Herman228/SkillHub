@@ -1,0 +1,56 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/media" as *;
+
+.textarea {
+    resize: vertical;
+    width: 100%;
+    background-color: transparent;
+    border: var(--border-black);
+    padding: 10px 10px 10px 15px;
+    outline: none;
+    transition-duration: var(--transition-duration);
+    border-radius: 2px;
+
+    @include hover {
+        border: var(--border-purple);
+    }
+
+    &:focus {
+        border: var(--border-purple);
+    }
+
+    &.error {
+        border: var(--border-red);
+    }
+}
+
+.textarea-label {
+    font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 5px;
+
+    &__text {
+        position: relative;
+
+        &.require {
+            &::after {
+                content: "*";
+                font-size: 21px;
+                position: absolute;
+                color: var(--dark-purple);
+                right: -12px;
+                top: 0px;
+                width: 10px;
+                height: 15px;
+            }
+        }
+    }
+}
+
+.textarea-error {
+    padding-block: 3px;
+    font-size: 14px;
+    color: var(--red);
+    font-weight: 500;
+}

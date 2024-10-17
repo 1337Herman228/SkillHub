@@ -12,8 +12,19 @@
     box-shadow: 0 0 0 0.5px var(--light-black);
     min-height: 900px;
 
+    @include mobile {
+        grid-template-columns: auto;
+        box-shadow: 0 0 0 0 var(--light-black);
+        padding-inline: 20px;
+        margin-top: 20px;
+    }
+
     .profile-dashboard {
         width: 200px;
+
+        @include mobile {
+            width: 100%;
+        }
 
         &__header {
             display: flex;
@@ -23,17 +34,22 @@
             padding-block: 25px;
 
             .user-avatar {
+                object-fit: cover;
+                object-position: center;
+                border-radius: 50%;
             }
 
             .username {
                 font-size: 16px;
                 font-weight: 700;
-                line-height: 1;
+                // line-height: 1;
                 max-width: 200px;
                 overflow-x: hidden;
                 overflow-y: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                padding-inline: 15px;
+                text-wrap: wrap;
             }
         }
 
@@ -48,6 +64,10 @@
                 text-align: start;
                 height: 32px;
 
+                @include hover {
+                    background-color: var(--grey);
+                }
+
                 &.active {
                     background-color: var(--light-black);
                     color: var(--white);
@@ -59,6 +79,11 @@
     .profile-inner {
         box-shadow: inset 0.5px 0 0 0 var(--light-black);
 
+        @include mobile {
+            margin-top: 10px;
+            box-shadow: 0 0 0 0.5px var(--light-black);
+        }
+
         &__header {
             box-shadow: inset 0 -0.5px 0 0 var(--light-black);
             display: flex;
@@ -66,6 +91,10 @@
             flex-direction: column;
             gap: 11px;
             padding-block: 40px;
+
+            @include mobile {
+                padding-block: 20px;
+            }
 
             &-title {
                 font-size: 24px;
@@ -77,6 +106,8 @@
                 font-size: 16px;
                 font-weight: 400;
                 line-height: 1;
+                text-wrap: wrap;
+                padding-inline: 20px;
             }
         }
 

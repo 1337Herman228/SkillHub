@@ -1,6 +1,6 @@
 "use client";
 
-import MainProfileForm from "@/components/forms/profile-forms/main-profile-form/MainProfileForm";
+import ChangePasswordForm from "@/components/forms/profile-forms/change-password-form/ChangePasswordForm";
 import Spinner from "@/components/spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";
@@ -8,20 +8,33 @@ import { ConfigProvider, notification } from "antd";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
-type NotificationType = "success" | "info" | "warning" | "error";
-
-const MainForm = () => {
+const ChangePassword = () => {
     const [api, contextHolder] = notification.useNotification();
-    const errorNotification = (type: NotificationType) => {
-        api[type]({
+    const notEqualRepeatPasswordsNotification = () => {
+        api["warning"]({
             message: "Ошибка",
-            description: "Что-то пошло не так",
+            description: "Новый пароль и повтор нового пароля не совпадают!",
         });
     };
-    const successNotification = (type: NotificationType) => {
-        api[type]({
+
+    const notEqualPasswordsNotification = () => {
+        api["error"]({
+            message: "Ошибка",
+            description: "Вы ввели неверный старый пароль!",
+        });
+    };
+
+    const errorNotification = () => {
+        api["error"]({
+            message: "Ошибка",
+            description: "Что-то пошло не так...",
+        });
+    };
+
+    const successNotification = () => {
+        api["success"]({
             message: "Успешно",
-            description: "Данные успешно изменены",
+            description: "Ваш пароль успешно изменен!",
         });
     };
 
@@ -34,21 +47,31 @@ const MainForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { getAndDispatchUser, putProfileInfo, isLoading } = useFetch();
+    const { changeUserPasswordRequest } = useFetch();
 
     const formSubmit = async (data: FieldValues) => {
         if (user) {
-            try {
-                await putProfileInfo(data, user);
-                await getAndDispatchUser();
-                successNotification("success");
-            } catch {
-                errorNotification("error");
+            if (data.newPassword !== data.repeatNewPassword) {
+                notEqualRepeatPasswordsNotification();
+            } else {
+                try {
+                    const response = await changeUserPasswordRequest(
+                        data,
+                        user
+                    );
+                    if (response === "BAD_REQUEST") {
+                        notEqualPasswordsNotification();
+                    } else if (response === "OK") {
+                        successNotification();
+                    }
+                } catch {
+                    errorNotification();
+                }
             }
         }
     };
 
-    if (!user || isLoading) {
+    if (!user) {
         return (
             <div
                 style={{
@@ -81,16 +104,15 @@ const MainForm = () => {
             >
                 {contextHolder}
             </ConfigProvider>
-            <MainProfileForm
+            <ChangePasswordForm
                 formSubmit={formSubmit}
                 register={register}
                 unregister={unregister}
                 handleSubmit={handleSubmit}
                 errors={errors}
-                user={user}
             />
         </>
     );
 };
 
-export default MainForm;
+export default ChangePassword;
