@@ -12,7 +12,7 @@ interface CourseCardProps {
     course: IAllCourse;
     token: string;
     user: IUser;
-    progressInPercents?: number;
+    progressInPercents?: number | null;
     completedLessonsCount?: number;
     allLessonsCount?: number;
 }
@@ -21,9 +21,9 @@ const CourseCard = ({
     course,
     token,
     user,
-    progressInPercents = 50,
-    completedLessonsCount = 5,
-    allLessonsCount = 10,
+    progressInPercents = null,
+    completedLessonsCount,
+    allLessonsCount,
 }: CourseCardProps) => {
     const isTabletDevice = useMediaQuery({ query: "(max-width: 1024px)" });
 
