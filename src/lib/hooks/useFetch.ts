@@ -15,6 +15,7 @@ const useFetch = () => {
     const { data: session, status } = useSession();
     const sessionData: ExtendedSession | null = session;
     const token = sessionData?.user?.authenticationResponse?.token;
+    const user = sessionData?.user;
 
     const getAndDispatchUser = async () => {
         if (token) {
@@ -82,11 +83,59 @@ const useFetch = () => {
         }
     };
 
+    const getAllCourses = async () => {
+        if (token) {
+            const allCoursesData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-all-courses-for-user/${sessionData?.user?.userId}`
+            );
+            return allCoursesData;
+        }
+    };
+
+    const getCoursesByName = async (searchtext: string, user: IUser) => {
+        if (token) {
+            const coursesData = await requestJson(
+                token,
+                `http://localhost:8080/user/find-courses-by-name-for-user`,
+                "POST",
+                JSON.stringify({ courseName: searchtext, userId: user.userId })
+            );
+            return coursesData;
+        }
+    };
+
+    const getUserInterestCourses = async () => {
+        if (token) {
+            const userInterestCoursesData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-user-interest-courses/${sessionData?.user?.userId}`
+            );
+            return userInterestCoursesData;
+        }
+    };
+
+    const getUserInterestCoursesByName = async (searchtext: string) => {
+        if (token) {
+            const coursesData = await requestJson(
+                token,
+                `http://localhost:8080/user/find-user-interest-courses-by-name`,
+                "POST",
+                JSON.stringify({ courseName: searchtext, userId: user?.userId })
+            );
+            return coursesData;
+        }
+    };
+
     return {
+        getUserInterestCoursesByName,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
+        getUserInterestCourses,
         getAndDispatchUser,
+        getCoursesByName,
         putProfileInfo,
+        getAllCourses,
         putAvatar,
         isLoading,
         error,

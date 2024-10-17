@@ -57,15 +57,24 @@ export interface IAllCourse {
     status: "NO_REQUEST" | "PENDING" | "APPROVED" | "REJECTED";
 }
 
+export interface IUserInterestCourse {
+    course: ICourse;
+    duration: number;
+    allLessonsCount: number;
+    completedLessonsCount: number;
+    progressInPercents: number;
+    rating: number;
+    reviewsCount: number;
+    status: TAccessStatus;
+}
+
 export interface ICourseAcces {
     accessId: number;
     user: IUser;
     course: ICourse;
     requestDate: Date;
     grantedDate: Date;
-    status: IAccessStatus;
+    status: TAccessStatus;
 }
 
-export interface IAccessStatus {
-    status: "PENDING" | "APPROVED" | "REJECTED";
-}
+export type TAccessStatus = "PENDING" | "APPROVED" | "REJECTED";

@@ -1,19 +1,21 @@
 "use client";
 
 import CustomSearch from "@/components/search/custom-search/CustomSearch";
-import "./AllCoursesPage.scss";
+import "../all-courses/AllCoursesPage.scss";
 import { useSession } from "next-auth/react";
 import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { useEffect, useState } from "react";
-import { IAllCourse } from "@/interfaces/types";
+import { IUserInterestCourse } from "@/interfaces/types";
 import CourseCard from "@/components/cards/course-card/CourseCard";
 import Spinner from "@/components/spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 
-const AllCoursesPage = () => {
+const MyEducationPage = () => {
     const user = useAppSelector((state) => state.user.user);
-    const [allCourses, setAllCourses] = useState<IAllCourse[]>([]);
+    const [userInterestCourses, setUserInterestCoursesData] = useState<
+        IUserInterestCourse[]
+    >([]);
     const [searchtext, setSearchtext] = useState<string>("");
     const [isLoadingWithDelay, setIsLoadingWithDelay] =
         useState<boolean>(false);
@@ -22,27 +24,26 @@ const AllCoursesPage = () => {
     const sessionData: ExtendedSession | null = session;
     const token = sessionData?.user?.authenticationResponse?.token;
 
-    const { getAllCourses, getCoursesByName, isLoading } = useFetch();
+    const { getUserInterestCourses, getUserInterestCoursesByName, isLoading } =
+        useFetch();
 
-    const fetchAllCourses = async () => {
-        if (token) {
-            const allCoursesData = await getAllCourses();
-            setAllCourses(allCoursesData);
-        }
+    const fetchUserInterestCourses = async () => {
+        const userInterestCoursesData = await getUserInterestCourses();
+        setUserInterestCoursesData(userInterestCoursesData);
     };
     useEffect(() => {
-        fetchAllCourses();
+        fetchUserInterestCourses();
     }, [user]);
 
-    const fetchCoursesByName = async () => {
+    const fetchUserInterestCourseByName = async () => {
         if (user) {
-            const coursesData = await getCoursesByName(searchtext, user);
-            setAllCourses(coursesData);
+            const coursesData = await getUserInterestCoursesByName(searchtext);
+            setUserInterestCoursesData(coursesData);
         }
     };
     useEffect(() => {
         setIsLoadingWithDelay(true);
-        fetchCoursesByName();
+        fetchUserInterestCourseByName();
         setTimeout(() => {
             setIsLoadingWithDelay(false);
         }, 1000);
@@ -50,7 +51,7 @@ const AllCoursesPage = () => {
 
     const loading =
         !user ||
-        !allCourses ||
+        !userInterestCourses ||
         token === undefined ||
         isLoading ||
         isLoadingWithDelay;
@@ -61,10 +62,10 @@ const AllCoursesPage = () => {
                 <div className="courses__dashboard">
                     <div className="dashboard-text">
                         <h1 className="dashboard-text__title  title">
-                            Выберите курс
+                            Ваши курсы
                         </h1>
                         <div className="dashboard-text__description title-description">
-                            Чтобы приступить к выполнению курса запросите доступ
+                            Курсы, к которым вы запросили доступ
                         </div>
                     </div>
                     <div className="dashboard-search">
@@ -81,14 +82,27 @@ const AllCoursesPage = () => {
                     </div>
                 ) : (
                     <>
-                        {allCourses?.length > 0 ? (
+                        {userInterestCourses?.length > 0 ? (
                             <div className="courses__content">
-                                {allCourses.map((course) => (
+                                {userInterestCourses.map((course) => (
                                     <CourseCard
                                         course={course}
                                         key={course.course.courseId}
                                         user={user}
                                         token={token}
+                                        progressInPercents={
+                                            course.completedLessonsCount
+                                                ? Number(
+                                                      course.progressInPercents.toFixed(
+                                                          0
+                                                      )
+                                                  )
+                                                : null
+                                        }
+                                        completedLessonsCount={
+                                            course.completedLessonsCount
+                                        }
+                                        allLessonsCount={course.allLessonsCount}
                                     />
                                 ))}
                             </div>
@@ -104,4 +118,4 @@ const AllCoursesPage = () => {
     );
 };
 
-export default AllCoursesPage;
+export default MyEducationPage;
