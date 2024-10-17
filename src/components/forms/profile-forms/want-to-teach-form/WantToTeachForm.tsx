@@ -8,13 +8,13 @@ import {
     UseFormRegister,
     UseFormUnregister,
 } from "react-hook-form";
-// import "./MainProfileForm.scss";
 import "../ProfileForms.scss";
 import { useEffect } from "react";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import { IUser } from "@/interfaces/types";
+import TextArea from "@/components/textarea/TextArea";
 
-interface MainProfileFormProps {
+interface WantToTeachFormProps {
     handleSubmit: (
         onValid: SubmitHandler<FieldValues>,
         onInvalid?: SubmitErrorHandler<FieldValues> | undefined
@@ -26,74 +26,58 @@ interface MainProfileFormProps {
     user?: IUser;
 }
 
-const MainProfileForm = ({
+const WantToTeachForm = ({
     formSubmit,
     handleSubmit,
     register,
     unregister,
     errors,
-    user,
-}: MainProfileFormProps) => {
+}: WantToTeachFormProps) => {
     useEffect(() => {
         return () => {
-            unregister("name");
-            unregister("surname");
-            unregister("login");
-            unregister("email");
+            unregister("courseSphere");
+            unregister("courseName");
+            unregister("courseDescription");
         };
     }, []);
 
     return (
-        <section className="profile-form-container form-container-profile">
+        <section className="want-to-teach-form-container form-container-profile">
             <form
                 onSubmit={handleSubmit((data) => formSubmit(data))}
-                className="profile-form form"
+                className="want-to-teach form"
             >
                 <CustomInput
-                    labelText="Имя"
-                    name="name"
-                    minLength={2}
-                    onlyLettersAndDigits={true}
-                    register={register}
-                    errors={errors}
-                    defaultValue={user?.person?.name}
-                />
-                <CustomInput
-                    labelText="Фамилия"
-                    name="surname"
-                    minLength={2}
-                    onlyLettersAndDigits={true}
-                    register={register}
-                    errors={errors}
-                    defaultValue={user?.person?.surname}
-                />
-                <CustomInput
-                    labelText="Login"
-                    name="login"
+                    labelText="В какой сфере будет курс?"
+                    name="courseSphere"
                     minLength={3}
-                    onlyLettersAndDigits={true}
                     register={register}
                     errors={errors}
-                    defaultValue={user?.login}
+                />
+                <CustomInput
+                    labelText="Название курса"
+                    name="courseName"
+                    minLength={5}
+                    register={register}
+                    errors={errors}
                 />
 
-                <CustomInput
-                    labelText="Email"
-                    name="email"
-                    minLength={3}
+                <TextArea
+                    labelText="Описание курса"
+                    name="courseDescription"
+                    minLength={30}
                     register={register}
                     errors={errors}
-                    defaultValue={user?.person?.email}
                 />
 
                 <input
                     className="submit-btn black-submit-button"
                     type="submit"
-                    value="Сохранить"
+                    value="Отправить"
                 />
             </form>
         </section>
     );
 };
 
-export default MainProfileForm;
+export default WantToTeachForm;

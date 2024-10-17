@@ -4,17 +4,15 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import "./UserNavbar.scss";
 import { useMediaQuery } from "react-responsive";
-import useHttp from "@/lib/hooks/useHttp";
 import { useSession } from "next-auth/react";
-import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/store/store";
-import { setUser } from "@/lib/redux/slices/userSlice";
+import { useAppSelector } from "@/lib/redux/store/store";
 import UserNavbarSkeleton from "@/components/skeletons/user-navbar-skeleton/UserNavbarSkeleton";
 import Greetings from "@/components/profile/greetings/Greetings";
 import ProfileModal from "@/components/modals/profile-modal/ProfileModal";
 import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverModalOpenBtn";
 import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
 import { usePathname } from "next/navigation";
+import useFetch from "@/lib/hooks/useFetch";
 
 const UserNavbar = () => {
     const pathname = usePathname();
@@ -22,12 +20,9 @@ const UserNavbar = () => {
     const btnProfileRef = useRef(null);
     const btnMessagesRef = useRef(null);
 
-    const { requestJson, error, isLoading } = useHttp();
-    const dispatch = useAppDispatch();
+    const { getAndDispatchUser, isLoading } = useFetch();
 
-    const { data: session, status } = useSession();
-    const sessionData: ExtendedSession | null = session;
-    const token = sessionData?.user?.authenticationResponse?.token;
+    const { data: session } = useSession();
 
     const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
 
@@ -47,20 +42,9 @@ const UserNavbar = () => {
     const isUserLoadedRef = useRef(true);
     useEffect(() => {
         if (isUserLoadedRef.current) {
-            fetchUser();
+            getAndDispatchUser();
         }
     }, [session]);
-
-    const fetchUser = async () => {
-        if (token && sessionData?.user?.userId) {
-            const userData = await requestJson(
-                token,
-                `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`
-            );
-            dispatch(setUser(userData));
-            isUserLoadedRef.current = false;
-        }
-    };
 
     useEffect(() => {
         markCurrentLink(pathname);
@@ -198,10 +182,15 @@ const UserNavbar = () => {
                         >
                             <Link href="/profile">
                                 <img
-                                    className="header-icons__button-img"
+                                    className="header-icons__button-img profile-img"
                                     loading="lazy"
                                     alt=""
-                                    src="svg/profile.svg"
+                                    src={
+                                        user.person?.avatarImg
+                                            ? "upload-images/" +
+                                              user.person?.avatarImg
+                                            : "svg/profile.svg"
+                                    }
                                     width={35}
                                     height={35}
                                 />
@@ -276,10 +265,14 @@ const UserNavbar = () => {
                     </button>
                     <button className="nav-mobile-part__button" type="button">
                         <img
-                            className="nav-mobile-part__button-img"
+                            className="nav-mobile-part__button-img profile-img"
                             loading="lazy"
                             alt=""
-                            src="svg/profile.svg"
+                            src={
+                                user.person?.avatarImg
+                                    ? "upload-images/" + user.person?.avatarImg
+                                    : "svg/profile.svg"
+                            }
                             width={24}
                             height={24}
                         />
@@ -317,7 +310,8 @@ const UserNavbar = () => {
                             textBig={
                                 <>
                                     Здравствуйте,
-                                    <br /> Имя Фамилия!
+                                    <br /> {user.person?.name}{" "}
+                                    {user.person?.surname}!
                                 </>
                             }
                             textSmall="С возвращением!"

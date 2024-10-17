@@ -8,13 +8,11 @@ import {
     UseFormRegister,
     UseFormUnregister,
 } from "react-hook-form";
-// import "./MainProfileForm.scss";
 import "../ProfileForms.scss";
 import { useEffect } from "react";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
-import { IUser } from "@/interfaces/types";
 
-interface MainProfileFormProps {
+interface ChangePasswordFormProps {
     handleSubmit: (
         onValid: SubmitHandler<FieldValues>,
         onInvalid?: SubmitErrorHandler<FieldValues> | undefined
@@ -23,67 +21,55 @@ interface MainProfileFormProps {
     register: UseFormRegister<FieldValues>;
     errors: FieldErrors<FieldValues>;
     formSubmit: (data: FieldValues) => void;
-    user?: IUser;
 }
 
-const MainProfileForm = ({
+const ChangePasswordForm = ({
     formSubmit,
     handleSubmit,
     register,
     unregister,
     errors,
-    user,
-}: MainProfileFormProps) => {
+}: ChangePasswordFormProps) => {
     useEffect(() => {
         return () => {
-            unregister("name");
-            unregister("surname");
-            unregister("login");
-            unregister("email");
+            unregister("oldPassword");
+            unregister("newPassword");
+            unregister("repeatNewPassword");
         };
     }, []);
 
     return (
-        <section className="profile-form-container form-container-profile">
+        <section className="change-password-form-container form-container-profile">
             <form
                 onSubmit={handleSubmit((data) => formSubmit(data))}
-                className="profile-form form"
+                className="change-password-form form"
             >
                 <CustomInput
-                    labelText="Имя"
-                    name="name"
-                    minLength={2}
+                    labelText="Cтарый пароль"
+                    name="oldPassword"
+                    minLength={8}
                     onlyLettersAndDigits={true}
                     register={register}
                     errors={errors}
-                    defaultValue={user?.person?.name}
+                    type="password"
                 />
                 <CustomInput
-                    labelText="Фамилия"
-                    name="surname"
-                    minLength={2}
+                    labelText="Новый пароль"
+                    name="newPassword"
+                    minLength={8}
                     onlyLettersAndDigits={true}
                     register={register}
                     errors={errors}
-                    defaultValue={user?.person?.surname}
+                    type="password"
                 />
                 <CustomInput
-                    labelText="Login"
-                    name="login"
-                    minLength={3}
+                    labelText="Повторите новый пароль"
+                    name="repeatNewPassword"
+                    minLength={8}
                     onlyLettersAndDigits={true}
                     register={register}
                     errors={errors}
-                    defaultValue={user?.login}
-                />
-
-                <CustomInput
-                    labelText="Email"
-                    name="email"
-                    minLength={3}
-                    register={register}
-                    errors={errors}
-                    defaultValue={user?.person?.email}
+                    type="password"
                 />
 
                 <input
@@ -96,4 +82,4 @@ const MainProfileForm = ({
     );
 };
 
-export default MainProfileForm;
+export default ChangePasswordForm;

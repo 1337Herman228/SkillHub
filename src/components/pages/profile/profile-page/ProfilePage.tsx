@@ -5,6 +5,9 @@ import "./ProfilePage.scss";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import MainForm from "./main-form/MainForm";
+import ProfilePhoto from "../profile-photo-page/ProfilePhoto";
+import WantToTeach from "../want-to-teach/WantToTeach";
+import ChangePassword from "./change-password/ChangePassword";
 
 interface IProfileSectionInfo {
     id: string;
@@ -27,14 +30,21 @@ const profileSectionsInfo: IProfileSectionInfo[] = [
         title: "Аватар",
         linkName: "Аватар",
         description: "Здесь вы можете изменить свой аватар",
-        children: <div>Аватар</div>,
+        children: <ProfilePhoto />,
+    },
+    {
+        id: "change-password",
+        title: "Смена пароля",
+        linkName: "Изменить пароль",
+        description: "Здесь мы можете поменять свой пароль",
+        children: <ChangePassword />,
     },
     {
         id: "want-to-teach",
         title: "Хотите преподавать?",
         linkName: "Хочу преподавать",
         description: "Заполните форму и мы с вами свяжемся!",
-        children: <div>Хотите преподавать?</div>,
+        children: <WantToTeach />,
     },
 ];
 
@@ -54,7 +64,11 @@ const ProfilePage = () => {
                         width={120}
                         height={120}
                         alt="avatar"
-                        src={user?.person?.avatarImg || "svg/profile-large.svg"}
+                        src={
+                            user?.person?.avatarImg
+                                ? "upload-images/" + user?.person?.avatarImg
+                                : "svg/profile-large.svg"
+                        }
                     />
                     <div className="username">
                         {user?.person?.name} {user?.person?.surname}
