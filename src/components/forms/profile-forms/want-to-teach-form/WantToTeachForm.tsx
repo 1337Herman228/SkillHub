@@ -9,10 +9,11 @@ import {
     UseFormUnregister,
 } from "react-hook-form";
 import "../ProfileForms.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import { IUser } from "@/interfaces/types";
 import TextArea from "@/components/textarea/TextArea";
+import TextEditor from "@/components/text-editor/TextEditor";
 
 interface WantToTeachFormProps {
     handleSubmit: (

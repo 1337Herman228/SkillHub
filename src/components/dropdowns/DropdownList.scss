@@ -1,0 +1,125 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/media" as *;
+
+.dropdown {
+    margin-bottom: 7px;
+
+    &__label {
+        .label-text {
+            font-size: 16px;
+            font-weight: 700;
+            padding-bottom: 5px;
+        }
+    }
+
+    &__input-wrapper {
+        position: relative;
+
+        .dropdown__input {
+            width: 100%;
+            font-size: 16px;
+            height: 49px;
+            background-color: transparent;
+            border: var(--border-black);
+            padding: 10px 35px 10px 15px;
+            outline: none;
+            transition-duration: var(--transition-duration);
+            border-radius: 2px;
+            color: var(--light-black);
+
+            @include hover {
+                border: var(--border-purple);
+            }
+
+            &:focus {
+                border: var(--border-purple);
+            }
+
+            &.error {
+                border: var(--border-red);
+            }
+        }
+
+        .dropdown__arrow {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            translate: 0 -50%;
+            transition-duration: var(--transition-duration);
+
+            &.open {
+                rotate: 0deg;
+            }
+
+            &.close {
+                rotate: 180deg;
+            }
+        }
+    }
+
+    .dropdown-list {
+        position: absolute;
+        z-index: 2000;
+        background-color: var(--white);
+        width: 100%;
+        border: var(--border-black);
+        border-top: none;
+
+        &.open {
+            visibility: visible;
+            animation: openDropdown 0.25s ease-in-out;
+        }
+
+        &.close {
+            visibility: hidden;
+        }
+
+        @keyframes openDropdown {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top;
+                opacity: 0;
+            }
+            100% {
+                transform: scaleY(1);
+                transform-origin: top;
+                opacity: 1;
+            }
+        }
+
+        @keyframes closeDropdown {
+            0% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+        }
+
+        .option {
+            font-size: 16px;
+            padding: 7px 10px;
+            cursor: pointer;
+        }
+
+        .not-found {
+            padding: 15px 10px;
+        }
+
+        &__option {
+            @include hover {
+                background-color: var(--grey);
+            }
+        }
+    }
+
+    .dropdown-error {
+        padding-block: 3px;
+        font-size: 14px;
+        color: var(--red);
+        font-weight: 500;
+    }
+}

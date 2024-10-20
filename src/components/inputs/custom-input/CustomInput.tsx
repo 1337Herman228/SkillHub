@@ -61,7 +61,7 @@ const CustomInput = ({
                 {isShow ? (
                     <Image
                         className="cart-list__item-img"
-                        src="svg/Eye-slash.svg"
+                        src="/svg/Eye-slash.svg"
                         alt=""
                         width={25}
                         height={25}
@@ -69,7 +69,7 @@ const CustomInput = ({
                 ) : (
                     <Image
                         className="cart-list__item-img"
-                        src="svg/Eye.svg"
+                        src="/svg/Eye.svg"
                         alt=""
                         width={25}
                         height={25}
@@ -83,7 +83,7 @@ const CustomInput = ({
         return (
             <Image
                 className="correct-mark"
-                src="svg/correct-mark.svg"
+                src="/svg/correct-mark.svg"
                 alt=""
                 width={20}
                 height={20}
@@ -95,7 +95,7 @@ const CustomInput = ({
         return (
             <Image
                 className="error-mark"
-                src="svg/error-mark.svg"
+                src="/svg/error-mark.svg"
                 alt=""
                 width={16}
                 height={16}

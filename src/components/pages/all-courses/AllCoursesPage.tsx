@@ -2,8 +2,6 @@
 
 import CustomSearch from "@/components/search/custom-search/CustomSearch";
 import "./AllCoursesPage.scss";
-import { useSession } from "next-auth/react";
-import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { useEffect, useState } from "react";
 import { IAllCourse } from "@/interfaces/types";
@@ -18,17 +16,11 @@ const AllCoursesPage = () => {
     const [isLoadingWithDelay, setIsLoadingWithDelay] =
         useState<boolean>(false);
 
-    const { data: session } = useSession();
-    const sessionData: ExtendedSession | null = session;
-    const token = sessionData?.user?.authenticationResponse?.token;
-
     const { getAllCourses, getCoursesByName, isLoading } = useFetch();
 
     const fetchAllCourses = async () => {
-        if (token) {
-            const allCoursesData = await getAllCourses();
-            setAllCourses(allCoursesData);
-        }
+        const allCoursesData = await getAllCourses();
+        setAllCourses(allCoursesData);
     };
     useEffect(() => {
         fetchAllCourses();
@@ -48,12 +40,7 @@ const AllCoursesPage = () => {
         }, 1000);
     }, [searchtext]);
 
-    const loading =
-        !user ||
-        !allCourses ||
-        token === undefined ||
-        isLoading ||
-        isLoadingWithDelay;
+    const loading = !user || !allCourses || isLoading || isLoadingWithDelay;
 
     return (
         <div className="courses-page container-reduced-medium">
@@ -87,8 +74,6 @@ const AllCoursesPage = () => {
                                     <CourseCard
                                         course={course}
                                         key={course.course.courseId}
-                                        user={user}
-                                        token={token}
                                     />
                                 ))}
                             </div>

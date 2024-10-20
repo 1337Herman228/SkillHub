@@ -23,8 +23,8 @@ const Greetings = ({ textBig, textSmall, style }: GreetingsProps) => {
                 alt=""
                 src={
                     user.person?.avatarImg
-                        ? "upload-images/" + user.person?.avatarImg
-                        : "svg/profile.svg"
+                        ? "/upload-images/" + user.person?.avatarImg
+                        : "/svg/profile.svg"
                 }
                 width={55}
                 height={55}

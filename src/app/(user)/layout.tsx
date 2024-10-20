@@ -1,10 +1,10 @@
 "use client";
 
 import "@/styles/style.scss";
-import UserNavbar from "@/components/navbars/user-navbar/UserNavbar";
 import { MySessionProvider } from "@/components/providers/SessionProvider";
 import StoreProvider from "@/components/providers/StoreProvider";
-import UserFooter from "@/components/footers/user-footer/UserFooter";
+import Navbar from "@/components/navbars/user-navbar/Navbar";
+import Footer from "@/components/footers/user-footer/Footer";
 
 export default function RootLayout({
     children,
@@ -19,9 +19,9 @@ export default function RootLayout({
             <body>
                 <StoreProvider>
                     <MySessionProvider>
-                        <UserNavbar />
+                        <Navbar role="user" />
                         {children}
-                        <UserFooter />
+                        <Footer role="user" />
                     </MySessionProvider>
                 </StoreProvider>
             </body>

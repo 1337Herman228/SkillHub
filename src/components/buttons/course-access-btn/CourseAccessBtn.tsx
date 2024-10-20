@@ -3,44 +3,22 @@
 import { useState } from "react";
 import "./CourseAccessBtn.scss";
 import Spinner from "@/components/spinners/spinner/Spinner";
-import { IUser } from "@/interfaces/types";
-import useHttp from "@/lib/hooks/useHttp";
-
-type statusType =
-    | "NO_REQUEST"
-    | "PENDING"
-    | "APPROVED"
-    | "REJECTED"
-    | "LOADING";
+import useFetch from "@/lib/hooks/useFetch";
+import { TStatusType } from "@/interfaces/types";
 
 interface CourseAccessBtnProps {
-    status: statusType;
-    token: string;
-    user: IUser;
+    status: TStatusType;
     courseId: number;
 }
 
-const CourseAccessBtn = ({
-    status,
-    token,
-    user,
-    courseId,
-}: CourseAccessBtnProps) => {
-    const [accessStatus, setAccessStatus] = useState<statusType>(status);
+const CourseAccessBtn = ({ status, courseId }: CourseAccessBtnProps) => {
+    const [accessStatus, setAccessStatus] = useState<TStatusType>(status);
 
-    const { requestJson, error } = useHttp();
+    const { fetchRequestAccess } = useFetch();
 
     const requestAccess = async () => {
         setAccessStatus("LOADING");
-        await requestJson(
-            token,
-            `http://localhost:8080/user/request-access`,
-            "POST",
-            JSON.stringify({
-                userId: user.userId,
-                courseId: courseId,
-            })
-        );
+        await fetchRequestAccess(courseId);
         setTimeout(() => {
             setAccessStatus("PENDING");
         }, 500);

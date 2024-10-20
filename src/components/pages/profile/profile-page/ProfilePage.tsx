@@ -8,14 +8,9 @@ import MainForm from "./main-form/MainForm";
 import ProfilePhoto from "../profile-photo-page/ProfilePhoto";
 import WantToTeach from "../want-to-teach/WantToTeach";
 import ChangePassword from "./change-password/ChangePassword";
-
-interface IProfileSectionInfo {
-    id: string;
-    title: string;
-    linkName: string;
-    description: string;
-    children?: React.ReactNode;
-}
+import { IProfileSectionInfo } from "@/interfaces/types";
+import ProfileNavButton from "@/components/profile/profile-nav-btn/ProfileNavButton";
+import Link from "next/link";
 
 const profileSectionsInfo: IProfileSectionInfo[] = [
     {
@@ -39,6 +34,9 @@ const profileSectionsInfo: IProfileSectionInfo[] = [
         description: "Здесь мы можете поменять свой пароль",
         children: <ChangePassword />,
     },
+];
+
+const wantToTeach = [
     {
         id: "want-to-teach",
         title: "Хотите преподавать?",
@@ -54,6 +52,44 @@ const ProfilePage = () => {
     const [currentSection, setCurrentSection] = useState<IProfileSectionInfo>(
         profileSectionsInfo[0]
     );
+
+    const RoleNavLink = () => {
+        switch (user?.role?.position) {
+            case "admin":
+                return (
+                    <Link href={"/admin/"}>
+                        <button tabIndex={-1} className="link">
+                            Режим администратора
+                        </button>
+                    </Link>
+                );
+            case "user":
+                return (
+                    <>
+                        {wantToTeach.map((section) => (
+                            <ProfileNavButton
+                                section={section}
+                                key={section.id}
+                                setCurrentSection={setCurrentSection}
+                                className={`link ${
+                                    currentSection.id === section.id
+                                        ? "active"
+                                        : ""
+                                }`}
+                            />
+                        ))}
+                    </>
+                );
+            case "teacher":
+                return (
+                    <Link href={"/teacher/"}>
+                        <button tabIndex={-1} className="link">
+                            Режим преподавателя
+                        </button>
+                    </Link>
+                );
+        }
+    };
 
     return (
         <div className="profile-page container-reduced-medium">
@@ -76,16 +112,16 @@ const ProfilePage = () => {
                 </div>
                 <div className="profile-dashboard__links">
                     {profileSectionsInfo.map((section) => (
-                        <button
+                        <ProfileNavButton
+                            section={section}
                             key={section.id}
-                            onClick={() => setCurrentSection(section)}
+                            setCurrentSection={setCurrentSection}
                             className={`link ${
                                 currentSection.id === section.id ? "active" : ""
                             }`}
-                        >
-                            {section.linkName}
-                        </button>
+                        />
                     ))}
+                    <RoleNavLink />
                     <button onClick={() => signOut()} className={`link`}>
                         Выйти
                     </button>

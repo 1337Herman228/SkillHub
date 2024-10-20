@@ -2,13 +2,12 @@
 
 import MainProfileForm from "@/components/forms/profile-forms/main-profile-form/MainProfileForm";
 import Spinner from "@/components/spinners/spinner/Spinner";
+import { NotificationType } from "@/interfaces/types";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { ConfigProvider, notification } from "antd";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
-
-type NotificationType = "success" | "info" | "warning" | "error";
 
 const MainForm = () => {
     const [api, contextHolder] = notification.useNotification();

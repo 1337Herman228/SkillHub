@@ -78,3 +78,22 @@ export interface ICourseAcces {
 }
 
 export type TAccessStatus = "PENDING" | "APPROVED" | "REJECTED";
+
+export interface IProfileSectionInfo {
+    id: string;
+    title: string;
+    linkName: string;
+    description: string;
+    children?: React.ReactNode;
+}
+
+export type TRole = "user" | "teacher" | "admin";
+
+export type NotificationType = "success" | "info" | "warning" | "error";
+
+export type TStatusType =
+    | "NO_REQUEST"
+    | "PENDING"
+    | "APPROVED"
+    | "REJECTED"
+    | "LOADING";
