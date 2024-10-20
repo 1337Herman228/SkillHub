@@ -95,6 +95,10 @@
                     font-size: 26px;
                     margin-right: clamp(30px, 4vw, 80px);
                 }
+
+                &.current-link {
+                    color: var(--dark-purple) !important;
+                }
             }
 
             .header-nav {
@@ -102,13 +106,38 @@
                 // align-items: end;
 
                 &__item {
+                    position: relative;
                     font-size: 19px;
                     font-weight: 500;
                     padding-block: 5px;
                     padding-inline: 12px;
 
+                    &.current-link {
+                        color: var(--dark-purple) !important;
+
+                        &::after {
+                            width: calc(100% - 24px);
+                        }
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 50%;
+                        width: calc(24px - 24px);
+                        translate: -50%;
+                        height: 2px;
+                        transition-duration: var(--transition-duration);
+                        background-color: var(--dark-purple);
+                    }
+
                     @include hover {
                         color: var(--dark-purple);
+
+                        &::after {
+                            width: calc(100% - 24px);
+                        }
                     }
 
                     @include tablet {

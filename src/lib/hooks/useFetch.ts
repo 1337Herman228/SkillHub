@@ -127,15 +127,81 @@ const useFetch = () => {
         }
     };
 
+    const addNewCourse = async (
+        data: FieldValues,
+        dropdownValue: string,
+        htmlText: string,
+        imgLink: string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/add-new-course`,
+                "POST",
+                JSON.stringify({
+                    authorId: user?.userId,
+                    topic: data.topic,
+                    skillLevel: dropdownValue,
+                    courseImg: imgLink,
+                    courseName: data.courseName,
+                    shortDescription: data.shortDescription,
+                    longDescription: htmlText,
+                })
+            );
+            return response;
+        }
+    };
+
+    const getTeacherCourses = async () => {
+        if (token) {
+            const coursesData = await requestJson(
+                token,
+                `http://localhost:8080/teacher/get-teacher-courses/${user?.userId}`,
+                "GET"
+            );
+            return coursesData;
+        }
+    };
+
+    const fetchRequestAccess = async (courseId: number) => {
+        if (token) {
+            await requestJson(
+                token,
+                `http://localhost:8080/user/request-access`,
+                "POST",
+                JSON.stringify({
+                    userId: user?.userId,
+                    courseId: courseId,
+                })
+            );
+        }
+    };
+
+    const getTeacherCoursesByName = async (searchtext: string) => {
+        if (token) {
+            const coursesData = await requestJson(
+                token,
+                `http://localhost:8080/teacher/find-teacher-courses-by-name`,
+                "POST",
+                JSON.stringify({ courseName: searchtext, userId: user?.userId })
+            );
+            return coursesData;
+        }
+    };
+
     return {
         getUserInterestCoursesByName,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
+        getTeacherCoursesByName,
         getUserInterestCourses,
         getAndDispatchUser,
+        fetchRequestAccess,
+        getTeacherCourses,
         getCoursesByName,
         putProfileInfo,
         getAllCourses,
+        addNewCourse,
         putAvatar,
         isLoading,
         error,

@@ -10,6 +10,10 @@
     transition-duration: var(--transition-duration);
     // padding: 25px;
 
+    &.teacher-card {
+        border-radius: 25px;
+    }
+
     display: grid;
     grid-template-columns: 500px auto;
 
@@ -32,6 +36,10 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+
+        &.teacher-img {
+            border-radius: 25px;
+        }
 
         @include tablet {
             grid-template-rows: 1fr 1fr;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import "./UserNavbar.scss";
+import "./Navbar.scss";
 import { useMediaQuery } from "react-responsive";
 import { useSession } from "next-auth/react";
 import { useAppSelector } from "@/lib/redux/store/store";
@@ -13,8 +13,59 @@ import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverMo
 import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
 import { usePathname } from "next/navigation";
 import useFetch from "@/lib/hooks/useFetch";
+import { TRole } from "@/interfaces/types";
 
-const UserNavbar = () => {
+interface INavLink {
+    id: string;
+    href: string;
+    name: string;
+}
+
+export const userNavLinks: INavLink[] = [
+    {
+        id: "courses",
+        href: "/all-courses",
+        name: "Курсы",
+    },
+    {
+        id: "my-education",
+        href: "/my-education",
+        name: "Мое обучение",
+    },
+];
+
+export const teacherNavLinks: INavLink[] = [
+    {
+        id: "my-courses",
+        href: "/teacher/my-courses",
+        name: "Мои курсы",
+    },
+];
+
+export const adminNavLinks: INavLink[] = [
+    {
+        id: "my-courses",
+        href: "/teacher/my-courses",
+        name: "Мои курсы",
+    },
+];
+
+export const chooseNavLinks = (role: TRole): INavLink[] => {
+    switch (role) {
+        case "user":
+            return userNavLinks;
+        case "teacher":
+            return teacherNavLinks;
+        case "admin":
+            return adminNavLinks;
+    }
+};
+
+interface NavbarProps {
+    role: TRole;
+}
+
+const Navbar = ({ role }: NavbarProps) => {
     const pathname = usePathname();
 
     const btnProfileRef = useRef(null);
@@ -120,18 +171,15 @@ const UserNavbar = () => {
                         SkillHub
                     </Link>
                     <ul className="header-nav">
-                        <Link
-                            className="header-nav__item link-to-check"
-                            href="/all-courses"
-                        >
-                            Курсы
-                        </Link>
-                        <Link
-                            className="header-nav__item link-to-check"
-                            href="my-education"
-                        >
-                            Мое обучение
-                        </Link>
+                        {chooseNavLinks(role).map((link) => (
+                            <Link
+                                className="header-nav__item link-to-check"
+                                href={link.href}
+                                key={link.id}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
                     </ul>
                 </div>
 
@@ -141,7 +189,7 @@ const UserNavbar = () => {
                             className="header-search__img"
                             loading="lazy"
                             alt=""
-                            src="svg/search.svg"
+                            src="/svg/search.svg"
                             width={20}
                             height={20}
                         />
@@ -164,7 +212,7 @@ const UserNavbar = () => {
                                     className="header-icons__button-img"
                                     loading="lazy"
                                     alt=""
-                                    src="svg/bell.svg"
+                                    src="/svg/bell.svg"
                                     width={32}
                                     height={32}
                                 />
@@ -187,14 +235,15 @@ const UserNavbar = () => {
                                     alt=""
                                     src={
                                         user.person?.avatarImg
-                                            ? "upload-images/" +
+                                            ? "/upload-images/" +
                                               user.person?.avatarImg
-                                            : "svg/profile.svg"
+                                            : "/svg/profile.svg"
                                     }
                                     width={35}
                                     height={35}
                                 />
                                 <ProfileModal
+                                    role={user.role?.position as TRole}
                                     openBtnRef={btnProfileRef}
                                     user={user}
                                     isOpen={isProfileModalOpen}
@@ -216,7 +265,7 @@ const UserNavbar = () => {
                             className="nav-mobile-part__button-img"
                             loading="lazy"
                             alt=""
-                            src="svg/menu.svg"
+                            src="/svg/menu.svg"
                             width={26}
                             height={26}
                         />
@@ -231,7 +280,7 @@ const UserNavbar = () => {
                             className="nav-mobile-part__button-img"
                             loading="lazy"
                             alt=""
-                            src="svg/search-mobile.svg"
+                            src="/svg/search-mobile.svg"
                             width={17}
                             height={17}
                         />
@@ -258,7 +307,7 @@ const UserNavbar = () => {
                             className="nav-mobile-part__button-img"
                             loading="lazy"
                             alt=""
-                            src="svg/bell.svg"
+                            src="/svg/bell.svg"
                             width={21}
                             height={21}
                         />
@@ -270,8 +319,8 @@ const UserNavbar = () => {
                             alt=""
                             src={
                                 user.person?.avatarImg
-                                    ? "upload-images/" + user.person?.avatarImg
-                                    : "svg/profile.svg"
+                                    ? "/upload-images/" + user.person?.avatarImg
+                                    : "/svg/profile.svg"
                             }
                             width={24}
                             height={24}
@@ -300,7 +349,7 @@ const UserNavbar = () => {
                             className="sidebar-container__close-btn-img"
                             loading="lazy"
                             alt=""
-                            src="svg/close.svg"
+                            src="/svg/close.svg"
                             width={16}
                             height={16}
                         />
@@ -317,19 +366,17 @@ const UserNavbar = () => {
                             textSmall="С возвращением!"
                         />
                         <ul className="menu__list">
-                            <Link className="link-to-check" href="/all-courses">
-                                <li className="menu__list-item link-to-check">
-                                    Курсы
-                                </li>
-                            </Link>
-                            <Link
-                                className="link-to-check"
-                                href="/my-education"
-                            >
-                                <li className="menu__list-item">
-                                    Мое обучение
-                                </li>
-                            </Link>
+                            {chooseNavLinks(role).map((link) => (
+                                <Link
+                                    className="link-to-check"
+                                    href={link.href}
+                                    key={link.id}
+                                >
+                                    <li className="menu__list-item link-to-check">
+                                        {link.name}
+                                    </li>
+                                </Link>
+                            ))}
                         </ul>
                     </nav>
                 </div>
@@ -338,4 +385,4 @@ const UserNavbar = () => {
     );
 };
 
-export default UserNavbar;
+export default Navbar;

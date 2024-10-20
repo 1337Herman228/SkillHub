@@ -1,0 +1,19 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.format-button {
+    @include reset-button;
+    min-width: 25px;
+    cursor: pointer;
+    transition-duration: var(--transition-duration);
+    border-radius: 3px;
+
+    @include hover {
+        background-color: var(--grey);
+    }
+
+    &--active {
+        background-color: var(--grey);
+    }
+}

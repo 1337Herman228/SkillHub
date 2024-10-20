@@ -8,7 +8,6 @@ import {
     UseFormRegister,
     UseFormUnregister,
 } from "react-hook-form";
-// import "./MainProfileForm.scss";
 import "../ProfileForms.scss";
 import { useEffect } from "react";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";

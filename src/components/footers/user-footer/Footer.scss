@@ -85,6 +85,11 @@
             &__link {
                 padding: 5px 12px;
                 font-size: 19px;
+                transition-duration: var(--transition-duration);
+
+                @include hover {
+                    color: var(--orange);
+                }
 
                 @include tablet {
                     font-size: 17px;

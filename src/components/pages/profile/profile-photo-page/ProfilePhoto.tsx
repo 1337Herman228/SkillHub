@@ -8,6 +8,7 @@ import useFetch from "@/lib/hooks/useFetch";
 import useManageImg from "@/lib/hooks/useManageImg";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { useState } from "react";
+import TextEditor from "@/components/text-editor/TextEditor";
 
 const ProfilePhoto = () => {
     const { getAndDispatchUser, putAvatar, isLoading } = useFetch();

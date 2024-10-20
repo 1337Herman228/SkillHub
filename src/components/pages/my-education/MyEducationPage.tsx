@@ -31,6 +31,7 @@ const MyEducationPage = () => {
         const userInterestCoursesData = await getUserInterestCourses();
         setUserInterestCoursesData(userInterestCoursesData);
     };
+
     useEffect(() => {
         fetchUserInterestCourses();
     }, [user]);
@@ -41,6 +42,7 @@ const MyEducationPage = () => {
             setUserInterestCoursesData(coursesData);
         }
     };
+
     useEffect(() => {
         setIsLoadingWithDelay(true);
         fetchUserInterestCourseByName();

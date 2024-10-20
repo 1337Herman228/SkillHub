@@ -156,3 +156,31 @@ hr {
     object-fit: cover;
     object-position: center;
 }
+
+.html-block {
+    code {
+        background-color: var(--light-grey);
+        border: var(--border-grey);
+        color: var(--dark-purple);
+        border-radius: 3px;
+        padding: 2px 4px;
+        margin: 0 3px;
+        font-family: monospace;
+        font-weight: 500;
+    }
+    p {
+        margin-bottom: 12px;
+    }
+
+    ul,
+    ol {
+        margin-block: 12px;
+    }
+}
+
+.error-message {
+    padding-block: 3px;
+    font-size: 14px;
+    color: var(--red);
+    font-weight: 500;
+}

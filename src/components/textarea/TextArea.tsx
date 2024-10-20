@@ -31,7 +31,7 @@ const TextArea = ({
             : " символов");
 
     return (
-        <>
+        <div>
             <label className="textarea-label" htmlFor={name}>
                 <span
                     className={`textarea-label__text ${require && "require"}`}
@@ -53,7 +53,7 @@ const TextArea = ({
                 })}
             />
             <p className="textarea-error">{errors[name]?.message}</p>
-        </>
+        </div>
     );
 };
 
