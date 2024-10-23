@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useAppDispatch } from "../redux/store/store";
 import useHttp from "./useHttp";
 import { setUser } from "../redux/slices/userSlice";
+import { setCourseState } from "../redux/slices/courseSlice";
 import { FieldValues } from "react-hook-form";
 import { IUser } from "@/interfaces/types";
 
@@ -24,6 +25,16 @@ const useFetch = () => {
                 `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`
             );
             dispatch(setUser(userData));
+        }
+    };
+
+    const getAndDispatchCourse = async (courseId: number) => {
+        if (token) {
+            const courseData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-course-info/${courseId}`
+            );
+            dispatch(setCourseState(courseData));
         }
     };
 
@@ -195,6 +206,7 @@ const useFetch = () => {
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
         getUserInterestCourses,
+        getAndDispatchCourse,
         getAndDispatchUser,
         fetchRequestAccess,
         getTeacherCourses,

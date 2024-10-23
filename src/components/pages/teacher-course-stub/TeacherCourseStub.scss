@@ -1,0 +1,23 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.course-stub-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    .course-stub {
+        max-width: 900px;
+
+        &__title {
+            font-size: 64px;
+            font-weight: 700;
+            padding-bottom: 30px;
+            line-height: 1;
+        }
+
+        &__description {
+            font-size: 20px;
+        }
+    }
+}

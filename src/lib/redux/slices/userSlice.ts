@@ -1,5 +1,3 @@
-"use client";
-
 import { IUser } from "@/interfaces/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

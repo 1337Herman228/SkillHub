@@ -22,14 +22,9 @@ const TeacherCoursesPage = () => {
     >(null);
     const [courses, setCourses] = useState<IAllCourse[]>([]);
 
-    console.log("allTeacherCourses", allTeacherCourses);
-    console.log("courses", courses);
-
     const [isLoadingWithDelay, setIsLoadingWithDelay] =
         useState<boolean>(false);
     const [searchtext, setSearchtext] = useState<string>("");
-
-    console.log("courses", courses);
 
     const fetchTeacherCourses = async () => {
         const courses_ = await getTeacherCourses();
