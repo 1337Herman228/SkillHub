@@ -46,11 +46,22 @@ const options: NextAuthOptions = {
                     }
                 );
 
-                const user: ExtendedUser = await res.json();
+                console.log("res", res);
 
-                if (res.ok && user) {
-                    return user;
+                if (res.ok) {
+                    const user: ExtendedUser = await res.json();
+
+                    if (res.ok && user) {
+                        return user;
+                    }
+                } else {
+                    if (res.status === 401) {
+                        throw new Error("Unauthorized");
+                    } else {
+                        throw new Error("Authentication failed");
+                    }
                 }
+
                 return null;
             },
         }),

@@ -13,13 +13,7 @@ import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverMo
 import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
 import { usePathname } from "next/navigation";
 import useFetch from "@/lib/hooks/useFetch";
-import { TRole } from "@/interfaces/types";
-
-interface INavLink {
-    id: string;
-    href: string;
-    name: string;
-}
+import { INavLink, TRole } from "@/interfaces/types";
 
 export const userNavLinks: INavLink[] = [
     {
@@ -92,8 +86,11 @@ const Navbar = ({ role }: NavbarProps) => {
     //Для единождой загрузки пользователя
     const isUserLoadedRef = useRef(true);
     useEffect(() => {
-        if (isUserLoadedRef.current) {
-            getAndDispatchUser();
+        if (session) {
+            if (isUserLoadedRef.current) {
+                getAndDispatchUser();
+                isUserLoadedRef.current = false;
+            }
         }
     }, [session]);
 

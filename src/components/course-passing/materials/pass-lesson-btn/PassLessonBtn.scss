@@ -1,0 +1,17 @@
+@use "../../../../styles/variables" as *;
+
+.pass-lesson-btn {
+    position: relative;
+    z-index: 4000;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--light-black);
+    background-color: var(--white);
+    cursor: pointer;
+    padding: 0px;
+    background-color: transparent;
+
+    &.checked {
+        background-color: var(--light-black);
+    }
+}

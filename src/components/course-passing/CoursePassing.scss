@@ -1,0 +1,25 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/media" as *;
+
+.course-passing-container {
+    display: grid;
+    grid-template-columns: auto 400px;
+    height: 100%;
+
+    .left-part {
+        display: grid;
+        grid-template-rows: auto auto;
+        border-right: var(--border-grey);
+
+        &__lesson {
+            border-bottom: var(--border-grey);
+        }
+
+        &__dashboard {
+        }
+    }
+
+    .right-part {
+    }
+}

@@ -1,0 +1,159 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.double-header-wrapper {
+    .double-header {
+        height: 70px;
+        width: 100%;
+        z-index: 900;
+        background-color: var(--white);
+        border-bottom: var(--border-black);
+
+        .double-navbar {
+            height: 100%;
+            display: grid;
+            align-items: center;
+            justify-content: start;
+
+            .header-inner {
+                display: flex;
+                align-items: center;
+
+                .course-first-nav {
+                    display: flex;
+                    align-items: center;
+                    gap: 25px;
+                }
+
+                .back {
+                    @include hover {
+                        opacity: 0.7;
+                    }
+
+                    &__img {
+                    }
+                }
+            }
+
+            .header-inner-mobile {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+
+                .nav-mobile-part {
+                    position: relative;
+                    display: flex;
+
+                    &__button {
+                        @include reset-button;
+                        padding-inline: 7px;
+                        cursor: pointer;
+                    }
+
+                    &__logo {
+                        font-family: "Michroma";
+                        font-size: 16px;
+                    }
+
+                    &__search {
+                        position: absolute;
+                        top: 42px;
+                        left: 45px;
+                        width: clamp(300px, 25vw, 400px);
+                        border-radius: var(--border-radius-large);
+                        border: var(--border-black);
+                        height: 46px;
+                        padding-left: 22px;
+                        padding-bottom: 3px;
+                        background-color: var(--light-grey);
+                        animation: appear ease-in-out 0.25s;
+
+                        @keyframes appear {
+                            0% {
+                                opacity: 0;
+                            }
+                            100% {
+                                opacity: 1;
+                            }
+                        }
+
+                        &:focus {
+                            outline: none;
+                            border: var(--border-purple);
+                        }
+
+                        &::placeholder {
+                            font-size: 16px;
+                            color: var(--light-black);
+                        }
+
+                        &.not-active {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .first-nav {
+            }
+
+            .second-nav {
+            }
+
+            .header-nav {
+                // display: flex;
+                // align-items: end;
+
+                &__item {
+                    position: relative;
+                    font-size: 19px;
+                    font-weight: 500;
+                    padding-block: 5px;
+                    padding-inline: 12px;
+
+                    &.current-link {
+                        color: var(--dark-purple) !important;
+
+                        &::after {
+                            width: calc(100% - 24px);
+                        }
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        bottom: 0;
+                        left: 50%;
+                        width: calc(24px - 24px);
+                        translate: -50%;
+                        height: 2px;
+                        transition-duration: var(--transition-duration);
+                        background-color: var(--dark-purple);
+                    }
+
+                    @include hover {
+                        color: var(--dark-purple);
+
+                        &::after {
+                            width: calc(100% - 24px);
+                        }
+                    }
+
+                    @include tablet {
+                        font-size: 17px;
+                    }
+                }
+            }
+        }
+
+        .link {
+            font-size: 19px;
+            font-weight: 600;
+        }
+    }
+}
+
+.current-link {
+    color: var(--dark-purple) !important;
+}

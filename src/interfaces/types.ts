@@ -6,6 +6,12 @@ export interface IUser {
     diamonds: number | null;
 }
 
+export interface INavLink {
+    id: string;
+    href: string;
+    name: string;
+}
+
 export interface IPerson {
     personId: number;
     name: string;
@@ -35,6 +41,55 @@ export interface ICourse {
     longDescription: string;
     lastUpdate: string;
 }
+
+export interface ICourseInfo {
+    course: ICourse;
+    info: IInfo;
+    chapters: IChapterWithLessonsInfo[];
+    lessons: ILessonWithResources[];
+}
+
+export interface ICourseInfoNullable {
+    course: ICourse | null;
+    info: IInfo | null;
+    chapters: IChapterWithLessonsInfo[] | null;
+    lessons: ILessonWithResources[] | null;
+}
+
+export interface IChapter {
+    chapterId: number;
+    courseId: number;
+    chapterTitle: string;
+    chapterOrder: number;
+}
+
+export interface IChapterWithLessonsInfo extends IChapter {
+    lessonsCount: number;
+    duration: number;
+}
+
+export interface ILesson {
+    lessonId: number;
+    chapterId: number;
+    lessonType: TLessonType;
+    lessonTitle: string;
+    diamondReward: number;
+    lessonOrder: number;
+    duration: number;
+}
+
+export interface ILessonWithResources extends ILesson {
+    resources: IResources[];
+}
+
+export interface IResources {
+    resourceId: number;
+    lessonId: number;
+    resourceTitle: string;
+    resourceLink: string;
+}
+
+export type TLessonType = "VIDEO" | "TEXT" | "TEST";
 
 export interface IUserProgress {
     progressId: number;
@@ -68,6 +123,15 @@ export interface IUserInterestCourse {
     status: TAccessStatus;
 }
 
+export interface IInfo {
+    duration: number | null;
+    allLessonsCount: number;
+    rating: number;
+    testsCount: number;
+    studentsCount: number;
+    reviewsCount: number;
+}
+
 export interface ICourseAcces {
     accessId: number;
     user: IUser;
@@ -97,3 +161,8 @@ export type TStatusType =
     | "APPROVED"
     | "REJECTED"
     | "LOADING";
+
+export interface ICourseInfoUrlParams {
+    "course-id": string;
+    "lesson-id": string;
+}
