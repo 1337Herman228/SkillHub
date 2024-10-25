@@ -17,7 +17,7 @@ const CoursePassing = ({ params }: CoursePassingProps) => {
                 <div className="left-part__dashboard">Обзор</div>
             </div>
             <div className="right-part">
-                <Materials params={params} />
+                <Materials params={params} role="teacher" />
             </div>
         </section>
     );

@@ -3,7 +3,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import "./VideoPlayer.scss";
 import VolumeSlider from "./volume-slider/VolumeSlider";
-import { is } from "immutable";
 
 interface VideoPlayerProps {
     videoSrc?: string;
@@ -13,17 +12,48 @@ const VideoPlayer = memo(
     ({
         videoSrc = "/upload-videos/X2Download.com-Hollywood Undead - Bullet (Lyric Video).mp4",
     }: VideoPlayerProps) => {
+        const timeLineRef = useRef<HTMLDivElement>(null);
         const videoContainerRef = useRef<HTMLDivElement>(null);
         const videoRef = useRef<HTMLVideoElement>(null);
         const currentTimeRef = useRef<HTMLDivElement>(null);
         const totalTimeRef = useRef<HTMLDivElement>(null);
 
+        const [isScrubbing, setIsScrubbing] = useState(false);
         const [playbackSpeed, setPlaybackSpeed] = useState(1);
         const [isPaused, setIsPaused] = useState(false);
         const [isFullScreen, setIsFullScreen] = useState(false);
         const [volume, setVolume] = useState(0.5);
         const [isVolumeSliderOpen, setIsVolumeSliderOpen] =
             useState<boolean>(false);
+
+        const handleTimelineUpdate = (e: any) => {
+            const rect = timeLineRef.current?.getBoundingClientRect();
+            const percent =
+                Math.min(Math.max(0, e.x - rect!.x), rect!.width) / rect!.width;
+
+            if (isScrubbing) {
+                e.preventDefault();
+                timeLineRef.current?.style.setProperty(
+                    "--progress-position",
+                    String(percent)
+                );
+            }
+        };
+
+        const toggleScrubbing = (e: any) => {
+            const rect = timeLineRef.current?.getBoundingClientRect();
+            const percent =
+                Math.min(Math.max(0, e.x - rect!.x), rect!.width) / rect!.width;
+            setIsScrubbing((e.button & 1) === 1);
+            if (isScrubbing) {
+                videoRef.current?.pause();
+            } else {
+                videoRef.current!.currentTime =
+                    percent * videoRef.current!.duration;
+                if (isPaused) videoRef.current?.play();
+            }
+            handleTimelineUpdate(e);
+        };
 
         const handleMouseEnter = () => {
             setIsVolumeSliderOpen(true); // Открываем слайдер при наведении
@@ -110,6 +140,8 @@ const VideoPlayer = memo(
             //Для остановки/запуска по клику
             videoRef.current?.addEventListener("click", togglePlay);
 
+            timeLineRef.current?.addEventListener("mousedown", toggleScrubbing);
+
             if (totalTimeRef.current) {
                 insertTotalDuration();
                 videoRef.current?.addEventListener(
@@ -122,6 +154,11 @@ const VideoPlayer = memo(
 
             return () => {
                 //Убираем слушатели
+                timeLineRef.current?.removeEventListener(
+                    "mousedown",
+                    toggleScrubbing
+                );
+
                 document.removeEventListener("keydown", keyboardManage);
                 videoRef.current?.removeEventListener("click", togglePlay);
                 videoRef.current?.removeEventListener(
@@ -137,12 +174,22 @@ const VideoPlayer = memo(
 
         const insertCurrentTime = () => {
             const currentTime = formatDuration(videoRef.current?.currentTime);
-            if (currentTime) currentTimeRef.current!.innerText = currentTime;
+            if (currentTime && currentTimeRef.current)
+                currentTimeRef.current.innerText = currentTime;
+            if (videoRef.current?.currentTime) {
+                const percent =
+                    videoRef.current?.currentTime / videoRef.current?.duration;
+                timeLineRef.current?.style.setProperty(
+                    "--progress-position",
+                    String(percent)
+                );
+            }
         };
 
         const insertTotalDuration = () => {
             const totalDuration = formatDuration(videoRef.current?.duration);
-            if (totalDuration) totalTimeRef.current!.innerText = totalDuration;
+            if (totalDuration && totalTimeRef.current)
+                totalTimeRef.current.innerText = totalDuration;
         };
 
         const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
@@ -170,7 +217,7 @@ const VideoPlayer = memo(
         return (
             <div ref={videoContainerRef} className="video-container ">
                 <div className="video-controls-container ">
-                    <div className="timeline-container">
+                    <div ref={timeLineRef} className="timeline-container">
                         <div className="timeline"></div>
                     </div>
                     <div className="controls">

@@ -6,11 +6,12 @@
     position: relative;
     width: 100%;
     height: 100%;
-    // background-color: black;
+    background-color: black;
 
     video {
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 
     .video-controls-container {
@@ -31,7 +32,11 @@
             content: "";
             position: absolute;
             bottom: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.75),
+                transparent
+            );
             width: 100%;
             aspect-ratio: 6/1;
             z-index: -1;
@@ -57,17 +62,6 @@
                 height: 8px;
                 width: 100%;
                 position: relative;
-
-                &::before {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    bottom: 0;
-                    right: calc(100% - var(--preview-position) * 100%);
-                    background-color: var(--light-dark-grey);
-                    // display: none;
-                }
 
                 &::after {
                     content: "";
