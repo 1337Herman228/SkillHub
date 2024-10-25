@@ -135,3 +135,52 @@ hr {
     font-size: 16px;
     font-weight: 400;
 }
+
+.black-submit-button {
+    @include reset-button;
+    background-color: var(--light-black);
+    color: var(--white);
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 11px 14px 12px;
+    cursor: pointer;
+
+    @include hover {
+        background-color: var(--dark-purple);
+    }
+}
+
+.profile-img {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.html-block {
+    code {
+        background-color: var(--light-grey);
+        border: var(--border-grey);
+        color: var(--dark-purple);
+        border-radius: 3px;
+        padding: 2px 4px;
+        margin: 0 3px;
+        font-family: monospace;
+        font-weight: 500;
+    }
+    p {
+        margin-bottom: 12px;
+    }
+
+    ul,
+    ol {
+        margin-block: 12px;
+    }
+}
+
+.error-message {
+    padding-block: 3px;
+    font-size: 14px;
+    color: var(--red);
+    font-weight: 500;
+}

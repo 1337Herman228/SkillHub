@@ -49,7 +49,7 @@ const CustomSearch = ({
                 className="custom-search__image"
                 loading="lazy"
                 alt=""
-                src="svg/search.svg"
+                src="/svg/search.svg"
                 width={20}
                 height={20}
             />

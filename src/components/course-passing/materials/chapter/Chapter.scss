@@ -1,0 +1,59 @@
+@use "../../../../styles/media" as *;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/variables" as *;
+
+.materials-loading {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.chapter-container {
+    .chapter {
+        padding: 16px;
+        background-color: var(--light-grey);
+        border-bottom: var(--border-grey);
+        cursor: pointer;
+
+        .chapter-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+
+            &__text {
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 1;
+            }
+
+            &__arrow {
+                transition-duration: var(--transition-duration);
+                rotate: 180deg;
+
+                &.open {
+                    rotate: 0deg;
+                }
+            }
+        }
+
+        &__content {
+            line-height: 1;
+            font-size: 12px;
+        }
+    }
+
+    .lessons {
+        animation: openDropdown 0.25s ease-in-out;
+
+        @keyframes openDropdown {
+            0% {
+                transform-origin: top;
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+}

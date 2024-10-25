@@ -1,6 +1,6 @@
 import HoverModal from "../hover-modal/HoverModal";
 import Greetings from "@/components/profile/greetings/Greetings";
-import { IUser } from "@/interfaces/types";
+import { IUser, TRole } from "@/interfaces/types";
 import Link from "next/link";
 import "./ProfileModal.scss";
 import { MutableRefObject } from "react";
@@ -11,6 +11,7 @@ interface ProfileModalProps {
     isOpen: boolean;
     setStateFunc: (state: boolean) => void;
     user: IUser;
+    role: TRole;
 }
 
 const ProfileModal = ({
@@ -18,6 +19,7 @@ const ProfileModal = ({
     setStateFunc,
     user,
     openBtnRef,
+    role,
 }: ProfileModalProps) => {
     return (
         <HoverModal
@@ -44,15 +46,37 @@ const ProfileModal = ({
                     </Link>
 
                     <ul className="link-list">
-                        <Link className="link-list__item purple-hover" href="#">
+                        <Link className="link-list__item purple-hover" href="/">
                             Главная
                         </Link>
-                        <Link className="link-list__item purple-hover" href="#">
+                        <Link
+                            className="link-list__item purple-hover"
+                            href="/all-courses"
+                        >
                             Курсы
                         </Link>
-                        <Link className="link-list__item purple-hover" href="#">
+                        <Link
+                            className="link-list__item purple-hover"
+                            href="/my-education"
+                        >
                             Мое обучение
                         </Link>
+                        {role === "teacher" && (
+                            <Link
+                                className="link-list__item purple-hover"
+                                href="/teacher"
+                            >
+                                Режим преподавателя
+                            </Link>
+                        )}
+                        {role === "admin" && (
+                            <Link
+                                className="link-list__item purple-hover"
+                                href="/admin"
+                            >
+                                Режим администратора
+                            </Link>
+                        )}
                     </ul>
                     <ul className="link-list">
                         <Link className="link-list__item purple-hover" href="#">

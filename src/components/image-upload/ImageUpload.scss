@@ -1,0 +1,33 @@
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload.ant-upload-select
+    > .ant-upload,
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-circle-wrapper
+    .ant-upload.ant-upload-select
+    > .ant-upload {
+    width: 200px;
+    height: 200px;
+}
+
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload.ant-upload-select,
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-circle-wrapper
+    .ant-upload.ant-upload-select {
+    width: 200px;
+    height: 200px;
+}
+
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload-list.ant-upload-list-picture-card
+    .ant-upload-list-item,
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-circle-wrapper
+    .ant-upload-list.ant-upload-list-picture-card
+    .ant-upload-list-item,
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-card-wrapper
+    .ant-upload-list.ant-upload-list-picture-circle
+    .ant-upload-list-item,
+:where(.css-dev-only-do-not-override-1cbhbqc).ant-upload-wrapper.ant-upload-picture-circle-wrapper
+    .ant-upload-list.ant-upload-list-picture-circle
+    .ant-upload-list-item {
+    width: 200px;
+    height: 200px;
+}

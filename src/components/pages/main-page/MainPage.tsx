@@ -6,12 +6,11 @@ import "./MainPage.scss";
 import Greetings from "@/components/profile/greetings/Greetings";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
-import CourseProgress from "@/components/course-progress/CourseProgress";
 import useHttp from "@/lib/hooks/useHttp";
 import { useSession } from "next-auth/react";
 import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
-import { IContinueCourse } from "@/interfaces/types";
+import { IContinueCourse, TRole } from "@/interfaces/types";
 import ContinueCourseCard from "@/components/cards/continue-course-card/ContinueCourseCard";
 import ScrollableBlock, {
     Item,
@@ -39,7 +38,6 @@ const MainPage = () => {
     const isMobileDevice = useMediaQuery({ query: "(max-width: 768px)" });
     const user = useAppSelector((state) => state.user.user);
 
-    // const [userProgress, setUserProgress] = useState<any>(null);
     const { data: session } = useSession();
     const sessionData: ExtendedSession | null = session;
     const token = sessionData?.user?.authenticationResponse?.token;
@@ -59,22 +57,17 @@ const MainPage = () => {
     useEffect(() => {
         fetchUserCourses();
     }, [user]);
-    console.log("userCourses", userCourses);
 
-    // const fetchUserProgress = async () => {
-    //     if (user && token) {
-    //         const userProgressData = await requestJson(
-    //             token,
-    //             `http://localhost:8080/user/get-user-progress/${sessionData?.user?.userId}`
-    //         );
-    //         setUserProgress(userProgressData);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchUserProgress();
-    // }, [session]);
-    // console.log("fetchUserProgress", userProgress);
+    const rolePrefix = (role: TRole) => {
+        switch (role) {
+            case "user":
+                return null;
+            case "teacher":
+                return " Преподаватель";
+            case "admin":
+                return " Администратор";
+        }
+    };
 
     if (!user || !userCourses) {
         return <FullScreenSpinner />;
@@ -86,7 +79,9 @@ const MainPage = () => {
                 <Greetings
                     textBig={
                         <div className="user-name">
-                            С возвращением, {user.person?.name}
+                            С возвращением,
+                            {rolePrefix(user.role?.position as TRole)}{" "}
+                            {user.person?.name}
                         </div>
                     }
                     textSmall={

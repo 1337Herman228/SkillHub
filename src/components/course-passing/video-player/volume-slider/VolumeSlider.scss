@@ -1,0 +1,14 @@
+@use "../../../../styles/variables" as *;
+
+.volume-slider-container {
+    background-color: var(--grey);
+    position: relative;
+    cursor: ns-resize;
+
+    .volume-slider-bar {
+        width: 100%;
+        background-color: var(--dark-purple);
+        position: absolute;
+        bottom: 0;
+    }
+}

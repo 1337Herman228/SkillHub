@@ -7,23 +7,70 @@ import { useRef, useState } from "react";
 import CourseProgress from "@/components/course-progress/CourseProgress";
 import HoverModal from "@/components/modals/hover-modal/HoverModal";
 import { useMediaQuery } from "react-responsive";
+import Link from "next/link";
 
 interface CourseCardProps {
     course: IAllCourse;
-    token: string;
-    user: IUser;
-    progressInPercents?: number;
+    progressInPercents?: number | null;
     completedLessonsCount?: number;
     allLessonsCount?: number;
+    isTeacherCard?: boolean;
 }
 
 const CourseCard = ({
     course,
-    token,
-    user,
-    progressInPercents = 50,
-    completedLessonsCount = 5,
-    allLessonsCount = 10,
+    progressInPercents = null,
+    completedLessonsCount,
+    allLessonsCount,
+    isTeacherCard = false,
+}: CourseCardProps) => {
+    return (
+        <>
+            {isTeacherCard ? (
+                <Link href={`/teacher/my-courses/${course.course.courseId}`}>
+                    <Card
+                        course={course}
+                        progressInPercents={progressInPercents}
+                        completedLessonsCount={completedLessonsCount}
+                        allLessonsCount={allLessonsCount}
+                        isTeacherCard={isTeacherCard}
+                    />
+                </Link>
+            ) : (
+                <>
+                    {course.status === "APPROVED" ? (
+                        <Link href={`/courses/${course.course.courseId}`}>
+                            <Card
+                                course={course}
+                                progressInPercents={progressInPercents}
+                                completedLessonsCount={completedLessonsCount}
+                                allLessonsCount={allLessonsCount}
+                                isTeacherCard={isTeacherCard}
+                            />
+                        </Link>
+                    ) : (
+                        <>
+                            <Card
+                                course={course}
+                                progressInPercents={progressInPercents}
+                                completedLessonsCount={completedLessonsCount}
+                                allLessonsCount={allLessonsCount}
+                                isTeacherCard={isTeacherCard}
+                            />
+                        </>
+                    )}
+                </>
+            )}
+        </>
+    );
+};
+
+const Card = ({
+    course,
+    progressInPercents = null,
+    completedLessonsCount,
+    allLessonsCount,
+    isTeacherCard = false,
 }: CourseCardProps) => {
     const isTabletDevice = useMediaQuery({ query: "(max-width: 1024px)" });
 
@@ -63,14 +110,14 @@ const CourseCard = ({
     };
 
     return (
-        <div className="course-card">
+        <div className={`course-card ${isTeacherCard ? "teacher-card" : ""}`}>
             <img
-                className="course-card__img"
+                className={`course-card__img ${
+                    isTeacherCard ? "teacher-img" : ""
+                }`}
                 loading="lazy"
                 alt={course.course.courseName}
-                src={"upload-images/" + course.course.courseImg}
-                // width={20}
-                // height={20}
+                src={"/upload-images/" + course.course.courseImg}
             />
 
             <div className="course-info-container">
@@ -81,10 +128,13 @@ const CourseCard = ({
                     <div className="course-info__description light-text hidden-tablet">
                         <p>{course.course.shortDescription}</p>
                     </div>
-                    <div className="course-info__author light-text">
-                        Автор: {course.course.author.person?.name}{" "}
-                        {course.course.author.person?.surname}
-                    </div>
+                    {isTeacherCard ? null : (
+                        <div className="course-info__author light-text">
+                            Автор: {course.course.author.person?.name}{" "}
+                            {course.course.author.person?.surname}
+                        </div>
+                    )}
+
                     <div className="course-info__last-update light-text">
                         Обновлено:{" "}
                         <span className="bold-text">
@@ -120,65 +170,69 @@ const CourseCard = ({
                             ({course.reviewsCount})
                         </span>
                     </div>
-                    <div className="course-info__btn hidden-tablet">
-                        <CourseAccessBtn
-                            token={token}
-                            user={user}
-                            status={course.status}
-                            courseId={course.course.courseId}
-                        />
-                    </div>
-                </div>
-
-                {progressInPercents &&
-                    completedLessonsCount &&
-                    allLessonsCount && (
-                        <div className="course-progress-container">
-                            <HoverModalOpenBtn
-                                className="course-progress"
-                                btnRef={progressBtnRef}
-                                stateSetter={setIsProgressModalOpen}
-                            >
-                                <CourseProgress
-                                    size={45}
-                                    percentage={progressInPercents}
-                                />
-                                <div className="percentage">
-                                    {progressInPercents}%
-                                </div>
-                                <HoverModal
-                                    openBtnRef={progressBtnRef}
-                                    isOpen={isProgressModalOpen}
-                                    setStateFunc={setIsProgressModalOpen}
-                                >
-                                    <div className="progress-modal">
-                                        <span
-                                            style={{
-                                                color: "var(--dark-purple)",
-                                            }}
-                                        >
-                                            {course.course.courseName}
-                                        </span>
-                                        <br />
-                                        Пройдено уроков: {
-                                            completedLessonsCount
-                                        }{" "}
-                                        из {course.allLessonsCount}
-                                        <br />
-                                        Завершено на{" "}
-                                        {Math.round(progressInPercents)}%
-                                    </div>
-                                </HoverModal>
-                            </HoverModalOpenBtn>
+                    {isTeacherCard ? null : (
+                        <div className="course-info__btn hidden-tablet">
+                            <CourseAccessBtn
+                                status={course.status}
+                                courseId={course.course.courseId}
+                            />
                         </div>
                     )}
+                </div>
+
+                {isTeacherCard ? null : (
+                    <>
+                        {progressInPercents &&
+                            completedLessonsCount &&
+                            allLessonsCount && (
+                                <div className="course-progress-container">
+                                    <HoverModalOpenBtn
+                                        className="course-progress"
+                                        btnRef={progressBtnRef}
+                                        stateSetter={setIsProgressModalOpen}
+                                    >
+                                        <CourseProgress
+                                            size={45}
+                                            percentage={progressInPercents}
+                                        />
+                                        <div className="percentage">
+                                            {progressInPercents}%
+                                        </div>
+                                        <HoverModal
+                                            openBtnRef={progressBtnRef}
+                                            isOpen={isProgressModalOpen}
+                                            setStateFunc={
+                                                setIsProgressModalOpen
+                                            }
+                                        >
+                                            <div className="progress-modal">
+                                                <span
+                                                    style={{
+                                                        color: "var(--dark-purple)",
+                                                    }}
+                                                >
+                                                    {course.course.courseName}
+                                                </span>
+                                                <br />
+                                                Пройдено уроков:{" "}
+                                                {completedLessonsCount} из{" "}
+                                                {course.allLessonsCount}
+                                                <br />
+                                                Завершено на{" "}
+                                                {Math.round(progressInPercents)}
+                                                %
+                                            </div>
+                                        </HoverModal>
+                                    </HoverModalOpenBtn>
+                                </div>
+                            )}
+                    </>
+                )}
             </div>
 
-            {isTabletDevice && (
+            {!isTeacherCard && isTabletDevice && (
                 <div className="tablet-access-btn-container">
                     <CourseAccessBtn
-                        token={token}
-                        user={user}
                         status={course.status}
                         courseId={course.course.courseId}
                     />

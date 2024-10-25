@@ -1,0 +1,15 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/media" as *;
+
+.profile-form-container {
+    max-width: 660px;
+    margin: 60px auto;
+    padding-inline: 30px;
+
+    .profile-form {
+        .submit-btn {
+            margin-top: 10px;
+        }
+    }
+}
