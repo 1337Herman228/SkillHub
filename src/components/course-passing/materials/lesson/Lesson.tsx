@@ -50,15 +50,16 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
     };
 
     //TODO: написать логику для изменения url и видео без перендера страницы
+    const switchLesson = () => {
+        if (pathname)
+            router.push(mutatePathname(pathname) + `/${lesson?.lessonId}`);
+    };
 
     if (pathname)
         return (
             <li
-                onClick={() => {
-                    router.push(
-                        mutatePathname(pathname) + `/${lesson?.lessonId}`
-                    );
-                }}
+                tabIndex={0}
+                onClick={() => switchLesson()}
                 className={`lesson-container ${
                     Number(params?.["lesson-id"]) == lesson?.lessonId
                         ? "current-lesson"
