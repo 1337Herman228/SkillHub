@@ -1,0 +1,163 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    // background-color: black;
+
+    video {
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-controls-container {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        opacity: 0;
+        transition: opacity var(--transition-duration) ease-in-out;
+
+        &.paused,
+        &:focus-within {
+            opacity: 1;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+            width: 100%;
+            aspect-ratio: 6/1;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .timeline-container {
+            height: 14px;
+            margin-inline: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+
+            @include hover {
+                .timeline {
+                    height: 100%;
+                }
+            }
+
+            .timeline {
+                transition: 0.1s ease-in-out;
+                background-color: var(--white-transparent);
+                height: 8px;
+                width: 100%;
+                position: relative;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    bottom: 0;
+                    right: calc(100% - var(--preview-position) * 100%);
+                    background-color: var(--light-dark-grey);
+                    // display: none;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    bottom: 0;
+                    right: calc(100% - var(--progress-position) * 100%);
+                    background-color: var(--dark-purple);
+                    // display: none;
+                }
+            }
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            align-items: center;
+
+            button {
+                @include reset-button;
+                @include flex-center;
+                // padding: 0 6px;
+                height: 30px;
+                width: 30px;
+                font-size: 1.1rem;
+                color: var(--white);
+                cursor: pointer;
+                opacity: 0.8;
+
+                @include hover {
+                    opacity: 1;
+                }
+            }
+
+            .volume-container {
+                position: relative;
+
+                .volume-bar {
+                    position: absolute;
+                    z-index: 1000;
+                    width: auto;
+                    translate: -25% 0%;
+                    bottom: 0px;
+                    left: 0;
+                    visibility: hidden;
+                    padding: 20px;
+                    padding-bottom: 70px;
+
+                    &.open {
+                        visibility: visible;
+                    }
+                }
+
+                .mute-btn {
+                    position: relative;
+                    z-index: 2000;
+                }
+            }
+
+            .duration-container {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                color: var(--white);
+                font-weight: 700;
+                font-size: 14px;
+                flex-grow: 1;
+            }
+
+            .speed-btn {
+                background-color: var(--white);
+                color: var(--light-black);
+                font-size: 14px;
+                font-weight: 700;
+                opacity: 1;
+            }
+
+            .wide {
+                width: 54px;
+                height: 22px;
+                padding-inline: 4px;
+            }
+        }
+    }
+
+    @include hover {
+        .video-controls-container {
+            opacity: 1;
+        }
+    }
+}

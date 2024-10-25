@@ -8,13 +8,14 @@ interface PassLessonBtnProps {
 const PassLessonBtn = ({ isChecked = false }: PassLessonBtnProps) => {
     const [isCheckedState, setIsCheckedState] = useState(isChecked);
 
-    const onHandleClick = () => {
+    const onHandleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
         setIsCheckedState(!isCheckedState);
     };
 
     return (
         <button
-            onClick={onHandleClick}
+            onClick={(e) => onHandleClick(e)}
             className={`pass-lesson-btn ${isCheckedState ? "checked" : ""}`}
         >
             {isCheckedState && (
