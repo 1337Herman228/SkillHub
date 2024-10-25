@@ -43,23 +43,34 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
 
     const router = useRouter();
     const pathname = usePathname();
-    const mutatePathname = (pathname: string) => {
-        if (pathname?.includes("lessons/")) {
-            return pathname.slice(0, pathname.indexOf("lessons/")) + "lessons";
-        } else return pathname;
+    // const mutatePathname = (pathname: string) => {
+    //     if (pathname?.includes("lessons/")) {
+    //         return pathname.slice(0, pathname.indexOf("lessons/")) + "lessons";
+    //     } else return pathname;
+    // };
+
+    const addLessonIdToUrl = (lessonId: string) => {
+        // Создаем новый объект URL на основе текущего URL
+        if (pathname) {
+            const newUrl = new URL(pathname);
+            newUrl.searchParams.set("lessonId", lessonId); // Добавляем или обновляем параметр 'id'
+
+            // Обновляем URL с помощью router.push
+            router.push(newUrl.toString());
+        }
     };
 
     //TODO: написать логику для изменения url и видео без перендера страницы
-    const switchLesson = () => {
-        if (pathname)
-            router.push(mutatePathname(pathname) + `/${lesson?.lessonId}`);
-    };
+    // const switchLesson = () => {
+    //     if (pathname)
+    //         router.push(mutatePathname(pathname) + `/${lesson?.lessonId}`);
+    // };
 
     if (pathname)
         return (
             <li
                 tabIndex={0}
-                onClick={() => switchLesson()}
+                onClick={() => addLessonIdToUrl(String(lesson.lessonId))}
                 className={`lesson-container ${
                     Number(params?.["lesson-id"]) == lesson?.lessonId
                         ? "current-lesson"

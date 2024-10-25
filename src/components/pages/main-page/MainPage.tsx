@@ -111,8 +111,8 @@ const MainPage = () => {
                     alt="advice"
                     src={
                         isMobileDevice
-                            ? "images/advice-mobile.png"
-                            : "images/advice.png"
+                            ? "/images/advice-mobile.png"
+                            : "/images/advice.png"
                     }
                 />
                 <div className="advice-content">
