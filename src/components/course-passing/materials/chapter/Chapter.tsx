@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Lesson from "../lesson/Lesson";
 import "./Chapter.scss";
@@ -27,8 +29,20 @@ const Chapter = ({
 
     const onKeyClickHandler = (e: React.KeyboardEvent) => {
         if (e.key === "Enter" || e.key === "Space") {
-            setIsChapterOpen(!isChapterOpen);
+            toggleOpen();
         }
+    };
+
+    const toggleOpen = () => {
+        if (isChapterOpen) {
+            localStorage.removeItem("chapter-" + chapter.chapterId);
+        } else {
+            localStorage.setItem(
+                "chapter-" + chapter.chapterId,
+                JSON.stringify(true)
+            );
+        }
+        setIsChapterOpen(!isChapterOpen);
     };
 
     const { convertMinutesToHoursAndMinutes, formatTimeToHoursAndMinutes } =
@@ -42,7 +56,7 @@ const Chapter = ({
             <div
                 className="chapter"
                 tabIndex={0}
-                onClick={() => setIsChapterOpen(!isChapterOpen)}
+                onClick={() => toggleOpen()}
                 onKeyDown={(e) => onKeyClickHandler(e)}
             >
                 <div className="chapter-title">

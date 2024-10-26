@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import PassLessonBtn from "../pass-lesson-btn/PassLessonBtn";
 import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverModalOpenBtn";
 import HoverModal from "@/components/modals/hover-modal/HoverModal";
@@ -43,28 +45,31 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
 
     const router = useRouter();
     const pathname = usePathname();
-    // const mutatePathname = (pathname: string) => {
-    //     if (pathname?.includes("lessons/")) {
-    //         return pathname.slice(0, pathname.indexOf("lessons/")) + "lessons";
-    //     } else return pathname;
-    // };
 
     const addLessonIdToUrl = (lessonId: string) => {
         // Создаем новый объект URL на основе текущего URL
         if (pathname) {
-            const newUrl = new URL(pathname);
-            newUrl.searchParams.set("lessonId", lessonId); // Добавляем или обновляем параметр 'id'
+            let newUrl = "";
+            if (pathname.includes(params["lesson-id"])) {
+                newUrl = pathname.replace(
+                    "lessons/" + params["lesson-id"],
+                    "lessons/" + lessonId
+                );
+            } else {
+                newUrl = pathname + `/${lessonId}`;
+            }
 
             // Обновляем URL с помощью router.push
             router.push(newUrl.toString());
         }
     };
 
-    //TODO: написать логику для изменения url и видео без перендера страницы
-    // const switchLesson = () => {
-    //     if (pathname)
-    //         router.push(mutatePathname(pathname) + `/${lesson?.lessonId}`);
-    // };
+    useEffect(() => {
+        if (pathname)
+            if (!pathname.includes("lessons/" + params["lesson-id"])) {
+                addLessonIdToUrl(String(lesson.lessonId));
+            }
+    }, [pathname]);
 
     if (pathname)
         return (
