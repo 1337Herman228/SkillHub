@@ -82,6 +82,49 @@ export interface ILessonWithResources extends ILesson {
     resources: IResources[];
 }
 
+export interface ILessonWithLessonType {
+    lessonId: number;
+    lessonType: TLessonType;
+    testLesson?: ITestLesson | null;
+    textLesson?: ITextLesson | null;
+    videoLesson?: IVideoLesson | null;
+}
+
+export interface IVideoLesson {
+    lessonId: number;
+    videoLessonId: number;
+    videoUrl: string;
+}
+
+export interface ITestLesson {
+    lessonId: number;
+    testId: number;
+    testDescription?: string;
+    testAnswers: ITestAnswer[];
+    testQuestions: ITestQuestion[];
+}
+
+export interface ITextLesson {
+    lessonId: number;
+    textLessonId: number;
+    lessonBody: string; //html
+    title: string;
+}
+
+export interface ITestAnswer {
+    answer: string;
+    testAnswerId: number;
+    testQuestionId: number;
+}
+
+export interface ITestQuestion {
+    answerDescription: string;
+    correctAnswerId: number;
+    questionId: number;
+    questionText: string;
+    testId: number;
+}
+
 export interface IResources {
     resourceId: number;
     lessonId: number;

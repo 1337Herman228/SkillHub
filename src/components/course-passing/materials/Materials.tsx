@@ -30,6 +30,12 @@ const Materials = ({ params }: MaterialsProps) => {
                 {course?.chapters
                     .filter((chapter) => chapter.chapterOrder)
                     .map((chapter) => {
+                        let isOpen = false;
+                        if (
+                            localStorage.getItem("chapter-" + chapter.chapterId)
+                        ) {
+                            isOpen = true;
+                        }
                         return (
                             <Chapter
                                 params={params}
@@ -43,6 +49,7 @@ const Materials = ({ params }: MaterialsProps) => {
                                     )
                                 }
                                 chapter={chapter}
+                                isOpen={isOpen}
                             />
                         );
                     })}

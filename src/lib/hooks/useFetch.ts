@@ -38,6 +38,16 @@ const useFetch = () => {
         }
     };
 
+    const getLessonById = async (lessonId: number) => {
+        if (token) {
+            const lessonData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-course-lesson/${lessonId}`
+            );
+            return lessonData;
+        }
+    };
+
     const putProfileInfo = async (data: FieldValues, user: IUser) => {
         if (token) {
             await requestJson(
@@ -212,6 +222,7 @@ const useFetch = () => {
         getTeacherCourses,
         getCoursesByName,
         putProfileInfo,
+        getLessonById,
         getAllCourses,
         addNewCourse,
         putAvatar,

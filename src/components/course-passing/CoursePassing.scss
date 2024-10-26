@@ -7,6 +7,10 @@
     grid-template-columns: auto 400px;
     height: 100%;
 
+    @include tablet {
+        grid-template-columns: 1fr;
+    }
+
     .left-part {
         display: grid;
         grid-template-rows: auto auto;
