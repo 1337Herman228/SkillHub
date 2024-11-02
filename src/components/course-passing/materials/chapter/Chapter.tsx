@@ -7,23 +7,24 @@ import {
     IChapterWithLessonsInfo,
     ICourseInfoUrlParams,
     ILessonWithResources,
+    TRole,
 } from "@/interfaces/types";
 import useTime from "@/lib/hooks/useTime";
 
 interface ChapterProps {
+    role?: TRole;
     isOpen?: boolean;
-    // previousLessonsCount?: number;
     chapter: IChapterWithLessonsInfo;
     lessons: ILessonWithResources[] | null;
-    params: ICourseInfoUrlParams;
+    courseId: number;
 }
 
 const Chapter = ({
-    // previousLessonsCount = 0,
+    role = "user",
     chapter,
     lessons,
     isOpen = false,
-    params,
+    courseId,
 }: ChapterProps) => {
     const [isChapterOpen, setIsChapterOpen] = useState(isOpen);
 
@@ -84,7 +85,8 @@ const Chapter = ({
                         ?.filter((lesson) => lesson.lessonOrder)
                         .map((lesson) => (
                             <Lesson
-                                params={params}
+                                courseId={courseId}
+                                role={role}
                                 chapterOrder={chapter.chapterOrder}
                                 lesson={lesson}
                                 key={lesson.lessonId}

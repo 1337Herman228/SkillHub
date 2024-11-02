@@ -149,6 +149,11 @@ hr {
     @include hover {
         background-color: var(--dark-purple);
     }
+
+    &[disabled] {
+        opacity: 0.6;
+        pointer-events: none;
+    }
 }
 
 .profile-img {

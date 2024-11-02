@@ -99,6 +99,7 @@ export interface IVideoLesson {
 export interface ITestLesson {
     lessonId: number;
     testId: number;
+    name: string;
     testDescription?: string;
     testAnswers: ITestAnswer[];
     testQuestions: ITestQuestion[];
@@ -123,6 +124,16 @@ export interface ITestQuestion {
     questionId: number;
     questionText: string;
     testId: number;
+}
+
+export interface ITestResult {
+    questionOrder: number;
+    testQuestionId: number;
+    questionText: string;
+    userAnswer: string;
+    correctAnswerId: number;
+    correctAnswerDescription: string;
+    isCorrect: boolean;
 }
 
 export interface IResources {

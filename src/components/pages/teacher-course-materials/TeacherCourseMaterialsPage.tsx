@@ -2,16 +2,12 @@ import CoursePassing from "@/components/course-passing/CoursePassing";
 import { ICourseInfoUrlParams } from "@/interfaces/types";
 import React from "react";
 
-interface TeacherCourseMaterialsPageProps {
-    params: ICourseInfoUrlParams;
-}
+interface TeacherCourseMaterialsPageProps {}
 
-const TeacherCourseMaterialsPage = ({
-    params,
-}: TeacherCourseMaterialsPageProps) => {
+const TeacherCourseMaterialsPage = ({}: TeacherCourseMaterialsPageProps) => {
     return (
         <div>
-            <CoursePassing params={params} />
+            <CoursePassing role="teacher" />
         </div>
     );
 };

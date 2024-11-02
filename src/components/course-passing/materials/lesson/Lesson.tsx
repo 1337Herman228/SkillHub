@@ -6,21 +6,25 @@ import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverMo
 import HoverModal from "@/components/modals/hover-modal/HoverModal";
 import Link from "next/link";
 import "./Lesson.scss";
-import {
-    ICourseInfoUrlParams,
-    ILessonWithResources,
-    TLessonType,
-} from "@/interfaces/types";
+import { ILessonWithResources, TLessonType, TRole } from "@/interfaces/types";
 import useTime from "@/lib/hooks/useTime";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import EditBtn from "../edit-btn/EditBtn";
+import { useAppSelector } from "@/lib/redux/store/store";
 
 interface LessonProps {
-    params: ICourseInfoUrlParams;
     lesson: ILessonWithResources;
     chapterOrder: number;
+    role?: TRole;
+    courseId: number;
 }
 
-const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
+const Lesson = ({
+    role = "user",
+    chapterOrder,
+    lesson,
+    courseId,
+}: LessonProps) => {
     const btnResourcesRef = useRef(null);
     const [isResourcesModalOpen, setIsResourcesModalOpen] = useState(false);
 
@@ -45,12 +49,13 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
 
     const router = useRouter();
     const pathname = usePathname();
+    const params = useParams();
 
     const addLessonIdToUrl = (lessonId: string) => {
         // Создаем новый объект URL на основе текущего URL
-        if (pathname) {
+        if (pathname && params) {
             let newUrl = "";
-            if (pathname.includes(params["lesson-id"])) {
+            if (pathname.includes(String(params["lesson-id"]))) {
                 newUrl = pathname.replace(
                     "lessons/" + params["lesson-id"],
                     "lessons/" + lessonId
@@ -65,7 +70,7 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
     };
 
     useEffect(() => {
-        if (pathname)
+        if (pathname && params)
             if (!pathname.includes("lessons/" + params["lesson-id"])) {
                 addLessonIdToUrl(String(lesson.lessonId));
             }
@@ -83,7 +88,20 @@ const Lesson = ({ chapterOrder, lesson, params }: LessonProps) => {
                 }`}
             >
                 <div className="btn-container">
-                    {1 ? <PassLessonBtn /> : <></>}
+                    {role === "teacher" || role === "admin" ? (
+                        <EditBtn
+                            lessonId={lesson?.lessonId}
+                            courseId={courseId}
+                        />
+                    ) : (
+                        <>
+                            {lesson?.lessonType !== "TEST" ? (
+                                <PassLessonBtn />
+                            ) : (
+                                <div />
+                            )}
+                        </>
+                    )}
                 </div>
                 <div className="info-container">
                     <div className="lesson-header">

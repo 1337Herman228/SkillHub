@@ -28,3 +28,11 @@
     .right-part {
     }
 }
+
+.centered-div {
+    width: 100%;
+    height: 65vh;
+    display: grid;
+    place-items: center;
+    overflow: -moz-hidden-unscrollable;
+}
