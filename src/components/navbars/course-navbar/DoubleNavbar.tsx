@@ -3,11 +3,11 @@ import "./DoubleNavbar.scss";
 import UserNavbarSkeleton from "@/components/skeletons/user-navbar-skeleton/UserNavbarSkeleton";
 import { INavLink } from "@/interfaces/types";
 import { useEffect, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
 import useFetch from "@/lib/hooks/useFetch";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Greetings from "@/components/profile/greetings/Greetings";
+import { useSession } from "next-auth/react";
 
 interface DoubleNavbarProps {
     secondNavLinks: INavLink[];
@@ -26,11 +26,10 @@ const DoubleNavbar = ({
     const course = useAppSelector((state) => state.course);
     const user = useAppSelector((state) => state.user.user);
 
+    const params = useParams();
     const pathname = usePathname();
-    const findSubstr = /my-courses\/\d*/;
-    const substrWithCourseId = pathname?.match(findSubstr)?.[0];
-    const courseId = Number(substrWithCourseId?.split("/")[1]);
 
+    const courseId = Number(params ? params["course-id"] : 0);
     const TEACHER_PATHNAME = `/teacher/my-courses/${courseId}`;
 
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -58,10 +57,10 @@ const DoubleNavbar = ({
     }, []);
 
     useEffect(() => {
-        if (session) {
+        if (courseId && session) {
             getAndDispatchCourse(courseId);
         }
-    }, [session]);
+    }, [courseId, session]);
 
     useEffect(() => {
         markCurrentLink(pathname);

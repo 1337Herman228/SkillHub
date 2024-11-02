@@ -1,0 +1,55 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.wrong-answers {
+    margin-top: 10px;
+
+    @include mobile {
+        margin-top: 25px;
+    }
+
+    &__title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        @include mobile {
+            gap: 30px;
+        }
+
+        .question {
+            &__title {
+                display: flex;
+                gap: 5px;
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 7px;
+            }
+            &__divider {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            &__user-answer {
+                padding: 7px 10px;
+                border-radius: 7px;
+                background-color: var(--light-red);
+            }
+
+            &__correct-answer {
+                padding: 7px 10px;
+                border-radius: 7px;
+                background-color: var(--light-green);
+            }
+        }
+    }
+}

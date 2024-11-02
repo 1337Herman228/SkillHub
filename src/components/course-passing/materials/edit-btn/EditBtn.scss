@@ -1,0 +1,20 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/media" as *;
+
+.edit-btn {
+    position: relative;
+    @include reset-button;
+    background-color: var(--light-black);
+    z-index: 4000;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px;
+
+    @include hover {
+        opacity: 0.7;
+    }
+
+    &__icon {
+    }
+}

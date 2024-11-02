@@ -4,15 +4,16 @@ import { useAppSelector } from "@/lib/redux/store/store";
 import "./Materials.scss";
 import Chapter from "./chapter/Chapter";
 import Spinner from "@/components/spinners/spinner/Spinner";
-import { ICourseInfoUrlParams, TRole } from "@/interfaces/types";
+import { ICourseInfoNullable, TRole } from "@/interfaces/types";
+import { useRouter } from "next/navigation";
 
 interface MaterialsProps {
     role: TRole;
-    params: ICourseInfoUrlParams;
+    course: ICourseInfoNullable;
 }
 
-const Materials = ({ params }: MaterialsProps) => {
-    const course = useAppSelector((state) => state.course);
+const Materials = ({ role, course }: MaterialsProps) => {
+    const router = useRouter();
 
     if (!course || !course.chapters || !course.lessons) {
         return (
@@ -38,7 +39,8 @@ const Materials = ({ params }: MaterialsProps) => {
                         }
                         return (
                             <Chapter
-                                params={params}
+                                courseId={course.course?.courseId ?? 0}
+                                role={role}
                                 key={chapter.chapterId}
                                 lessons={
                                     course.lessons &&
@@ -53,6 +55,28 @@ const Materials = ({ params }: MaterialsProps) => {
                             />
                         );
                     })}
+                {(role === "teacher" || role === "admin") && (
+                    <li className="add-lesson">
+                        <button
+                            onClick={() =>
+                                router.push(
+                                    `/teacher/my-courses/${course.course?.courseId}/add-lesson`
+                                )
+                            }
+                            className="add-lesson-btn"
+                        >
+                            <img
+                                src="/svg/plus-icon.svg"
+                                width={15}
+                                height={15}
+                                alt="add lesson"
+                            />
+                            <div className="add-lesson-btn__text">
+                                Добавить урок
+                            </div>
+                        </button>
+                    </li>
+                )}
             </ul>
         </div>
     );

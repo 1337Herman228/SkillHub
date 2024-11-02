@@ -11,26 +11,29 @@ import { useSession } from "next-auth/react";
 import Spinner from "@/components/spinners/spinner/Spinner";
 import "./LessonVariant.scss";
 import TextLesson from "../text-lesson/TextLesson";
+import TestLesson from "../testing/TestLesson";
+import { useParams } from "next/navigation";
 
-interface LessonVariantProps {
-    params: ICourseInfoUrlParams;
-}
+interface LessonVariantProps {}
 
-const LessonVariant = ({ params }: LessonVariantProps) => {
+const LessonVariant = () => {
     const { data: session } = useSession();
+    const params = useParams();
     const { getLessonById, isLoading } = useFetch();
 
     const [lesson, setLessons] = useState<ILessonWithLessonType | null>(null);
 
-    console.log("lesson", lesson);
+    // console.log("lesson", lesson);
 
     useEffect(() => {
         fetchLesson();
     }, [session]);
 
     const fetchLesson = async () => {
-        const lesson = await getLessonById(Number(params["lesson-id"]));
-        setLessons(lesson);
+        if (params && Number(params["lesson-id"])) {
+            const lesson = await getLessonById(Number(params["lesson-id"]));
+            setLessons(lesson);
+        }
     };
 
     const chooseLessonType = () => {
@@ -44,6 +47,15 @@ const LessonVariant = ({ params }: LessonVariantProps) => {
                     <TextLesson
                         title={lesson.textLesson.title}
                         html={lesson?.textLesson?.lessonBody}
+                    />
+                );
+            }
+            case "TEST": {
+                if (!lesson?.testLesson) return null;
+                return (
+                    <TestLesson
+                        title={lesson.testLesson.name}
+                        testLesson={lesson.testLesson}
                     />
                 );
             }

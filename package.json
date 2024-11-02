@@ -9,6 +9,11 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@ant-design/charts": "^2.2.1",
+        "@emotion/react": "^11.13.3",
+        "@emotion/styled": "^11.13.0",
+        "@mui/material": "^6.1.6",
+        "@mui/x-charts": "^7.22.1",
         "@reduxjs/toolkit": "^2.2.7",
         "antd": "^5.21.2",
         "clsx": "^2.1.1",

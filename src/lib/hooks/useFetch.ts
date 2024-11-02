@@ -13,7 +13,7 @@ const useFetch = () => {
     const { requestJson, isLoading, error } = useHttp();
     const dispatch = useAppDispatch();
 
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const sessionData: ExtendedSession | null = session;
     const token = sessionData?.user?.authenticationResponse?.token;
     const user = sessionData?.user;

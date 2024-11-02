@@ -37,11 +37,11 @@ const courseNavLinks: INavLink[] = [
     },
 ];
 
-export default function RootLayout({
-    children,
-}: Readonly<{
+interface RootLayoutProps {
     children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
     const pathname = usePathname();
     const comparePathname = /\/teacher\/my-courses\/\d+\/?.*/;
 

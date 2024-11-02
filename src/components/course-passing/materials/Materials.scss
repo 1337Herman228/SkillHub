@@ -11,5 +11,28 @@
     }
 
     .materials {
+        .add-lesson {
+            .add-lesson-btn {
+                @include reset-button;
+                background-color: var(--dark-purple);
+                width: 100%;
+                cursor: pointer;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: center;
+                padding-block: 20px;
+
+                @include hover {
+                    background-color: var(--dark-purple-accent);
+                }
+
+                &__text {
+                    color: var(--white);
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+            }
+        }
     }
 }

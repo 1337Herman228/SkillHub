@@ -1,10 +1,9 @@
+"use client";
+
 import TeacherCourseMaterialsPage from "@/components/pages/teacher-course-materials/TeacherCourseMaterialsPage";
-import { ICourseInfoUrlParams } from "@/interfaces/types";
 
-interface LessonPageProps {
-    params: ICourseInfoUrlParams;
-}
+interface LessonPageProps {}
 
-export default function LessonPage({ params }: LessonPageProps) {
-    return <TeacherCourseMaterialsPage params={params} />;
+export default function LessonPage({}: LessonPageProps) {
+    return <TeacherCourseMaterialsPage />;
 }
