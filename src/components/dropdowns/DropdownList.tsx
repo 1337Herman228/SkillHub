@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import "./DropdownList.scss";
-import { FieldValues, UseFormRegister } from "react-hook-form";
 
 export interface IOption {
     value: string;
@@ -17,12 +16,7 @@ interface DropdownListProps {
     defaultValue?: IOption | null;
     setStateFunc: (state: string) => void;
     isError?: boolean;
-
-    // setValue: (name: string, value: any) => void;
-    // trigger: (name: string) => Promise<boolean>;
-    // reset: () => void;
-    // register: UseFormRegister<FieldValues>;
-    // errors: any;
+    extraOption?: React.ReactNode;
 }
 
 const DropdownList = ({
@@ -33,12 +27,8 @@ const DropdownList = ({
     setStateFunc,
     defaultValue = null,
     isError,
-}: // setValue,
-// trigger,
-// reset,
-// register,
-// errors,
-DropdownListProps) => {
+    extraOption,
+}: DropdownListProps) => {
     const requiredMessage = "Введите " + labelText.toLowerCase();
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -218,6 +208,11 @@ DropdownListProps) => {
                                     {option.name}
                                 </li>
                             ))
+                        )}
+                        {extraOption && (
+                            <>{extraOption}</>
+                            // <li className="dropdown-list__option option">
+                            // </li>
                         )}
                     </ul>
                 </div>

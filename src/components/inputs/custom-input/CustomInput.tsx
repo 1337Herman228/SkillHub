@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./CustomInput.scss";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import {
+    FieldValues,
+    UseFormRegister,
+    UseFormUnregister,
+} from "react-hook-form";
 import Image from "next/image";
 
 interface CustomInputProps {
@@ -13,9 +17,11 @@ interface CustomInputProps {
     onlyLettersAndDigits?: boolean;
     onlyPositiveDigits?: boolean;
     require?: boolean;
-    register: UseFormRegister<FieldValues>;
+    register: UseFormRegister<FieldValues> | UseFormRegister<any>;
+    unregister?: UseFormUnregister<FieldValues> | UseFormUnregister<any>;
     errors: any;
     defaultValue?: string;
+    showMarks?: boolean;
 }
 
 const CustomInput = ({
@@ -29,7 +35,15 @@ const CustomInput = ({
     register,
     errors,
     defaultValue = "",
+    unregister,
+    showMarks = true,
 }: CustomInputProps) => {
+    useEffect(() => {
+        return () => {
+            if (unregister) unregister(name);
+        };
+    }, []);
+
     const [isShow, setIsShow] = useState(type === "password" ? false : null);
 
     const requiredMessage = "Введите " + labelText.toLowerCase();
@@ -128,7 +142,6 @@ const CustomInput = ({
                     }`}
                     type={type === "password" && isShow ? "text" : type}
                     id={name}
-                    // name={name}
                     {...register(name, {
                         pattern: onlyLettersAndDigits
                             ? lettersAndDigitsPattern
@@ -142,11 +155,15 @@ const CustomInput = ({
                         },
                     })}
                 />
-                {type === "password" && <ShowPasswordButton />}
-                {type === "password" ? null : errors[name]?.message ? (
-                    <ErrorMark />
-                ) : (
-                    <CorrectMark />
+                {showMarks && (
+                    <>
+                        {type === "password" && <ShowPasswordButton />}
+                        {type === "password" ? null : errors[name]?.message ? (
+                            <ErrorMark />
+                        ) : (
+                            <CorrectMark />
+                        )}
+                    </>
                 )}
             </div>
             <p className="form-field__error">{errors[name]?.message}</p>

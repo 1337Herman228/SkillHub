@@ -112,7 +112,8 @@ const Lesson = ({
                             {lesson?.lessonTitle}
                         </div>
                         <div className="diamonds">
-                            {lesson.diamondReward && (
+                            {lesson.diamondReward &&
+                            lesson.diamondReward > 0 ? (
                                 <>
                                     <span className="diamonds__count">
                                         {lesson.diamondReward}
@@ -125,7 +126,7 @@ const Lesson = ({
                                         height={16}
                                     />
                                 </>
-                            )}
+                            ) : null}
                         </div>
                     </div>
 
@@ -190,6 +191,7 @@ const Lesson = ({
                                                             resource.resourceId
                                                         }
                                                         className="resource-link"
+                                                        target="_blank"
                                                         href={
                                                             resource.resourceLink
                                                         }

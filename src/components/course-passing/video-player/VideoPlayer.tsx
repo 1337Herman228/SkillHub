@@ -12,6 +12,12 @@ const VideoPlayer = memo(
     ({
         videoSrc = "/upload-videos/X2Download.com-Hollywood Undead - Bullet (Lyric Video).mp4",
     }: VideoPlayerProps) => {
+        const checkVideoSrc = (videoSrc: string) => {
+            if (videoSrc.includes("/upload-videos/")) return videoSrc;
+            else return "/upload-videos/" + videoSrc;
+        };
+        const correctVideoSrc = checkVideoSrc(videoSrc);
+
         const timeLineRef = useRef<HTMLDivElement>(null);
         const videoContainerRef = useRef<HTMLDivElement>(null);
         const videoRef = useRef<HTMLVideoElement>(null);
@@ -374,7 +380,7 @@ const VideoPlayer = memo(
                         </button>
                     </div>
                 </div>
-                <video ref={videoRef} src={videoSrc}></video>
+                <video ref={videoRef} src={correctVideoSrc}></video>
             </div>
         );
     }

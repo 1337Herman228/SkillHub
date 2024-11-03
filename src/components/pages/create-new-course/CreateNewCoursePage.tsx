@@ -39,8 +39,6 @@ const CreateNewCoursePage = () => {
 
     const formSubmit = async (data: FieldValues) => {
         if (text.length > 50 && dropdownValue && img) {
-            console.log("SUBMIT FUNC");
-
             const imgName =
                 "course-preview" + "t=" + new Date().getTime() + ".png";
             const response = await addNewCourse(
@@ -49,7 +47,6 @@ const CreateNewCoursePage = () => {
                 text,
                 imgName
             );
-            console.log(response);
 
             if (response === "OK") {
                 MyNotification("success", "Успешно", "Курс успешно создан!");

@@ -23,8 +23,6 @@ const LessonVariant = () => {
 
     const [lesson, setLessons] = useState<ILessonWithLessonType | null>(null);
 
-    // console.log("lesson", lesson);
-
     useEffect(() => {
         fetchLesson();
     }, [session]);

@@ -8,6 +8,7 @@ import { setUser } from "../redux/slices/userSlice";
 import { setCourseState } from "../redux/slices/courseSlice";
 import { FieldValues } from "react-hook-form";
 import { IUser } from "@/interfaces/types";
+import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
 
 const useFetch = () => {
     const { requestJson, isLoading, error } = useHttp();
@@ -114,6 +115,16 @@ const useFetch = () => {
         }
     };
 
+    const getAllCourseChapters = async (courseId: number) => {
+        if (token) {
+            const allCoursesChaptersData = await requestJson(
+                token,
+                `http://localhost:8080/user/get-all-course-chapters/${courseId}`
+            );
+            return allCoursesChaptersData;
+        }
+    };
+
     const getCoursesByName = async (searchtext: string, user: IUser) => {
         if (token) {
             const coursesData = await requestJson(
@@ -173,6 +184,72 @@ const useFetch = () => {
         }
     };
 
+    const addNewChapter = async (data: FieldValues, courseId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/add-new-chapter`,
+                "POST",
+                JSON.stringify({
+                    courseId: courseId,
+                    chapterTitle: data.chapterTitle,
+                })
+            );
+            return response;
+        }
+    };
+
+    const addNewVideoLesson = async (
+        data: IVideoLessonFormFields,
+        chapterId: number,
+        resources: any[],
+        videoUrl: string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/add-new-video-lesson`,
+                "POST",
+                JSON.stringify({
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "VIDEO",
+                    duration: data.duration,
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    videoUrl: videoUrl,
+                })
+            );
+            return response;
+        }
+    };
+
+    const editCourse = async (
+        data: FieldValues,
+        dropdownValue: string,
+        htmlText: string,
+        imgLink: string,
+        courseId: number
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/edit-course`,
+                "PUT",
+                JSON.stringify({
+                    courseId: courseId,
+                    topic: data.topic,
+                    skillLevel: dropdownValue,
+                    courseImg: imgLink,
+                    courseName: data.courseName,
+                    shortDescription: data.shortDescription,
+                    longDescription: htmlText,
+                })
+            );
+            return response;
+        }
+    };
+
     const getTeacherCourses = async () => {
         if (token) {
             const coursesData = await requestJson(
@@ -216,15 +293,19 @@ const useFetch = () => {
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
         getUserInterestCourses,
+        getAllCourseChapters,
         getAndDispatchCourse,
         getAndDispatchUser,
         fetchRequestAccess,
+        addNewVideoLesson,
         getTeacherCourses,
         getCoursesByName,
         putProfileInfo,
         getLessonById,
+        addNewChapter,
         getAllCourses,
         addNewCourse,
+        editCourse,
         putAvatar,
         isLoading,
         error,
