@@ -85,6 +85,7 @@ export interface ILessonWithResources extends ILesson {
 export interface ILessonWithLessonType {
     lessonId: number;
     lessonType: TLessonType;
+    lessonTitle: string;
     testLesson?: ITestLesson | null;
     textLesson?: ITextLesson | null;
     videoLesson?: IVideoLesson | null;
@@ -139,6 +140,12 @@ export interface ITestResult {
 export interface IResources {
     resourceId: number;
     lessonId: number;
+    resourceTitle: string;
+    resourceLink: string;
+}
+
+export interface IResourcesListItem {
+    resourceId: number;
     resourceTitle: string;
     resourceLink: string;
 }

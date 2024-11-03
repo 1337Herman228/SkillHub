@@ -1,3 +1,5 @@
+import CreateNewLesson from "@/components/pages/create-new-lesson/CreateNewLesson";
+
 export default function AddLesson() {
-    return <div className="">add lesson page</div>;
+    return <CreateNewLesson />;
 }

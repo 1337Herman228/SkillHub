@@ -52,6 +52,14 @@ interface CreateCourseFormProps {
     dropdownValue: string;
     setDropdownValueFunc: (state: string) => void;
     text: string;
+    isEditForm?: boolean;
+    defaultImage?: any;
+    defaultDropdownValue?: string;
+    defaultValues?: {
+        courseName?: string;
+        topic?: string;
+        shortDescription?: string;
+    };
 }
 
 const CreateCourseForm = ({
@@ -68,6 +76,10 @@ const CreateCourseForm = ({
     setDropdownValueFunc,
     dropdownValue,
     text,
+    isEditForm = false,
+    defaultImage = null,
+    defaultDropdownValue = "",
+    defaultValues,
 }: CreateCourseFormProps) => {
     useEffect(() => {
         return () => {
@@ -79,7 +91,9 @@ const CreateCourseForm = ({
 
     return (
         <div className="create-course-form-wrapper">
-            <h1 className="form-title">Создание курса</h1>
+            <h1 className="form-title">
+                {isEditForm ? "Редактирование курса" : "Создание курса"}
+            </h1>
             <form
                 onSubmit={handleSubmit((data) => formSubmit(data))}
                 className="create-course-form form"
@@ -90,16 +104,9 @@ const CreateCourseForm = ({
                     {img ? (
                         <>
                             <ImageUpload
-                                defaultImg={[
-                                    {
-                                        // uid: "avatar-" + user?.userId,
-                                        // name: "avatar-" + user?.userId + ".png",
-                                        // status: "done",
-                                        // url:
-                                        //     "upload-images/" +
-                                        //     user?.person?.avatarImg,
-                                    },
-                                ]}
+                                defaultImg={
+                                    defaultImage ? [...defaultImage] : []
+                                }
                                 img={img}
                                 isFormSubmitted={false}
                                 setImg={setImg}
@@ -130,6 +137,7 @@ const CreateCourseForm = ({
                     minLength={5}
                     register={register}
                     errors={errors}
+                    defaultValue={defaultValues?.courseName ?? ""}
                 />
                 <CustomInput
                     labelText="В какой сфере будет курс?"
@@ -137,6 +145,7 @@ const CreateCourseForm = ({
                     minLength={2}
                     register={register}
                     errors={errors}
+                    defaultValue={defaultValues?.topic ?? ""}
                 />
                 <DropdownList
                     setStateFunc={setDropdownValueFunc}
@@ -145,7 +154,9 @@ const CreateCourseForm = ({
                     name="skillLevel"
                     options={skillLevels}
                     isError={!dropdownValue && isFormSubmitted}
-                    // defaultValue={skillLevels[1]}
+                    defaultValue={skillLevels.find(
+                        (item) => item.value === defaultDropdownValue
+                    )}
                 />
                 <TextArea
                     labelText="Краткое описание курса"
@@ -153,26 +164,22 @@ const CreateCourseForm = ({
                     minLength={20}
                     register={register}
                     errors={errors}
+                    defaultValue={defaultValues?.shortDescription ?? ""}
                 />
 
                 <TextEditor
                     setStateFunc={setText}
                     title="Подробное описание курса"
-                    htmlText={`<h3><strong>Title</strong></h3>`}
+                    htmlText={text}
                     errorMessage={"Слишком мало текста!"}
                     isInvalid={text.length < 50 && isFormSubmitted}
                 />
-
-                {/* <div
-                    dangerouslySetInnerHTML={{ __html: text }}
-                    className="html-block"
-                ></div> */}
 
                 <input
                     onClick={() => setIsFormSubmitted(true)}
                     className="submit-btn black-submit-button"
                     type="submit"
-                    value="Создать курс"
+                    value={isEditForm ? "Подтвердить" : "Создать курс"}
                 />
             </form>
         </div>

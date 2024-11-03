@@ -8,6 +8,7 @@ import Footer from "@/components/footers/user-footer/Footer";
 import { usePathname } from "next/navigation";
 import DoubleNavbar from "@/components/navbars/course-navbar/DoubleNavbar";
 import { INavLink } from "@/interfaces/types";
+import AntdConfigProvider from "@/components/providers/AntdConfigProvider";
 
 const courseNavLinks: INavLink[] = [
     {
@@ -17,7 +18,7 @@ const courseNavLinks: INavLink[] = [
     },
     {
         id: "edit-course",
-        href: "/edit-course",
+        href: "/edit",
         name: "Редактировать курс",
     },
     {
@@ -51,20 +52,22 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
                 <title>SkillHub</title>
             </head>
             <body>
-                <StoreProvider>
-                    <MySessionProvider>
-                        {pathname?.match(comparePathname) ? (
-                            <DoubleNavbar
-                                isCourseNavbar
-                                secondNavLinks={courseNavLinks}
-                            />
-                        ) : (
-                            <Navbar role="teacher" />
-                        )}
-                        {children}
-                        <Footer role="teacher" />
-                    </MySessionProvider>
-                </StoreProvider>
+                <AntdConfigProvider>
+                    <StoreProvider>
+                        <MySessionProvider>
+                            {pathname?.match(comparePathname) ? (
+                                <DoubleNavbar
+                                    isCourseNavbar
+                                    secondNavLinks={courseNavLinks}
+                                />
+                            ) : (
+                                <Navbar role="teacher" />
+                            )}
+                            {children}
+                            <Footer role="teacher" />
+                        </MySessionProvider>
+                    </StoreProvider>
+                </AntdConfigProvider>
             </body>
         </html>
     );

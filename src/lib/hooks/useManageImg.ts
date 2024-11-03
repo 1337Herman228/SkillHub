@@ -1,6 +1,4 @@
 const useManageImg = () => {
-    //imgName - название файла c расширением (.jpg,.png etc.)
-
     const saveImg = async (imgName: string, img: any) => {
         const formData = new FormData();
         formData.append("file", img);
@@ -25,6 +23,41 @@ const useManageImg = () => {
 
         try {
             const response = await fetch("/api/delete-img", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+            } else {
+                throw new Error("Delete failed.");
+            }
+        } catch (error) {}
+    };
+
+    const saveVideo = async (videoName: string, video: any) => {
+        const formData = new FormData();
+        formData.append("file", video);
+        formData.append("name", videoName.toLowerCase().replace(/\s/g, "-"));
+
+        try {
+            const response = await fetch("/api/upload-video", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+            } else {
+                throw new Error("Upload failed.");
+            }
+        } catch (error) {}
+    };
+
+    const deleteVideo = async (videoName: string) => {
+        const formData = new FormData();
+        formData.append("name", videoName.toLowerCase().replace(/\s/g, "-"));
+
+        try {
+            const response = await fetch("/api/delete-video", {
                 method: "POST",
                 body: formData,
             });
@@ -71,7 +104,14 @@ const useManageImg = () => {
         } catch (error) {}
     };
 
-    return { saveImg, deleteImg, saveSvgIcon, deleteSvgIcon };
+    return {
+        saveVideo,
+        deleteVideo,
+        saveImg,
+        deleteImg,
+        saveSvgIcon,
+        deleteSvgIcon,
+    };
 };
 
 export default useManageImg;

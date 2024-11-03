@@ -1,0 +1,22 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+@use "../../../styles/media" as *;
+
+.add-chapter-modal {
+    font-family: "Inter";
+
+    &__title {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 1.1;
+        margin-bottom: 35px;
+    }
+
+    .add-chapter-form {
+        .add-chapter-submit-btn {
+            width: 100%;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+    }
+}
