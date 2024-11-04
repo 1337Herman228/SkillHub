@@ -83,8 +83,6 @@ const CreateCourseForm = ({
 }: CreateCourseFormProps) => {
     useEffect(() => {
         return () => {
-            unregister("courseName");
-            unregister("topic");
             unregister("shortDescription");
         };
     }, []);
@@ -136,6 +134,7 @@ const CreateCourseForm = ({
                     name="courseName"
                     minLength={5}
                     register={register}
+                    unregister={unregister}
                     errors={errors}
                     defaultValue={defaultValues?.courseName ?? ""}
                 />
@@ -144,6 +143,7 @@ const CreateCourseForm = ({
                     name="topic"
                     minLength={2}
                     register={register}
+                    unregister={unregister}
                     errors={errors}
                     defaultValue={defaultValues?.topic ?? ""}
                 />

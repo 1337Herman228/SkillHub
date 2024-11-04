@@ -41,6 +41,15 @@ const DropdownList = ({
         defaultValue ? defaultValue.name : ""
     );
 
+    const onceRef = useRef(true);
+    useEffect(() => {
+        if (defaultValue && onceRef.current) {
+            setInputText(defaultValue.name);
+            setSelectedOption(defaultValue);
+            onceRef.current = false;
+        }
+    }, [defaultValue]);
+
     const inputTextRef = useRef(inputText);
     const selectedOptionRef = useRef(selectedOption);
 
@@ -84,8 +93,6 @@ const DropdownList = ({
         setSelectedOption(option);
         setIsOpen(false);
         setInputText(option.name);
-        // trigger(name);
-        // setValue(name, selectedOption?.value); // Устанавливаем значение в react-hook-form
     };
 
     useEffect(() => {
@@ -108,8 +115,6 @@ const DropdownList = ({
     useEffect(() => {
         if (selectedOption?.name === inputText) {
             setInputText(selectedOption.name);
-            // trigger(name);
-            // setValue(name, selectedOption?.value);
         }
     }, [selectedOption]);
 
@@ -118,27 +123,12 @@ const DropdownList = ({
         const option = options.find((option) => option.name === inputText);
         if (option) {
             setSelectedOption(option);
-            // trigger(name);
-            // setValue(name, selectedOption?.value); // Устанавливаем значение в react-hook-form
         }
     }, [inputText]);
 
     useEffect(() => {
         setStateFunc(selectedOption?.value ?? "");
     }, [selectedOption]);
-
-    // useEffect(() => {
-    //     if (selectedOption) {
-    //         setValue(name, selectedOption.value);
-    //         // trigger(name);
-    //     }
-    // }, [selectedOption, name]);
-
-    // useEffect(() => {
-    //     if (selectedOption) {
-    //         setValue(name, selectedOption?.value);
-    //     }
-    // }, [selectedOption, name]);
 
     //Фильтрация по вводу
     const filterOptions = () => {

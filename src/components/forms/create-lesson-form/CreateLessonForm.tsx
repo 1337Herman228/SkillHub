@@ -29,6 +29,8 @@ interface CreateLessonFormProps {
     lessonType: TLessonType | "";
     defaultLesson?: ILessonWithLessonType;
     setLessonType: (lessonType: TLessonType) => void;
+
+    defaultVideo?: any;
 }
 
 const CreateLessonForm = ({
@@ -36,6 +38,7 @@ const CreateLessonForm = ({
     lessonType,
     defaultLesson,
     setLessonType,
+    defaultVideo,
 }: CreateLessonFormProps) => {
     const setStringLessonType = (lessonType: string) => {
         setLessonType(lessonType as TLessonType);
@@ -61,6 +64,7 @@ const CreateLessonForm = ({
 
                 {lessonType === "VIDEO" && (
                     <VideoLessonForm
+                        defaultVideo={defaultVideo}
                         defaultLesson={defaultLesson}
                         isEditForm={isEditForm}
                     />

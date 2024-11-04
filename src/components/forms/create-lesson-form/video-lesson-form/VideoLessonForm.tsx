@@ -1,13 +1,11 @@
 "use client";
 
-import DropdownList from "@/components/dropdowns/DropdownList";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import Resources from "@/components/inputs/resources/Resources";
 import {
     ILessonWithLessonType,
     IResources,
     NotificationType,
-    TLessonType,
 } from "@/interfaces/types";
 import { useAppSelector } from "@/lib/redux/store/store";
 import React, { useEffect, useRef, useState } from "react";
@@ -17,6 +15,7 @@ import ImageUpload from "@/components/image-upload/ImageUpload";
 import useManageImg from "@/lib/hooks/useManageImg";
 import useFetch from "@/lib/hooks/useFetch";
 import { notification } from "antd";
+import { is } from "immutable";
 
 const mapResources = (resources: IResources[]) => {
     const defaultResourcesNames = resources.map((resource) => {
@@ -41,11 +40,13 @@ export interface IVideoLessonFormFields {
 interface VideoLessonFormProps {
     isEditForm?: boolean;
     defaultLesson?: ILessonWithLessonType;
+    defaultVideo?: any;
 }
 
 const VideoLessonForm = ({
     isEditForm = false,
     defaultLesson,
+    defaultVideo,
 }: VideoLessonFormProps) => {
     const course = useAppSelector((state) => state.course);
     const [api, contextHolder] = notification.useNotification();
@@ -125,12 +126,13 @@ const VideoLessonForm = ({
         name: "resourcesLinks", // Имя поля, которое будет массивом
     });
 
-    const { saveVideo } = useManageImg();
-    const { addNewVideoLesson, getAndDispatchCourse } = useFetch();
+    const { saveVideo, deleteVideo } = useManageImg();
+    const { editVideoLesson, addNewVideoLesson, getAndDispatchCourse } =
+        useFetch();
 
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
     const [chapter, setChapter] = useState<string>("");
-    const [video, setVideo] = useState(null);
+    const [video, setVideo] = useState(isEditForm ? true : null);
 
     const formSubmit = async (data: IVideoLessonFormFields) => {
         if (chapter && video) {
@@ -150,16 +152,44 @@ const VideoLessonForm = ({
                 .toLowerCase()
                 .replace(/\s/g, "-");
 
-            const response = await addNewVideoLesson(
-                data,
-                Number(chapter),
-                resources,
-                newVideoName
-            );
+            const response = isEditForm
+                ? await editVideoLesson(
+                      data,
+                      Number(defaultLesson?.lessonId),
+                      Number(chapter),
+                      resources,
+                      video === true
+                          ? defaultLesson?.videoLesson?.videoUrl ?? ""
+                          : newVideoName
+                  )
+                : await addNewVideoLesson(
+                      data,
+                      Number(chapter),
+                      resources,
+                      newVideoName
+                  );
 
             if (response === "OK") {
-                MyNotification("success", "Успешно", "Урок успешно добавлен!");
-                saveVideo(newVideoName, video);
+                if (isEditForm) {
+                    MyNotification(
+                        "success",
+                        "Успешно",
+                        "Урок успешно изменен!"
+                    );
+                    editVideo(
+                        video,
+                        newVideoName,
+                        defaultLesson?.videoLesson?.videoUrl ?? ""
+                    );
+                } else {
+                    MyNotification(
+                        "success",
+                        "Успешно",
+                        "Урок успешно добавлен!"
+                    );
+                    saveVideo(newVideoName, video);
+                }
+
                 getAndDispatchCourse(course.course?.courseId ?? 0);
             } else if (response === "BAD_REQUEST") {
                 MyNotification("error", "Ошибка", "Что-то пошло не так");
@@ -173,7 +203,18 @@ const VideoLessonForm = ({
         }
     };
 
-    console.log(defaultCourseLesson?.chapterId);
+    const editVideo = async (
+        video: any,
+        videoName: string,
+        oldVideoName: string
+    ) => {
+        if (video) {
+            if (video !== true) {
+                await deleteVideo(oldVideoName);
+                await saveVideo(videoName, video);
+            }
+        }
+    };
 
     return (
         <form
@@ -186,10 +227,8 @@ const VideoLessonForm = ({
                 setChapter={setChapter}
                 chapter={chapter}
                 isFormSubmitted={isFormSubmitted}
-                //TODO Разобраться почему не работает дефолтное значение
                 defaultChapterValue={
-                    // String(defaultCourseLesson?.chapterId) ?? ""
-                    "10000"
+                    String(defaultCourseLesson?.chapterId) ?? ""
                 }
             />
 
@@ -219,9 +258,7 @@ const VideoLessonForm = ({
                 {video ? (
                     <>
                         <ImageUpload
-                            // defaultImg={
-                            //     defaultImage ? [...defaultImage] : []
-                            // }
+                            defaultImg={defaultVideo ?? []}
                             accept="video/*"
                             img={video}
                             isFormSubmitted={false}
