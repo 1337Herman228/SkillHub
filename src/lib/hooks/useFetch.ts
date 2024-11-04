@@ -224,6 +224,33 @@ const useFetch = () => {
         }
     };
 
+    const editVideoLesson = async (
+        data: IVideoLessonFormFields,
+        lessonId: number,
+        chapterId: number,
+        resources: any[],
+        videoUrl: string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/edit-video-lesson`,
+                "PUT",
+                JSON.stringify({
+                    lessonId: lessonId,
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "VIDEO",
+                    duration: data.duration,
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    videoUrl: videoUrl,
+                })
+            );
+            return response;
+        }
+    };
+
     const editCourse = async (
         data: FieldValues,
         dropdownValue: string,
@@ -300,6 +327,7 @@ const useFetch = () => {
         addNewVideoLesson,
         getTeacherCourses,
         getCoursesByName,
+        editVideoLesson,
         putProfileInfo,
         getLessonById,
         addNewChapter,

@@ -39,6 +39,14 @@ const EditLesson = () => {
     return (
         <div>
             <CreateLessonForm
+                defaultVideo={[
+                    {
+                        uid: lesson.lessonId,
+                        name: lesson.videoLesson?.videoUrl,
+                        status: "done",
+                        url: "/upload-videos/" + lesson.videoLesson?.videoUrl,
+                    },
+                ]}
                 isEditForm
                 isFormSubmitted={isFormSubmitted}
                 setIsFormSubmitted={setIsFormSubmitted}
