@@ -136,7 +136,18 @@ const TextEditor: React.FC<TextEditorProps> = memo(
                         />
                     </div>
                 </div>
-                {isInvalid && <p className="textarea-error">{errorMessage}</p>}
+                {isInvalid && (
+                    <p
+                        style={{
+                            paddingBlock: "3px",
+                            fontSize: "14px",
+                            color: "var(--red)",
+                            fontWeight: "500",
+                        }}
+                    >
+                        {errorMessage}
+                    </p>
+                )}
             </div>
         );
     }

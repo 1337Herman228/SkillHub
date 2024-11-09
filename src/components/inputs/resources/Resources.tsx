@@ -9,19 +9,21 @@ import {
     UseFormRegister,
 } from "react-hook-form";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
+import { ITextLessonFormFields } from "@/components/forms/create-lesson-form/text-lesson-form/TextLessonForm";
+import { ITestLessonFormFields } from "@/components/forms/create-lesson-form/test-lesson-form/TestLessonForm";
 
 interface ResourcesProps {
     register: UseFormRegister<FieldValues> | UseFormRegister<any>;
-    fields: FieldArrayWithId<IVideoLessonFormFields, "resourcesNames", "id">[];
-    append: UseFieldArrayAppend<IVideoLessonFormFields, "resourcesNames">;
-    remove: UseFieldArrayRemove;
-
-    linksFields: FieldArrayWithId<
-        IVideoLessonFormFields,
-        "resourcesLinks",
+    fields: FieldArrayWithId<
+        IVideoLessonFormFields | ITextLessonFormFields | ITestLessonFormFields,
+        "resourcesNames",
         "id"
     >[];
-    linksAppend: UseFieldArrayAppend<IVideoLessonFormFields, "resourcesLinks">;
+    append: UseFieldArrayAppend<any, "resourcesNames">;
+    remove: UseFieldArrayRemove;
+
+    linksFields: FieldArrayWithId<any, "resourcesLinks", "id">[];
+    linksAppend: UseFieldArrayAppend<any, "resourcesLinks">;
     linksRemove: UseFieldArrayRemove;
     errors: any; // Здесь можно указать правильный тип для ошибок
 }

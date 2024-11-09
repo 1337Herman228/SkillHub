@@ -17,6 +17,7 @@ interface DropdownListProps {
     setStateFunc: (state: string) => void;
     isError?: boolean;
     extraOption?: React.ReactNode;
+    disabled?: boolean;
 }
 
 const DropdownList = ({
@@ -28,6 +29,7 @@ const DropdownList = ({
     defaultValue = null,
     isError,
     extraOption,
+    disabled = false,
 }: DropdownListProps) => {
     const requiredMessage = "Введите " + labelText.toLowerCase();
 
@@ -56,8 +58,6 @@ const DropdownList = ({
     const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedOption(null);
         setInputText(e.target.value);
-        // trigger(name);
-        // setValue(name, selectedOption?.value);
     };
 
     //Функция закрытия списка, при нажатии вне него
@@ -143,8 +143,15 @@ const DropdownList = ({
         }
     };
 
+    const onRemove = () => {
+        selectedOptionRef.current = null;
+        inputTextRef.current = "";
+        setSelectedOption(null);
+        setInputText("");
+    };
+
     return (
-        <div className="dropdown">
+        <div className={`dropdown ${disabled && "disabled"}`}>
             <label className="dropdown__label" htmlFor={name}>
                 <span className={`label-text`}>{labelText}</span>
             </label>
@@ -159,9 +166,19 @@ const DropdownList = ({
                         placeholder={
                             selectedOption ? selectedOption.name : placeholder
                         }
-                        // defaultValue={defaultValue?.name && ""}
                         value={inputText}
                     />
+                    {inputText && selectedOption ? (
+                        <button onClick={onRemove} className="delete-value-btn">
+                            <img
+                                alt=""
+                                src={`/svg/close.svg`}
+                                width={12}
+                                height={12}
+                            />
+                        </button>
+                    ) : null}
+
                     <img
                         className={`dropdown__arrow ${
                             isOpen ? "open" : "close"
@@ -174,11 +191,7 @@ const DropdownList = ({
                     {/* Скрытый инпут, в который подставляется value, а не отоборажаемое name */}
                     <input
                         className="visually-hidden"
-                        // defaultValue={defaultValue?.value && ""}
                         value={selectedOption?.value && ""}
-                        // {...register(name, {
-                        //     required: requiredMessage,
-                        // })}
                     />
                     <ul
                         className={`dropdown-list ${isOpen ? "open" : "close"}`}
@@ -191,7 +204,11 @@ const DropdownList = ({
                             filterOptions().map((option) => (
                                 <li
                                     tabIndex={0}
-                                    className="dropdown-list__option option"
+                                    className={`dropdown-list__option option ${
+                                        selectedOption?.value === option.value
+                                            ? "selected"
+                                            : ""
+                                    }`}
                                     key={option.value}
                                     onClick={() => onSelectOption(option)}
                                 >
@@ -199,11 +216,7 @@ const DropdownList = ({
                                 </li>
                             ))
                         )}
-                        {extraOption && (
-                            <>{extraOption}</>
-                            // <li className="dropdown-list__option option">
-                            // </li>
-                        )}
+                        {extraOption && <>{extraOption}</>}
                     </ul>
                 </div>
             </div>

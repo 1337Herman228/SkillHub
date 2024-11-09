@@ -5,6 +5,8 @@ import { ILessonWithLessonType, TLessonType } from "@/interfaces/types";
 import DropdownList, { IOption } from "@/components/dropdowns/DropdownList";
 
 import VideoLessonForm from "./video-lesson-form/VideoLessonForm";
+import TextLessonForm from "./text-lesson-form/TextLessonForm";
+import TestLessonForm from "./test-lesson-form/TestLessonForm";
 
 const lessonTypeOptions: IOption[] = [
     {
@@ -51,6 +53,7 @@ const CreateLessonForm = ({
             </h1>
             <div className="create-lesson-form form">
                 <DropdownList
+                    disabled={isEditForm}
                     setStateFunc={setStringLessonType}
                     placeholder="Выберите тип урока"
                     labelText="Тип урока"
@@ -65,6 +68,18 @@ const CreateLessonForm = ({
                 {lessonType === "VIDEO" && (
                     <VideoLessonForm
                         defaultVideo={defaultVideo}
+                        defaultLesson={defaultLesson}
+                        isEditForm={isEditForm}
+                    />
+                )}
+                {lessonType === "TEXT" && (
+                    <TextLessonForm
+                        defaultLesson={defaultLesson}
+                        isEditForm={isEditForm}
+                    />
+                )}
+                {lessonType === "TEST" && (
+                    <TestLessonForm
                         defaultLesson={defaultLesson}
                         isEditForm={isEditForm}
                     />

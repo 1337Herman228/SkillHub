@@ -72,30 +72,13 @@ const CreateNewCoursePage = () => {
     const saveImage = async (img: any, imgName: string) => {
         if (img) {
             // Удалить старое фото (для странички редактирования)
-            // await deleteImg(user?.person?.avatarImg);
             await saveImg(imgName, img);
-            // await putAvatar(imgName, user);
         }
     };
 
     return (
         <div>
-            <ConfigProvider
-                theme={{
-                    components: {
-                        Notification: {
-                            zIndexPopup: 10000,
-                            colorBgElevated: "#212121",
-                            colorText: "white",
-                            colorTextHeading: "white",
-                            colorIcon: "white",
-                            colorIconHover: "gray",
-                        },
-                    },
-                }}
-            >
-                {contextHolder}
-            </ConfigProvider>
+            {contextHolder}
             <CreateCourseForm
                 formSubmit={formSubmit}
                 register={register}

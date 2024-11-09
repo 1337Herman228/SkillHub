@@ -5,6 +5,14 @@
 .dropdown {
     margin-bottom: 7px;
 
+    &.disabled {
+        pointer-events: none;
+
+        .dropdown__input {
+            background-color: var(--grey);
+        }
+    }
+
     &__label {
         .label-text {
             font-size: 16px;
@@ -16,13 +24,29 @@
     &__input-wrapper {
         position: relative;
 
+        .delete-value-btn {
+            @include reset-button;
+            position: absolute;
+            z-index: 1000;
+            right: 35px;
+            top: 50%;
+            translate: 0 -50%;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+
+            @include hover {
+                background-color: var(--grey);
+            }
+        }
+
         .dropdown__input {
             width: 100%;
             font-size: 16px;
             height: 49px;
             background-color: transparent;
             border: var(--border-black);
-            padding: 10px 35px 10px 15px;
+            padding: 10px 70px 10px 15px;
             outline: none;
             transition-duration: var(--transition-duration);
             border-radius: 2px;
@@ -103,6 +127,10 @@
             font-size: 16px;
             padding: 7px 10px;
             cursor: pointer;
+
+            &.selected {
+                background-color: var(--grey);
+            }
         }
 
         .not-found {

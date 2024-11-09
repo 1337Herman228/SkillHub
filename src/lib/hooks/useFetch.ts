@@ -9,6 +9,9 @@ import { setCourseState } from "../redux/slices/courseSlice";
 import { FieldValues } from "react-hook-form";
 import { IUser } from "@/interfaces/types";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
+import { ITextLessonFormFields } from "@/components/forms/create-lesson-form/text-lesson-form/TextLessonForm";
+import { ITestLessonFormFields } from "@/components/forms/create-lesson-form/test-lesson-form/TestLessonForm";
+import { ITestQuestions } from "@/components/test-form/TestForm";
 
 const useFetch = () => {
     const { requestJson, isLoading, error } = useHttp();
@@ -224,6 +227,66 @@ const useFetch = () => {
         }
     };
 
+    const addNewTextLesson = async (
+        data: ITextLessonFormFields,
+        chapterId: number,
+        resources: any[],
+        html: string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/add-new-text-lesson`,
+                "POST",
+                JSON.stringify({
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "TEXT",
+                    duration: data.duration,
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    html: html,
+                })
+            );
+            return response;
+        }
+    };
+
+    const addNewTestLesson = async (
+        data: ITestLessonFormFields,
+        chapterId: number,
+        resources: any[],
+        questions: ITestQuestions[]
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/add-new-test-lesson`,
+                "POST",
+                JSON.stringify({
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "TEST",
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    questions: questions.map((question) => {
+                        return {
+                            questionText: question.questionText,
+                            correctAnswerId: question.correctAnswerId,
+                            answers: question.testAnswers.map((answer) => {
+                                return {
+                                    answerId: answer.answerId,
+                                    answerText: answer.answerText,
+                                };
+                            }),
+                        };
+                    }),
+                })
+            );
+            return response;
+        }
+    };
+
     const editVideoLesson = async (
         data: IVideoLessonFormFields,
         lessonId: number,
@@ -251,6 +314,70 @@ const useFetch = () => {
         }
     };
 
+    const editTextLesson = async (
+        data: ITextLessonFormFields,
+        lessonId: number,
+        chapterId: number,
+        resources: any[],
+        html: string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/edit-text-lesson`,
+                "PUT",
+                JSON.stringify({
+                    lessonId: lessonId,
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "TEXT",
+                    duration: data.duration,
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    html: html,
+                })
+            );
+            return response;
+        }
+    };
+
+    const editTestLesson = async (
+        data: ITestLessonFormFields,
+        chapterId: number,
+        resources: any[],
+        questions: ITestQuestions[],
+        lessonId: number
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/edit-test-lesson`,
+                "PUT",
+                JSON.stringify({
+                    lessonId: lessonId,
+                    chapterId: chapterId,
+                    lessonTitle: data.lessonName,
+                    lessonType: "TEST",
+                    diamondReward: data.diamondReward,
+                    resources: resources,
+                    questions: questions.map((question) => {
+                        return {
+                            questionText: question.questionText,
+                            correctAnswerId: question.correctAnswerId,
+                            answers: question.testAnswers.map((answer) => {
+                                return {
+                                    answerId: answer.answerId,
+                                    answerText: answer.answerText,
+                                };
+                            }),
+                        };
+                    }),
+                })
+            );
+            return response;
+        }
+    };
+
     const editCourse = async (
         data: FieldValues,
         dropdownValue: string,
@@ -272,6 +399,28 @@ const useFetch = () => {
                     shortDescription: data.shortDescription,
                     longDescription: htmlText,
                 })
+            );
+            return response;
+        }
+    };
+
+    const deleteCourse = async (courseId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/delete-course/${courseId}`,
+                "DELETE"
+            );
+            return response;
+        }
+    };
+
+    const deleteLesson = async (lessonId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/delete-lesson/${lessonId}`,
+                "DELETE"
             );
             return response;
         }
@@ -327,11 +476,17 @@ const useFetch = () => {
         addNewVideoLesson,
         getTeacherCourses,
         getCoursesByName,
+        addNewTextLesson,
+        addNewTestLesson,
         editVideoLesson,
+        editTextLesson,
         putProfileInfo,
+        editTestLesson,
         getLessonById,
         addNewChapter,
         getAllCourses,
+        deleteCourse,
+        deleteLesson,
         addNewCourse,
         editCourse,
         putAvatar,
