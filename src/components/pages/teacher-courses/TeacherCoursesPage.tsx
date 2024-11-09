@@ -22,8 +22,6 @@ const TeacherCoursesPage = () => {
     >(null);
     const [courses, setCourses] = useState<IAllCourse[]>([]);
 
-    const [isLoadingWithDelay, setIsLoadingWithDelay] =
-        useState<boolean>(false);
     const [searchtext, setSearchtext] = useState<string>("");
 
     const fetchTeacherCourses = async () => {
@@ -41,14 +39,10 @@ const TeacherCoursesPage = () => {
         setCourses(coursesData);
     };
     useEffect(() => {
-        setIsLoadingWithDelay(true);
         fetchCoursesByName();
-        setTimeout(() => {
-            setIsLoadingWithDelay(false);
-        }, 1000);
     }, [searchtext]);
 
-    const loading = !courses || isLoading || isLoadingWithDelay;
+    const loading = !courses || isLoading;
 
     if (allTeacherCourses?.length === 0)
         return (

@@ -1,0 +1,83 @@
+@use "../../styles/variables" as *;
+@use "../../styles/media" as *;
+@use "../../styles/mixins" as *;
+
+.make-test {
+    margin-bottom: 10px;
+
+    &__title {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 5px;
+    }
+
+    .make-test-container {
+        padding: 20px;
+        border: var(--border-black);
+
+        .make-test-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            justify-content: center;
+
+            .question {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                &__number {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+            }
+
+            &__remove-btn {
+                margin-top: 3px;
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    .manage-make-test-btn {
+        @include reset-button;
+        background-color: var(--light-black);
+        width: 22px;
+        height: 22px;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+
+        @include hover {
+            opacity: 0.8;
+        }
+    }
+
+    .manage-make-test-btn-special {
+        @include reset-button;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &__icon-container {
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            background-color: var(--light-black);
+            width: 35px;
+            height: 35px;
+            aspect-ratio: 1;
+        }
+
+        &__icon {
+        }
+
+        @include hover {
+            opacity: 0.8;
+        }
+    }
+}

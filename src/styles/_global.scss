@@ -156,6 +156,21 @@ hr {
     }
 }
 
+.red-button {
+    @include reset-button;
+    background-color: var(--red);
+    color: var(--white);
+    height: 48px;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 11px 14px 12px;
+    cursor: pointer;
+
+    @include hover {
+        opacity: 0.7;
+    }
+}
+
 .profile-img {
     border-radius: 50%;
     object-fit: cover;

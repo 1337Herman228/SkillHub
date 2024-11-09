@@ -23,19 +23,39 @@
         flex-direction: column;
         gap: 5px;
 
-        .submit-btn {
-            max-width: 145px;
-            margin-top: 10px;
-        }
-
         .img-container {
-            min-height: 240px;
-
             &__label {
                 font-size: 16px;
                 font-weight: 700;
                 padding-bottom: 5px;
             }
         }
+
+        .dashboard-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+
+            .submit-btn {
+                max-width: 145px;
+            }
+        }
     }
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.modal-description {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
 }

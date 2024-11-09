@@ -14,20 +14,9 @@ import ChaptersList from "../chapters-list/ChaptersList";
 import ImageUpload from "@/components/image-upload/ImageUpload";
 import useManageImg from "@/lib/hooks/useManageImg";
 import useFetch from "@/lib/hooks/useFetch";
-import { notification } from "antd";
-import { is } from "immutable";
-
-const mapResources = (resources: IResources[]) => {
-    const defaultResourcesNames = resources.map((resource) => {
-        return { value: resource.resourceTitle };
-    });
-
-    const defaultResourcesLinks = resources.map((resource) => {
-        return { value: resource.resourceLink };
-    });
-
-    return { defaultResourcesNames, defaultResourcesLinks };
-};
+import { Modal, notification } from "antd";
+import { mapResources } from "../functions";
+import { useParams, useRouter } from "next/navigation";
 
 export interface IVideoLessonFormFields {
     duration: number;
@@ -216,6 +205,28 @@ const VideoLessonForm = ({
         }
     };
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { deleteLesson } = useFetch();
+    const router = useRouter();
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const params = useParams();
+    const onDeleteLesson = async () => {
+        await deleteLesson(defaultCourseLesson?.lessonId as number);
+        await deleteVideo(defaultLesson?.videoLesson?.videoUrl ?? "");
+        await getAndDispatchCourse(course.course?.courseId ?? 0);
+        router.push(
+            "/teacher/my-courses/" + params?.["course-id"] + "/lessons"
+        );
+    };
+
     return (
         <form
             onSubmit={handleSubmit((data) => formSubmit(data))}
@@ -307,12 +318,65 @@ const VideoLessonForm = ({
                 showMarks={false}
             />
 
-            <input
-                onClick={() => setIsFormSubmitted(true)}
-                className="submit-btn black-submit-button"
-                type="submit"
-                value={isEditForm ? "Подтвердить" : "Добавить урок"}
-            />
+            <div className="dashboard-form">
+                <input
+                    onClick={() => setIsFormSubmitted(true)}
+                    className="submit-btn black-submit-button"
+                    type="submit"
+                    value={isEditForm ? "Подтвердить" : "Добавить урок"}
+                />
+                {isEditForm && (
+                    <button
+                        onClick={showModal}
+                        className="delete-btn red-button"
+                        type="button"
+                    >
+                        Удалить урок
+                    </button>
+                )}
+            </div>
+            <Modal
+                styles={{
+                    content: {
+                        borderRadius: 0,
+                        border: "var(--border-black)",
+                        boxShadow: "0 0 0 0",
+                        padding: "35px 35px 40px 35px",
+                        minWidth: "600px",
+                    },
+                    mask: {
+                        backdropFilter: "blur(2px)",
+                    },
+                }}
+                zIndex={7000}
+                centered
+                open={isModalOpen}
+                onCancel={handleCancel}
+                footer={
+                    <div className="modal-footer">
+                        <button
+                            onClick={handleCancel}
+                            className="black-submit-button"
+                        >
+                            Отмена
+                        </button>
+                        <button
+                            onClick={() => onDeleteLesson()}
+                            className="red-button"
+                        >
+                            Удалить
+                        </button>
+                    </div>
+                }
+            >
+                <div className="modal-title">
+                    Вы действительно хотите удалить урок?
+                </div>
+                <div className="modal-description">
+                    Вместе с уроком будут удалены все его материалы, а также все
+                    связанные с ним данные.
+                </div>
+            </Modal>
         </form>
     );
 };

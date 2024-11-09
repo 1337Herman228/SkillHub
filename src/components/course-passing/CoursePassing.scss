@@ -12,8 +12,11 @@
     }
 
     .left-part {
-        display: grid;
-        grid-template-rows: auto auto;
+        // display: grid;
+        // grid-template-rows: auto-fit auto;
+        // grid-auto-rows: 1fr;
+        display: flex;
+        flex-direction: column;
         border-right: var(--border-grey);
 
         &__lesson {

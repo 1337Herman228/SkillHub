@@ -131,7 +131,9 @@ const EditCoursePage = () => {
                     courseName: course?.courseName,
                     topic: course?.topic,
                     shortDescription: course?.shortDescription,
+                    courseImg: course?.courseImg,
                 }}
+                courseId={course?.courseId ?? 0}
             />
         </div>
     );

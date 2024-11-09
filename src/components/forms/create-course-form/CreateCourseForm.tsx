@@ -6,7 +6,11 @@ import ImageUpload from "@/components/image-upload/ImageUpload";
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import TextEditor from "@/components/text-editor/TextEditor";
 import TextArea from "@/components/textarea/TextArea";
-import { useEffect } from "react";
+import useFetch from "@/lib/hooks/useFetch";
+import useManageImg from "@/lib/hooks/useManageImg";
+import { Modal } from "antd";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
     FieldErrors,
     FieldValues,
@@ -59,7 +63,9 @@ interface CreateCourseFormProps {
         courseName?: string;
         topic?: string;
         shortDescription?: string;
+        courseImg?: string;
     };
+    courseId?: number;
 }
 
 const CreateCourseForm = ({
@@ -80,12 +86,32 @@ const CreateCourseForm = ({
     defaultImage = null,
     defaultDropdownValue = "",
     defaultValues,
+    courseId,
 }: CreateCourseFormProps) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { deleteCourse } = useFetch();
+    const { deleteImg } = useManageImg();
+    const router = useRouter();
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     useEffect(() => {
         return () => {
             unregister("shortDescription");
         };
     }, []);
+
+    const onDeleteCourse = async () => {
+        await deleteCourse(courseId as number);
+        await deleteImg(defaultValues?.courseImg ?? "");
+        router.push("/teacher/my-courses");
+    };
 
     return (
         <div className="create-course-form-wrapper">
@@ -175,12 +201,65 @@ const CreateCourseForm = ({
                     isInvalid={text.length < 50 && isFormSubmitted}
                 />
 
-                <input
-                    onClick={() => setIsFormSubmitted(true)}
-                    className="submit-btn black-submit-button"
-                    type="submit"
-                    value={isEditForm ? "Подтвердить" : "Создать курс"}
-                />
+                <div className="dashboard-form">
+                    <input
+                        onClick={() => setIsFormSubmitted(true)}
+                        className="submit-btn black-submit-button"
+                        type="submit"
+                        value={isEditForm ? "Подтвердить" : "Создать курс"}
+                    />
+                    {isEditForm && (
+                        <button
+                            onClick={showModal}
+                            className="delete-btn red-button"
+                            type="button"
+                        >
+                            Удалить курс
+                        </button>
+                    )}
+                </div>
+                <Modal
+                    styles={{
+                        content: {
+                            borderRadius: 0,
+                            border: "var(--border-black)",
+                            boxShadow: "0 0 0 0",
+                            padding: "35px 35px 40px 35px",
+                            minWidth: "600px",
+                        },
+                        mask: {
+                            backdropFilter: "blur(2px)",
+                        },
+                    }}
+                    zIndex={7000}
+                    centered
+                    open={isModalOpen}
+                    onCancel={handleCancel}
+                    footer={
+                        <div className="modal-footer">
+                            <button
+                                onClick={handleCancel}
+                                className="black-submit-button"
+                            >
+                                Отмена
+                            </button>
+                            <button
+                                onClick={() => onDeleteCourse()}
+                                className="red-button"
+                            >
+                                Удалить
+                            </button>
+                        </div>
+                    }
+                >
+                    <div className="modal-title">
+                        Вы действительно хотите удалить курс?
+                    </div>
+                    <div className="modal-description">
+                        Вместе с курсом будут удалены все уроки и материалы, а
+                        также все связанные с ним данные.
+                    </div>
+                </Modal>
             </form>
         </div>
     );
