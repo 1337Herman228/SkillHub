@@ -1,0 +1,80 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.has-access {
+    max-width: 1200px;
+    width: 90vw;
+
+    &__dashboard {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 50px;
+
+        @include tablet {
+            flex-direction: column;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .dashboard-text {
+            &__title {
+                line-height: 1;
+                margin-bottom: 5px;
+            }
+
+            &__description {
+            }
+        }
+
+        .dashboard-search {
+            @include tablet {
+                width: 100%;
+            }
+        }
+    }
+
+    &__loading {
+        max-width: 1250px;
+        width: 90vw;
+        height: 70vh;
+        display: grid;
+        place-items: center;
+    }
+
+    &__content {
+        padding-top: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        @include tablet {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+        }
+
+        gap: 10px;
+    }
+
+    &__not-found {
+        max-width: 1250px;
+        width: 90vw;
+        height: 70vh;
+        display: grid;
+        place-items: center;
+        font-size: 40px;
+        font-weight: 700;
+
+        @include tablet {
+            font-size: 32px;
+        }
+
+        @include mobile {
+            font-size: 26px;
+        }
+    }
+}

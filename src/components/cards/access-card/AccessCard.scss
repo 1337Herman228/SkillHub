@@ -1,0 +1,75 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.access-card-container {
+    max-width: 1200px;
+    border: var(--border-black);
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .user-part {
+        flex-grow: 1;
+    }
+
+    .buttons-part {
+        flex-shrink: 0;
+
+        .request-access-btns {
+            display: flex;
+            gap: 15px;
+
+            .request-access-btn {
+                @include reset-button;
+                cursor: pointer;
+                border: var(--border-black);
+                border-radius: 5px;
+                width: 35px;
+                aspect-ratio: 1;
+                display: grid;
+                place-items: center;
+
+                @include hover {
+                    opacity: 0.7;
+                }
+
+                &.approve {
+                    background-color: var(--light-green);
+                }
+
+                &.reject {
+                    background-color: var(--light-red);
+                }
+
+                &.default {
+                    background-color: var(--light-black);
+
+                    img {
+                        filter: invert(1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.modal-description {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}

@@ -52,6 +52,17 @@ const useFetch = () => {
         }
     };
 
+    const removeUserAccess = async (userId: number, courseId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/teacher/remove-user-access/${userId}/${courseId}`,
+                "DELETE"
+            );
+            return response;
+        }
+    };
+
     const putProfileInfo = async (data: FieldValues, user: IUser) => {
         if (token) {
             await requestJson(
@@ -73,6 +84,28 @@ const useFetch = () => {
                 `http://localhost:8080/user/edit-profile-photo`,
                 "PUT",
                 JSON.stringify({ userId: user?.userId, imgLink: imgLink })
+            );
+        }
+    };
+
+    const approveCourseAccess = async (accessId: number | string) => {
+        if (token) {
+            await requestJson(
+                token,
+                `http://localhost:8080/teacher/approve-course-access`,
+                "PUT",
+                JSON.stringify({ accessId: accessId })
+            );
+        }
+    };
+
+    const rejectCourseAccess = async (accessId: number | string) => {
+        if (token) {
+            await requestJson(
+                token,
+                `http://localhost:8080/teacher/reject-course-access`,
+                "PUT",
+                JSON.stringify({ accessId: accessId })
             );
         }
     };
@@ -463,18 +496,81 @@ const useFetch = () => {
         }
     };
 
+    const getRequestAccessUsers = async (courseId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/teacher/get-request-access-users/${courseId}`
+            );
+            return data;
+        }
+    };
+
+    const getRequestAccessUsersByName = async (
+        courseId: number | string,
+        username: string
+    ) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/teacher/get-request-access-users-by-name`,
+                "POST",
+                JSON.stringify({
+                    courseId: courseId,
+                    username: username,
+                })
+            );
+            return data;
+        }
+    };
+
+    const getHasAccessUsers = async (courseId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/teacher/get-has-access-users/${courseId}`
+            );
+            return data;
+        }
+    };
+
+    const getHasAccessUsersByName = async (
+        courseId: number | string,
+        username: string
+    ) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/teacher/get-has-access-users-by-name`,
+                "POST",
+                JSON.stringify({
+                    courseId: courseId,
+                    username: username,
+                })
+            );
+            return data;
+        }
+    };
+
     return {
         getUserInterestCoursesByName,
+        getRequestAccessUsersByName,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
+        getHasAccessUsersByName,
         getUserInterestCourses,
+        getRequestAccessUsers,
         getAllCourseChapters,
         getAndDispatchCourse,
+        approveCourseAccess,
+        rejectCourseAccess,
         getAndDispatchUser,
         fetchRequestAccess,
         addNewVideoLesson,
         getTeacherCourses,
+        getHasAccessUsers,
+        removeUserAccess,
         getCoursesByName,
         addNewTextLesson,
         addNewTestLesson,

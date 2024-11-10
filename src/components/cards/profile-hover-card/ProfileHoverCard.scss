@@ -1,0 +1,21 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.profile-hover-card-container {
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .avatar-img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: 700;
+        }
+    }
+}
