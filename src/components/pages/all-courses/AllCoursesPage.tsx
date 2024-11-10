@@ -13,8 +13,6 @@ const AllCoursesPage = () => {
     const user = useAppSelector((state) => state.user.user);
     const [allCourses, setAllCourses] = useState<IAllCourse[]>([]);
     const [searchtext, setSearchtext] = useState<string>("");
-    const [isLoadingWithDelay, setIsLoadingWithDelay] =
-        useState<boolean>(false);
 
     const { getAllCourses, getCoursesByName, isLoading } = useFetch();
 
@@ -33,14 +31,10 @@ const AllCoursesPage = () => {
         }
     };
     useEffect(() => {
-        setIsLoadingWithDelay(true);
         fetchCoursesByName();
-        setTimeout(() => {
-            setIsLoadingWithDelay(false);
-        }, 1000);
     }, [searchtext]);
 
-    const loading = !user || !allCourses || isLoading || isLoadingWithDelay;
+    const loading = !user || !allCourses || isLoading;
 
     return (
         <div className="courses-page container-reduced-medium">

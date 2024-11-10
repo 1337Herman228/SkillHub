@@ -164,28 +164,6 @@ const MainPage = () => {
                                         />
                                     </Item>
                                 ))}
-                                {userCourses.map((course) => (
-                                    <Item
-                                        style={{ paddingTop: 7 }}
-                                        key={course.course.courseId}
-                                    >
-                                        <ContinueCourseCard
-                                            key={course.course.courseId}
-                                            course={course}
-                                        />
-                                    </Item>
-                                ))}
-                                {userCourses.map((course) => (
-                                    <Item
-                                        style={{ paddingTop: 7 }}
-                                        key={course.course.courseId}
-                                    >
-                                        <ContinueCourseCard
-                                            key={course.course.courseId}
-                                            course={course}
-                                        />
-                                    </Item>
-                                ))}
                             </ScrollableBlock>
                         </div>
                     )}

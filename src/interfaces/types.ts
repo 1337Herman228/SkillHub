@@ -202,6 +202,13 @@ export interface ICourseAcces {
     status: TAccessStatus;
 }
 
+export interface IHasAccessUser {
+    accessId: number;
+    user: IUser;
+    requestDate: Date;
+    grantedDate: Date;
+}
+
 export type TAccessStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export interface IProfileSectionInfo {
