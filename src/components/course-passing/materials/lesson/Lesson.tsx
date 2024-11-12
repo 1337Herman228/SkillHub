@@ -10,7 +10,6 @@ import { ILessonWithResources, TLessonType, TRole } from "@/interfaces/types";
 import useTime from "@/lib/hooks/useTime";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import EditBtn from "../edit-btn/EditBtn";
-import { useAppSelector } from "@/lib/redux/store/store";
 
 interface LessonProps {
     lesson: ILessonWithResources;
@@ -96,7 +95,10 @@ const Lesson = ({
                     ) : (
                         <>
                             {lesson?.lessonType !== "TEST" ? (
-                                <PassLessonBtn />
+                                <PassLessonBtn
+                                    courseId={courseId}
+                                    lessonId={lesson.lessonId}
+                                />
                             ) : (
                                 <div />
                             )}
