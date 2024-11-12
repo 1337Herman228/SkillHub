@@ -15,6 +15,8 @@ interface CoursePassingProps {
 const CoursePassing = ({ role = "user" }: CoursePassingProps) => {
     const course = useAppSelector((state) => state.course);
 
+    console.log("course", course);
+
     return (
         <>
             {course.lessons !== null && course.lessons?.length > 0 && (
@@ -30,18 +32,20 @@ const CoursePassing = ({ role = "user" }: CoursePassingProps) => {
                     </div>
                 </section>
             )}
-            {course.lessons !== null && course.lessons.length === 0 && (
-                <div className="centered-div">
-                    <StubWithBtn
-                        title="Тут пусто!"
-                        description="Вы еще не создали ни одного урока!"
-                        btnType="link"
-                        btnLink={`/teacher/my-courses/${course.course?.courseId}/add-lesson`}
-                        btnText="Добавить урок"
-                        btnStyle={{ fontSize: "18px" }}
-                    />
-                </div>
-            )}
+            {role === "teacher" &&
+                course.lessons !== null &&
+                course.lessons.length === 0 && (
+                    <div className="centered-div">
+                        <StubWithBtn
+                            title="Тут пусто!"
+                            description="Вы еще не создали ни одного урока!"
+                            btnType="link"
+                            btnLink={`/teacher/my-courses/${course.course?.courseId}/add-lesson`}
+                            btnText="Добавить урок"
+                            btnStyle={{ fontSize: "18px" }}
+                        />
+                    </div>
+                )}
             {course.lessons === null && (
                 <div className="centered-div">
                     <Spinner size="100px" />

@@ -1,4 +1,4 @@
-import { IAllCourse, IUser } from "@/interfaces/types";
+import { IAllCourse } from "@/interfaces/types";
 import "./CourseCard.scss";
 import { ConfigProvider, Rate } from "antd";
 import CourseAccessBtn from "@/components/buttons/course-access-btn/CourseAccessBtn";
@@ -39,7 +39,9 @@ const CourseCard = ({
             ) : (
                 <>
                     {course.status === "APPROVED" ? (
-                        <Link href={`/courses/${course.course.courseId}`}>
+                        <Link
+                            href={`/my-courses/${course.course.courseId}/lessons`}
+                        >
                             <Card
                                 course={course}
                                 progressInPercents={progressInPercents}

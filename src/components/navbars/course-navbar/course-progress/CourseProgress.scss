@@ -1,0 +1,14 @@
+.course-progress-container {
+    justify-self: end;
+    display: grid;
+    place-items: center;
+    .course-progress {
+        position: relative;
+
+        .progress-modal {
+            min-width: 300px;
+            padding: 16px;
+            font-weight: 700;
+        }
+    }
+}

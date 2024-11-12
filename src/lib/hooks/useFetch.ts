@@ -12,6 +12,7 @@ import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/vi
 import { ITextLessonFormFields } from "@/components/forms/create-lesson-form/text-lesson-form/TextLessonForm";
 import { ITestLessonFormFields } from "@/components/forms/create-lesson-form/test-lesson-form/TestLessonForm";
 import { ITestQuestions } from "@/components/test-form/TestForm";
+import { setUserProgressState } from "../redux/slices/userProgressSlice";
 
 const useFetch = () => {
     const { requestJson, isLoading, error } = useHttp();
@@ -49,6 +50,47 @@ const useFetch = () => {
                 `http://localhost:8080/user/get-course-lesson/${lessonId}`
             );
             return lessonData;
+        }
+    };
+
+    const getLessonPassedStatus = async (userId: number, lessonId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/user/is-lesson-passed/${userId}/${lessonId}`
+            );
+            return response;
+        }
+    };
+
+    const markLessonAsPassed = async (
+        userId: number,
+        lessonId: number,
+        courseId: number
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/user/mark-lesson-as-passed`,
+                "POST",
+                JSON.stringify({
+                    userId: userId,
+                    courseId: courseId,
+                    lessonId: lessonId,
+                })
+            );
+            return response;
+        }
+    };
+
+    const markLessonAsUnpassed = async (userId: number, lessonId: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/user/mark-lesson-as-unpassed/${userId}/${lessonId}`,
+                "DELETE"
+            );
+            return response;
         }
     };
 
@@ -192,6 +234,19 @@ const useFetch = () => {
                 JSON.stringify({ courseName: searchtext, userId: user?.userId })
             );
             return coursesData;
+        }
+    };
+
+    const getAndDispatchUserProgress = async (
+        userId: string | number,
+        courseId: string | number
+    ) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-user-progress/${userId}/${courseId}`
+            );
+            dispatch(setUserProgressState(data));
         }
     };
 
@@ -555,18 +610,22 @@ const useFetch = () => {
     return {
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
+        getAndDispatchUserProgress,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
         getHasAccessUsersByName,
         getUserInterestCourses,
         getRequestAccessUsers,
+        getLessonPassedStatus,
+        markLessonAsUnpassed,
         getAllCourseChapters,
         getAndDispatchCourse,
         approveCourseAccess,
         rejectCourseAccess,
         getAndDispatchUser,
         fetchRequestAccess,
+        markLessonAsPassed,
         addNewVideoLesson,
         getTeacherCourses,
         getHasAccessUsers,

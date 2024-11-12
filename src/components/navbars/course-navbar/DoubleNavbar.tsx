@@ -8,19 +8,22 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Greetings from "@/components/profile/greetings/Greetings";
 import { useSession } from "next-auth/react";
+import CourseProgressNav from "./course-progress/CourseProgress";
 
 interface DoubleNavbarProps {
-    secondNavLinks: INavLink[];
+    secondNavLinks?: INavLink[];
     isCourseNavbar?: boolean;
+    isUserNavbar?: boolean;
 }
 
 const DoubleNavbar = ({
     secondNavLinks,
     isCourseNavbar,
+    isUserNavbar = false,
 }: DoubleNavbarProps) => {
     const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-    const { getAndDispatchCourse, isLoading } = useFetch();
+    const { getAndDispatchCourse, getAndDispatchUser, isLoading } = useFetch();
     const { data: session } = useSession();
 
     const course = useAppSelector((state) => state.course);
@@ -42,6 +45,17 @@ const DoubleNavbar = ({
             setIsSidebarOpen(false);
         }
     };
+
+    //Для единождой загрузки пользователя
+    const isUserLoadedRef = useRef(true);
+    useEffect(() => {
+        if (session) {
+            if (isUserLoadedRef.current) {
+                getAndDispatchUser();
+                isUserLoadedRef.current = false;
+            }
+        }
+    }, [session]);
 
     useEffect(() => {
         // Добавляем обработчик событий при монтировании
@@ -101,7 +115,11 @@ const DoubleNavbar = ({
                             <div className="course-first-nav">
                                 <Link
                                     className="back"
-                                    href={"/teacher/my-courses"}
+                                    href={
+                                        isUserNavbar
+                                            ? "/my-education"
+                                            : "/teacher/my-courses"
+                                    }
                                 >
                                     <img
                                         className="back__img"
@@ -120,25 +138,36 @@ const DoubleNavbar = ({
                             <div>First ADMIN nav</div>
                         )}
                     </nav>
+                    {isUserNavbar && (
+                        <div className="course-progress">
+                            <CourseProgressNav
+                                courseId={courseId}
+                                courseName={course.course.courseName}
+                            />
+                        </div>
+                    )}
                 </div>
             </header>
-            <header className="double-header hidden-mobile">
-                <div className="double-navbar container">
-                    <nav className="header-inner second-nav">
-                        <ul className="header-nav">
-                            {secondNavLinks.map((link) => (
-                                <Link
-                                    className="header-nav__item link-to-check"
-                                    href={TEACHER_PATHNAME + link.href}
-                                    key={link.id}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                        </ul>
-                    </nav>
-                </div>
-            </header>
+            {!isUserNavbar && (
+                <header className="double-header hidden-mobile">
+                    <div className="double-navbar container">
+                        <nav className="header-inner second-nav">
+                            <ul className="header-nav">
+                                {secondNavLinks &&
+                                    secondNavLinks.map((link) => (
+                                        <Link
+                                            className="header-nav__item link-to-check"
+                                            href={TEACHER_PATHNAME + link.href}
+                                            key={link.id}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    ))}
+                            </ul>
+                        </nav>
+                    </div>
+                </header>
+            )}
             <header className="double-header visible-mobile">
                 <div className="double-navbar container">
                     <nav className="header-inner-mobile first-nav">
@@ -212,21 +241,32 @@ const DoubleNavbar = ({
                                             Главная
                                         </li>
                                     </Link>
-                                    {secondNavLinks.map((link) => (
-                                        <Link
-                                            className="link-to-check"
-                                            href={TEACHER_PATHNAME + link.href}
-                                            key={link.id}
-                                        >
-                                            <li className="menu__list-item link-to-check">
-                                                {link.name}
-                                            </li>
-                                        </Link>
-                                    ))}
+                                    {secondNavLinks &&
+                                        secondNavLinks.map((link) => (
+                                            <Link
+                                                className="link-to-check"
+                                                href={
+                                                    TEACHER_PATHNAME + link.href
+                                                }
+                                                key={link.id}
+                                            >
+                                                <li className="menu__list-item link-to-check">
+                                                    {link.name}
+                                                </li>
+                                            </Link>
+                                        ))}
                                 </ul>
                             </nav>
                         </div>
                     </nav>
+                    {isUserNavbar && (
+                        <div className="course-progress">
+                            <CourseProgressNav
+                                courseId={courseId}
+                                courseName={course.course.courseName}
+                            />
+                        </div>
+                    )}
                 </div>
             </header>
         </div>

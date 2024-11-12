@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import userSlice from "../slices/userSlice";
 import courseSlice from "../slices/courseSlice";
+import userProgressSlice from "../slices/userProgressSlice";
 
 export const makeStore = () =>
     configureStore({
         reducer: {
             user: userSlice,
             course: courseSlice,
+            userProgress: userProgressSlice,
         },
     });
 
