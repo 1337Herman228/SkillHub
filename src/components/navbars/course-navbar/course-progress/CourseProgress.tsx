@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import CourseProgress from "@/components/course-progress/CourseProgress";
 import { useAppSelector } from "@/lib/redux/store/store";
 import Spinner from "@/components/spinners/spinner/Spinner";
-import { useSession } from "next-auth/react";
 
 export interface IUserProgress {
     progressInPercents: number;
@@ -39,7 +38,7 @@ const CourseProgressNav = ({
 
     const fetchUserProgress = async () => {
         if (user?.userId) {
-            await getAndDispatchUserProgress(user.userId, courseId);
+            await getAndDispatchUserProgress(courseId);
         }
     };
 

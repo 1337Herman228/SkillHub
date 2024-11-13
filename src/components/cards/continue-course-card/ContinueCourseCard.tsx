@@ -16,7 +16,7 @@ const ContinueCourseCard = ({ course }: ContinueCourseCardProps) => {
 
     return (
         <div className="continue-course-card">
-            <Link href={`/course/${course.course.courseId}`}>
+            <Link href={`/my-courses/${course.course.courseId}/lessons`}>
                 <img
                     className="continue-course-card__img"
                     src={"upload-images/" + course.course.courseImg}

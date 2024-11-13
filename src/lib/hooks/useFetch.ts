@@ -7,7 +7,7 @@ import useHttp from "./useHttp";
 import { setUser } from "../redux/slices/userSlice";
 import { setCourseState } from "../redux/slices/courseSlice";
 import { FieldValues } from "react-hook-form";
-import { IUser } from "@/interfaces/types";
+import { IAddAnswer, IAddQuestion, IAnswer, IUser } from "@/interfaces/types";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
 import { ITextLessonFormFields } from "@/components/forms/create-lesson-form/text-lesson-form/TextLessonForm";
 import { ITestLessonFormFields } from "@/components/forms/create-lesson-form/test-lesson-form/TestLessonForm";
@@ -64,9 +64,8 @@ const useFetch = () => {
     };
 
     const markLessonAsPassed = async (
-        userId: number,
-        lessonId: number,
-        courseId: number
+        lessonId: number | string,
+        courseId: number | string
     ) => {
         if (token) {
             const response = await requestJson(
@@ -74,7 +73,7 @@ const useFetch = () => {
                 `http://localhost:8080/user/mark-lesson-as-passed`,
                 "POST",
                 JSON.stringify({
-                    userId: userId,
+                    userId: user?.userId,
                     courseId: courseId,
                     lessonId: lessonId,
                 })
@@ -237,16 +236,23 @@ const useFetch = () => {
         }
     };
 
-    const getAndDispatchUserProgress = async (
-        userId: string | number,
-        courseId: string | number
-    ) => {
+    const getAndDispatchUserProgress = async (courseId: string | number) => {
         if (token) {
             const data = await requestJson(
                 token,
-                `http://localhost:8080/user/get-user-progress/${userId}/${courseId}`
+                `http://localhost:8080/user/get-user-progress/${user?.userId}/${courseId}`
             );
             dispatch(setUserProgressState(data));
+        }
+    };
+
+    const getQuestionsForLesson = async (lessonId: string | number) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-questions-for-lesson/${lessonId}`
+            );
+            return data;
         }
     };
 
@@ -607,6 +613,30 @@ const useFetch = () => {
         }
     };
 
+    const addAnswerToQuestion = async (answer: IAddAnswer) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/add-answer`,
+                "POST",
+                JSON.stringify({ ...answer, userId: user?.userId })
+            );
+            return data;
+        }
+    };
+
+    const addQuestionToLesson = async (question: IAddQuestion) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/add-question`,
+                "POST",
+                JSON.stringify({ ...question })
+            );
+            return data;
+        }
+    };
+
     return {
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
@@ -618,8 +648,11 @@ const useFetch = () => {
         getUserInterestCourses,
         getRequestAccessUsers,
         getLessonPassedStatus,
+        getQuestionsForLesson,
         markLessonAsUnpassed,
+        addAnswerToQuestion,
         getAllCourseChapters,
+        addQuestionToLesson,
         getAndDispatchCourse,
         approveCourseAccess,
         rejectCourseAccess,

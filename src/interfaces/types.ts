@@ -219,6 +219,38 @@ export interface IProfileSectionInfo {
     children?: React.ReactNode;
 }
 
+export interface IQuestion {
+    questionId: number;
+    user: IUser;
+    createdAt: Date;
+    updatedAt: Date;
+    body: string;
+    answers: IAnswer[];
+}
+export interface IAnswer {
+    answerId: number;
+    questionId: number;
+    user: IUser;
+    body: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IAddAnswer {
+    questionId: number;
+    userId: number;
+    body: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export interface IAddQuestion {
+    lessonId: number;
+    userId: number;
+    createdAt: Date;
+    updatedAt: Date;
+    body: string;
+}
+
 export type TRole = "user" | "teacher" | "admin";
 
 export type NotificationType = "success" | "info" | "warning" | "error";

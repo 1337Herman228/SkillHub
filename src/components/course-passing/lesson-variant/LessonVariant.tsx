@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import VideoPlayer from "../video-player/VideoPlayer";
 import useFetch from "@/lib/hooks/useFetch";
-import {
-    ICourseInfoUrlParams,
-    ILessonWithLessonType,
-} from "@/interfaces/types";
+import { ILessonWithLessonType } from "@/interfaces/types";
 import { useSession } from "next-auth/react";
 import Spinner from "@/components/spinners/spinner/Spinner";
 import "./LessonVariant.scss";
@@ -52,6 +49,7 @@ const LessonVariant = () => {
                 if (!lesson?.testLesson) return null;
                 return (
                     <TestLesson
+                        courseId={String(params?.["course-id"] ?? "")}
                         title={lesson.testLesson.name}
                         testLesson={lesson.testLesson}
                     />

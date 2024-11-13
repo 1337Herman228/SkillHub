@@ -1,0 +1,21 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/media" as *;
+@use "../../../../styles/mixins" as *;
+
+.questions-container {
+    padding-inline: 15px;
+    padding-bottom: 20px;
+
+    .questions-title {
+        padding-top: 20px;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .questions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-block: 20px;
+    }
+}

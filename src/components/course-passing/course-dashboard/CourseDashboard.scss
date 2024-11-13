@@ -1,0 +1,54 @@
+@use "../../../styles/mixins" as *;
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+
+.dashboard-container {
+    padding-inline: 15px;
+
+    .dashboard {
+        display: flex;
+        gap: 15px;
+        border-bottom: 1px solid var(--grey);
+
+        &__item {
+            position: relative;
+            @include reset-button;
+            padding-block: 12px;
+            transition-duration: var(--transition-duration);
+            cursor: pointer;
+
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--dark-grey);
+
+            &::after {
+                content: "";
+                position: absolute;
+                transition-duration: var(--transition-duration);
+                bottom: 0;
+                width: 0;
+                height: 2px;
+                background-color: var(--light-black);
+                left: 50%;
+                translate: -50%;
+            }
+
+            @include hover {
+                color: var(--light-black);
+                &::after {
+                    width: 100%;
+                }
+            }
+
+            &.active {
+                color: var(--light-black);
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .content {
+    }
+}

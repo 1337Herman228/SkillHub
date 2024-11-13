@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PassLessonBtn from "../pass-lesson-btn/PassLessonBtn";
 import HoverModalOpenBtn from "@/components/buttons/hover-modal-open-btn/HoverModalOpenBtn";
 import HoverModal from "@/components/modals/hover-modal/HoverModal";
@@ -94,14 +94,11 @@ const Lesson = ({
                         />
                     ) : (
                         <>
-                            {lesson?.lessonType !== "TEST" ? (
-                                <PassLessonBtn
-                                    courseId={courseId}
-                                    lessonId={lesson.lessonId}
-                                />
-                            ) : (
-                                <div />
-                            )}
+                            <PassLessonBtn
+                                courseId={courseId}
+                                lessonId={lesson.lessonId}
+                                isTest={lesson?.lessonType === "TEST"}
+                            />
                         </>
                     )}
                 </div>
