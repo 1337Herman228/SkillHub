@@ -27,7 +27,7 @@ export default function RootLayout({
                         {isCourseOpen ? (
                             <DoubleNavbar isUserNavbar isCourseNavbar />
                         ) : (
-                            <Navbar role="teacher" />
+                            <Navbar role="user" />
                         )}
                         {children}
                         <Footer role="user" />

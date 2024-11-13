@@ -26,10 +26,11 @@ type TextEditorProps = {
     htmlText?: string;
     title?: string;
     setStateFunc: (state: string) => void;
+    style?: React.CSSProperties;
 };
 
 const TextEditor: React.FC<TextEditorProps> = memo(
-    ({ htmlText, title, setStateFunc, errorMessage, isInvalid }) => {
+    ({ style, htmlText, title, setStateFunc, errorMessage, isInvalid }) => {
         const editorRef = useRef<Editor>(null);
 
         const [editorState, setEditorState] = useState<EditorState>(
@@ -84,7 +85,7 @@ const TextEditor: React.FC<TextEditorProps> = memo(
         };
 
         return (
-            <div className="text-editor-container">
+            <div style={style} className="text-editor-container">
                 <div className="title">{title}</div>
                 <div className={`text-editor ${isInvalid ? "invalid" : ""}`}>
                     <div className="toolbar">

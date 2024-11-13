@@ -7,6 +7,7 @@ import LessonVariant from "./lesson-variant/LessonVariant";
 import { useAppSelector } from "@/lib/redux/store/store";
 import StubWithBtn from "../stubs/stub-with-btn/StubWithBtn";
 import Spinner from "../spinners/spinner/Spinner";
+import CourseDashboard from "./course-dashboard/CourseDashboard";
 
 interface CoursePassingProps {
     role?: TRole;
@@ -14,8 +15,6 @@ interface CoursePassingProps {
 
 const CoursePassing = ({ role = "user" }: CoursePassingProps) => {
     const course = useAppSelector((state) => state.course);
-
-    console.log("course", course);
 
     return (
         <>
@@ -25,7 +24,9 @@ const CoursePassing = ({ role = "user" }: CoursePassingProps) => {
                         <div className="left-part__lesson">
                             <LessonVariant />
                         </div>
-                        <div className="left-part__dashboard">Обзор</div>
+                        <div className="left-part__dashboard">
+                            <CourseDashboard course={course} />
+                        </div>
                     </div>
                     <div className="right-part">
                         <Materials course={course} role={role} />

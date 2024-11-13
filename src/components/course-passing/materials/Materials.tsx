@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppSelector } from "@/lib/redux/store/store";
 import "./Materials.scss";
 import Chapter from "./chapter/Chapter";
 import Spinner from "@/components/spinners/spinner/Spinner";

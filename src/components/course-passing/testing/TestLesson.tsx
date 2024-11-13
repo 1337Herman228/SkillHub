@@ -10,13 +10,17 @@ import MyPieChart, {
 } from "@/components/charts/pie/MyPieChart";
 import TestFinished from "./TestFinished";
 import WrongAnswersInfo from "./WrongAnswersInfo";
+import useFetch from "@/lib/hooks/useFetch";
 
 interface TestLessonProps {
     testLesson?: ITestLesson;
     title: string;
+    courseId?: number | string;
 }
 
-const TestLesson = memo(({ testLesson, title }: TestLessonProps) => {
+const TestLesson = memo(({ testLesson, title, courseId }: TestLessonProps) => {
+    const { getAndDispatchUserProgress, markLessonAsPassed } = useFetch();
+
     const [isTestEnded, setIsTestEnded] = useState(false);
     const [isTestFinished, setIsTestFinished] = useState(false);
 
@@ -26,11 +30,20 @@ const TestLesson = memo(({ testLesson, title }: TestLessonProps) => {
 
     const [testResults, setTestResults] = useState<ITestResult[]>([]);
 
-    // console.log("isTestFinished", isTestFinished);
-    console.log("testResults", testResults);
-
     //TODO: написать логику для отправки данных на сервер и сохранения результатов теста
-    const endTest = () => {};
+    const endTest = async () => {
+        const { correctAnswersPercentage } = getResultsInfo();
+        if (correctAnswersPercentage >= 80 && testLesson && courseId) {
+            await markLessonAsPassed(testLesson?.lessonId, courseId);
+            await getAndDispatchUserProgress(courseId);
+        }
+    };
+
+    useEffect(() => {
+        if (isTestEnded) {
+            endTest();
+        }
+    }, [isTestEnded]);
 
     const getResultsInfo = useCallback(() => {
         const correctAnswers = testResults.filter((result) => result.isCorrect);

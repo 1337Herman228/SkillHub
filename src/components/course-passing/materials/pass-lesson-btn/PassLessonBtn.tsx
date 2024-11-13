@@ -10,16 +10,19 @@ interface PassLessonBtnProps {
     isChecked?: boolean;
     courseId?: number;
     lessonId?: number;
+    isTest?: boolean;
 }
 
 const PassLessonBtn = ({
     isChecked = false,
     lessonId,
     courseId,
+    isTest,
 }: PassLessonBtnProps) => {
     const user = useAppSelector((state) => state.user.user);
 
     const {
+        getAndDispatchUserProgress,
         getLessonPassedStatus,
         markLessonAsUnpassed,
         markLessonAsPassed,
@@ -51,19 +54,14 @@ const PassLessonBtn = ({
     const onToggleMark = async () => {
         if (user?.userId && lessonId && courseId) {
             if (!isCheckedState) {
-                //Отмечаем как пройденный
-
-                const resp = await markLessonAsPassed(
-                    user?.userId,
-                    lessonId,
-                    courseId
-                );
-                // console.log("Отмечаем как пройденный", resp);
+                await markLessonAsPassed(lessonId, courseId);
             }
             //Отмечаем как не пройденный
             else {
-                markLessonAsUnpassed(user?.userId, lessonId);
+                await markLessonAsUnpassed(user?.userId, lessonId);
             }
+            //Подгружаем прогресс
+            await getAndDispatchUserProgress(courseId);
         }
     };
 
@@ -71,8 +69,13 @@ const PassLessonBtn = ({
         return <Spinner size="15px" />;
     }
 
+    if (isTest && !isCheckedState) {
+        return <div />;
+    }
+
     return (
         <button
+            disabled={isTest && isCheckedState}
             onClick={(e) => onHandleClick(e)}
             className={`pass-lesson-btn ${isCheckedState ? "checked" : ""}`}
         >

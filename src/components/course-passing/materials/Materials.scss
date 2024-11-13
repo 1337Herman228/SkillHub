@@ -3,6 +3,9 @@
 @use "../../../styles/media" as *;
 
 .materials-container {
+    //Добавить sticky и чтобы оставался на месте при скроле
+    // overflow-y: scroll;
+
     .materials-title {
         padding: 16px;
         border-bottom: var(--border-grey);
