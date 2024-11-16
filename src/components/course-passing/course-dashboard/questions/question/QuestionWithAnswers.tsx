@@ -15,6 +15,9 @@ interface QuestionWithAnswersProps {
 }
 
 const QuestionWithAnswers = ({ question }: QuestionWithAnswersProps) => {
+    const [isAnswersOpen, setIsAnswersOpen] = useState(false);
+    const [addAnswer, setAddAnswer] = useState("");
+
     const user = useAppSelector((state) => state.user.user);
     const answers = question.answers;
 
@@ -30,13 +33,16 @@ const QuestionWithAnswers = ({ question }: QuestionWithAnswersProps) => {
         });
     };
 
-    const [isAnswersOpen, setIsAnswersOpen] = useState(false);
-    const [addAnswer, setAddAnswer] = useState("");
-
     const { addAnswerToQuestion } = useFetch();
 
     const handleAddAnswer = async () => {
-        if (addAnswer) {
+        if (addAnswer.length < 10) {
+            MyNotification(
+                "warning",
+                "Пустой ответ",
+                "Перед добавлением ответа нужно заполнить поле ответа!"
+            );
+        } else if (addAnswer) {
             const resp = await addAnswerToQuestion({
                 questionId: question.questionId,
                 userId: user?.userId ?? 0,
@@ -59,13 +65,6 @@ const QuestionWithAnswers = ({ question }: QuestionWithAnswersProps) => {
             } else if (resp === "BAD_REQUEST") {
                 MyNotification("error", "Ошибка", "Что-то пошло не так");
             }
-        }
-        if (addAnswer.length < 10) {
-            MyNotification(
-                "warning",
-                "Пустой ответ",
-                "Перед добавлением ответа нужно заполнить поле ответа!"
-            );
         }
     };
 

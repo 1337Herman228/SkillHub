@@ -7,7 +7,13 @@ import useHttp from "./useHttp";
 import { setUser } from "../redux/slices/userSlice";
 import { setCourseState } from "../redux/slices/courseSlice";
 import { FieldValues } from "react-hook-form";
-import { IAddAnswer, IAddQuestion, IAnswer, IUser } from "@/interfaces/types";
+import {
+    IAddAnswer,
+    IAddQuestion,
+    IAnswer,
+    INote,
+    IUser,
+} from "@/interfaces/types";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
 import { ITextLessonFormFields } from "@/components/forms/create-lesson-form/text-lesson-form/TextLessonForm";
 import { ITestLessonFormFields } from "@/components/forms/create-lesson-form/test-lesson-form/TestLessonForm";
@@ -637,6 +643,33 @@ const useFetch = () => {
         }
     };
 
+    const getUserNote = async (lessonId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-user-note/${user?.userId}/${lessonId}`
+            );
+            return data;
+        }
+    };
+
+    const saveUserNote = async (note: INote) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/save-user-note`,
+                "POST",
+                JSON.stringify({
+                    createdAt: note.createdAt,
+                    userId: user?.userId,
+                    lessonId: note.lessonId,
+                    text: note.text,
+                })
+            );
+            return data;
+        }
+    };
+
     return {
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
@@ -675,7 +708,9 @@ const useFetch = () => {
         getAllCourses,
         deleteCourse,
         deleteLesson,
+        saveUserNote,
         addNewCourse,
+        getUserNote,
         editCourse,
         putAvatar,
         isLoading,

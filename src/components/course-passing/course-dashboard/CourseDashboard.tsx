@@ -7,6 +7,7 @@ import Questions from "./questions/Questions";
 import Notes from "./notes/Notes";
 import Reviews from "./reviews/Reviews";
 import { ICourseInfoNullable } from "@/interfaces/types";
+import { useParams } from "next/navigation";
 
 type TTabNames = "about" | "questions" | "notes" | "reviews";
 
@@ -15,6 +16,7 @@ interface CourseDashboardProps {
 }
 
 const CourseDashboard = ({ course }: CourseDashboardProps) => {
+    const params = useParams();
     const [tabName, setTabName] = useState<TTabNames>("about");
 
     return (
@@ -55,8 +57,8 @@ const CourseDashboard = ({ course }: CourseDashboardProps) => {
             </div>
             <div className="content">
                 {tabName === "about" && <AboutCourse course={course} />}
-                {tabName === "questions" && <Questions />}
-                {tabName === "notes" && <Notes />}
+                {tabName === "questions" && <Questions params={params} />}
+                {tabName === "notes" && <Notes params={params} />}
                 {tabName === "reviews" && <Reviews />}
             </div>
         </div>

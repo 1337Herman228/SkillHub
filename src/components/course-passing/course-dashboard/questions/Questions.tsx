@@ -11,12 +11,12 @@ import DOMPurify from "dompurify";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { notification } from "antd";
 
-interface QuestionsProps {}
+interface QuestionsProps {
+    params: Record<string, string | string[]> | null;
+}
 
-const Questions = ({}: QuestionsProps) => {
+const Questions = ({ params }: QuestionsProps) => {
     const user = useAppSelector((state) => state.user.user);
-    const params = useParams();
-
     const [api, contextHolder] = notification.useNotification();
     const MyNotification = (
         type: NotificationType,
@@ -49,7 +49,13 @@ const Questions = ({}: QuestionsProps) => {
     };
 
     const handleAddQuestion = async () => {
-        if (questionText) {
+        if (questionText.length < 10) {
+            MyNotification(
+                "warning",
+                "Пустой вопрос",
+                "Перед добавлением вопроса нужно заполнить поле вопроса!"
+            );
+        } else if (questionText) {
             const resp = await addQuestionToLesson({
                 lessonId: Number(params?.["lesson-id"] ?? ""),
                 userId: user?.userId ?? 0,
@@ -81,13 +87,6 @@ const Questions = ({}: QuestionsProps) => {
             } else if (resp === "BAD_REQUEST") {
                 MyNotification("error", "Ошибка", "Что-то пошло не так");
             }
-        }
-        if (questionText.length < 10) {
-            MyNotification(
-                "warning",
-                "Пустой ответ",
-                "Перед добавлением ответа нужно заполнить поле ответа!"
-            );
         }
     };
 
@@ -121,7 +120,7 @@ const Questions = ({}: QuestionsProps) => {
                         onClick={handleAddQuestion}
                         className="black-submit-button "
                     >
-                        Добавить ответ
+                        Добавить вопрос
                     </button>
                     <button
                         style={{ marginLeft: "10px" }}
