@@ -7,6 +7,7 @@ import Navbar from "@/components/navbars/user-navbar/Navbar";
 import Footer from "@/components/footers/user-footer/Footer";
 import { useParams } from "next/navigation";
 import DoubleNavbar from "@/components/navbars/course-navbar/DoubleNavbar";
+import AntdConfigProvider from "@/components/providers/AntdConfigProvider";
 
 export default function RootLayout({
     children,
@@ -22,17 +23,19 @@ export default function RootLayout({
                 <title>SkillHub</title>
             </head>
             <body>
-                <StoreProvider>
-                    <MySessionProvider>
-                        {isCourseOpen ? (
-                            <DoubleNavbar isUserNavbar isCourseNavbar />
-                        ) : (
-                            <Navbar role="user" />
-                        )}
-                        {children}
-                        <Footer role="user" />
-                    </MySessionProvider>
-                </StoreProvider>
+                <AntdConfigProvider>
+                    <StoreProvider>
+                        <MySessionProvider>
+                            {isCourseOpen ? (
+                                <DoubleNavbar isUserNavbar isCourseNavbar />
+                            ) : (
+                                <Navbar role="user" />
+                            )}
+                            {children}
+                            <Footer role="user" />
+                        </MySessionProvider>
+                    </StoreProvider>
+                </AntdConfigProvider>
             </body>
         </html>
     );

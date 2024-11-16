@@ -8,10 +8,10 @@ const AntdConfigProvider = ({ children }: { children: React.ReactNode }) => {
                 components: {
                     Notification: {
                         zIndexPopup: 10000,
-                        colorBgElevated: "#212121",
-                        colorText: "var(--white)",
-                        colorTextHeading: "var(--white)",
-                        colorIcon: "var(--white)",
+                        colorBgElevated: "var(--white)",
+                        colorText: "var(--light-black)",
+                        colorTextHeading: "var(--light-black)",
+                        colorIcon: "var(--light-black)",
                         colorIconHover: "gray",
                     },
                 },

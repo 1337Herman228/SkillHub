@@ -251,6 +251,14 @@ export interface IAddQuestion {
     body: string;
 }
 
+export interface INote {
+    lessonId?: number | null;
+    userId?: number | null;
+    createdAt?: Date | null;
+    noteId?: number | null;
+    text?: string | null;
+}
+
 export type TRole = "user" | "teacher" | "admin";
 
 export type NotificationType = "success" | "info" | "warning" | "error";

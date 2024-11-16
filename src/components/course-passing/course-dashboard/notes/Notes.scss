@@ -1,0 +1,13 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/media" as *;
+
+.notes-container {
+    max-width: 800px;
+    margin-top: 15px;
+
+    .notes-dashboard {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
