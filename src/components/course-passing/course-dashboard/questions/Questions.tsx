@@ -4,7 +4,6 @@ import useFetch from "@/lib/hooks/useFetch";
 import "./Questions.scss";
 import { IQuestion, NotificationType } from "@/interfaces/types";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import QuestionWithAnswers from "./question/QuestionWithAnswers";
 import TextEditor from "@/components/text-editor/TextEditor";
 import DOMPurify from "dompurify";
@@ -57,15 +56,6 @@ const Questions = ({ params }: QuestionsProps) => {
             );
         } else if (questionText) {
             const resp = await addQuestionToLesson({
-                lessonId: Number(params?.["lesson-id"] ?? ""),
-                userId: user?.userId ?? 0,
-                body: DOMPurify.sanitize(questionText),
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            });
-            console.log("resp", resp);
-
-            console.log({
                 lessonId: Number(params?.["lesson-id"] ?? ""),
                 userId: user?.userId ?? 0,
                 body: DOMPurify.sanitize(questionText),

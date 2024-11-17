@@ -10,8 +10,9 @@ import { FieldValues } from "react-hook-form";
 import {
     IAddAnswer,
     IAddQuestion,
-    IAnswer,
+    IAddReview,
     INote,
+    IReview,
     IUser,
 } from "@/interfaces/types";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
@@ -670,6 +671,54 @@ const useFetch = () => {
         }
     };
 
+    const getCourseRatingInfo = async (courseId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-course-rating-info/${courseId}`
+            );
+            return data;
+        }
+    };
+
+    const getCourseReviews = async (courseId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-course-reviews/${courseId}`
+            );
+            return data;
+        }
+    };
+
+    const getReviewByCourseAndUser = async (courseId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-review-by-course-and-user/${courseId}/${user?.userId}`
+            );
+            return data;
+        }
+    };
+
+    const saveUserReview = async (review: IAddReview) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/save-user-review`,
+                "POST",
+                JSON.stringify({
+                    createdAt: review.createdAt,
+                    userId: user?.userId,
+                    courseId: review.courseId,
+                    text: review.text,
+                    rating: review.rating,
+                })
+            );
+            return data;
+        }
+    };
+
     return {
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
@@ -678,6 +727,7 @@ const useFetch = () => {
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
         getHasAccessUsersByName,
+        getReviewByCourseAndUser,
         getUserInterestCourses,
         getRequestAccessUsers,
         getLessonPassedStatus,
@@ -685,6 +735,7 @@ const useFetch = () => {
         markLessonAsUnpassed,
         addAnswerToQuestion,
         getAllCourseChapters,
+        getCourseRatingInfo,
         addQuestionToLesson,
         getAndDispatchCourse,
         approveCourseAccess,
@@ -697,6 +748,7 @@ const useFetch = () => {
         getHasAccessUsers,
         removeUserAccess,
         getCoursesByName,
+        getCourseReviews,
         addNewTextLesson,
         addNewTestLesson,
         editVideoLesson,
@@ -705,6 +757,7 @@ const useFetch = () => {
         editTestLesson,
         getLessonById,
         addNewChapter,
+        saveUserReview,
         getAllCourses,
         deleteCourse,
         deleteLesson,
