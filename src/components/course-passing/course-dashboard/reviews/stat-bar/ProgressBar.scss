@@ -1,0 +1,12 @@
+.progress-bar {
+    width: 100%; /* Ширина полосы прогресса */
+    height: 8px; /* Высота полосы прогресса */
+    background-color: var(--grey); /* Цвет фона */
+    overflow: hidden; /* Скрытие переполнения */
+}
+
+.progress-fill {
+    height: 100%; /* Полная высота заполненной части */
+    background-color: var(--dark-grey); /* Цвет заполненной части */
+    transition: width 0.3s ease; /* Плавный переход при изменении ширины */
+}

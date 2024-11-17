@@ -5,9 +5,21 @@ import { useMediaQuery } from "react-responsive";
 interface ScrollableBlockProps {
     itemsToScroll: number; // Количество элементов для прокрутки
     children: React.ReactNode;
+    _itemWidth?: number;
+    gapDesktop?: number;
+    gapMobile?: number;
+    cardsCountDesktop?: number;
+    cardsCountTablet?: number;
+    cardsCountMobile?: number;
 }
 
 const ScrollableBlock: React.FC<ScrollableBlockProps> = ({
+    cardsCountDesktop = 3,
+    cardsCountTablet = 2,
+    cardsCountMobile = 1.4,
+    _itemWidth = 320,
+    gapDesktop = 20,
+    gapMobile = 15,
     itemsToScroll = 1,
     children,
 }) => {
@@ -19,10 +31,10 @@ const ScrollableBlock: React.FC<ScrollableBlockProps> = ({
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
     //  Ширина элемента
-    const gap = isMobileDevice ? 15 : 20;
+    const gap = isMobileDevice ? gapMobile : gapDesktop;
 
     // Устанавливаем ширину элемента
-    let itemWidth = 320;
+    let itemWidth = _itemWidth;
 
     // Обновляем состояние кнопок, когда компоненты монтируются
     useEffect(() => {
@@ -95,6 +107,36 @@ const ScrollableBlock: React.FC<ScrollableBlockProps> = ({
         }
     }, [children, itemsToScroll, isMobileDevice]);
 
+    //Присвоение значений кол-ва карточек и отступов
+    useEffect(() => {
+        const scrollableContainer = document.querySelector(
+            ".scrollable-container"
+        ) as HTMLElement;
+        if (scrollableContainer) {
+            //Устанавливаем отступы между элементами
+            scrollableContainer.style.setProperty(
+                "--gap-desktop",
+                `${gapDesktop}px`
+            );
+            scrollableContainer.style.setProperty(
+                "--gap-mobile",
+                `${gapMobile}px`
+            );
+            scrollableContainer.style.setProperty(
+                "--cards-count-desktop",
+                `${cardsCountDesktop}`
+            );
+            scrollableContainer.style.setProperty(
+                "--cards-count-tablet",
+                `${cardsCountTablet}`
+            );
+            scrollableContainer.style.setProperty(
+                "--cards-count-mobile",
+                `${cardsCountMobile}`
+            );
+        }
+    }, []);
+
     return (
         <div className="scrollable-block">
             <button
@@ -107,7 +149,7 @@ const ScrollableBlock: React.FC<ScrollableBlockProps> = ({
                     width={21}
                     height={14}
                     alt=""
-                    src={"svg/white-arrow-left.svg"}
+                    src={"/svg/white-arrow-left.svg"}
                 />
             </button>
             <div className="scrollable-container" ref={scrollContainerRef}>
@@ -123,7 +165,7 @@ const ScrollableBlock: React.FC<ScrollableBlockProps> = ({
                     width={21}
                     height={14}
                     alt=""
-                    src={"svg/white-arrow-right.svg"}
+                    src={"/svg/white-arrow-right.svg"}
                 />
             </button>
         </div>

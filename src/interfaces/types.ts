@@ -259,6 +259,33 @@ export interface INote {
     text?: string | null;
 }
 
+export interface ICourseRatingInfo {
+    courseId: number;
+    rating: number;
+    star1Percentage: number;
+    star2Percentage: number;
+    star3Percentage: number;
+    star4Percentage: number;
+    star5Percentage: number;
+}
+
+export interface IReview {
+    courseId: number;
+    createdAt: Date;
+    rating: number;
+    reviewId: number;
+    text: string;
+    user: IUser;
+}
+
+export interface IAddReview {
+    courseId: number;
+    createdAt: Date;
+    rating: number;
+    text: string;
+    userId: number;
+}
+
 export type TRole = "user" | "teacher" | "admin";
 
 export type NotificationType = "success" | "info" | "warning" | "error";

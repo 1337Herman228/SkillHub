@@ -1,0 +1,59 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/media" as *;
+@use "../../../../../styles/mixins" as *;
+
+.review {
+    display: flex;
+    gap: 13px;
+
+    &__user-avatar {
+        flex-shrink: 0;
+        border-radius: 50%;
+    }
+
+    &__body {
+        .username {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            &__date {
+                color: var(--purple);
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 1;
+            }
+        }
+
+        .review-text {
+            font-size: 14px;
+        }
+    }
+
+    .answers-count {
+        align-self: end;
+
+        &__btn {
+            @include reset-button;
+            display: flex;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--dark-grey);
+            cursor: pointer;
+            padding: 5px;
+
+            @include hover {
+                background-color: var(--grey);
+                border-radius: 5px;
+            }
+        }
+    }
+}

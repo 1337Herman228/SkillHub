@@ -29,6 +29,10 @@
             opacity: 1;
         }
 
+        // @include mobile {
+        //     opacity: 1;
+        // }
+
         &::before {
             content: "";
             position: absolute;

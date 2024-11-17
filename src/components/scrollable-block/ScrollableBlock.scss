@@ -18,8 +18,14 @@
     .scrollable-container {
         display: grid;
 
-        --gap: 20px; //расстояние между карточками
-        --cards-count: 3; // кол-во карточек
+        --gap-desktop: 20px;
+        --gap: var(--gap-desktop); //расстояние между карточками
+        --gap-mobile: 15px;
+
+        --cards-count-desktop: 3;
+        --cards-count: var(--cards-count-desktop); // кол-во карточек
+        --cards-count-tablet: 2;
+        --cards-count-mobile: 1.4;
 
         // Формула, чтобы ширины столбца соответствовала кол-ву карточек
         grid-auto-columns: calc((100% - (var(--cards-count) - 1) * var(--gap)) / var(--cards-count));
@@ -37,12 +43,12 @@
         width: 100%; /* Ширина контейнера */
 
         @include tablet {
-            --cards-count: 2;
+            --cards-count: var(--cards-count-tablet);
         }
 
         @include mobile {
-            --cards-count: 1.4;
-            --gap: 15px;
+            --cards-count: var(--cards-count-mobile);
+            --gap: var(--gap-mobile);
         }
 
         .item {

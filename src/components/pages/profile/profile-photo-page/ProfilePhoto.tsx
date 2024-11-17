@@ -69,7 +69,7 @@ const ProfilePhoto = () => {
 
     return (
         <div className="profile-photo-form form-container-profile">
-            <div className="profile-photo">
+            <div className="">
                 <div className="profile-photo__label">Изображение:</div>
 
                 {user?.person?.avatarImg ? (

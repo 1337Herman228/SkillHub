@@ -6,9 +6,30 @@
     padding-inline: 15px;
 
     .dashboard {
-        display: flex;
-        gap: 15px;
-        border-bottom: 1px solid var(--grey);
+        &__desktop {
+            display: flex;
+            gap: 15px;
+            border-bottom: 1px solid var(--grey);
+        }
+
+        &__mobile {
+            position: relative;
+            max-width: 1250px;
+            width: 95vw;
+
+            .scrollable-container {
+                display: flex;
+                gap: 15px;
+                overflow: auto;
+                overflow-y: hidden;
+                scrollbar-width: none; /* Скрыть скроллбар */
+                scroll-snap-type: x mandatory; /* Включить прилипания */
+                touch-action: manipulation; /* Разрешить только манипуляции */
+                -webkit-overflow-scrolling: touch; /* Плавная прокрутка для iOS */
+                width: 100%; /* Ширина контейнера */
+                text-wrap: nowrap;
+            }
+        }
 
         &__item {
             position: relative;

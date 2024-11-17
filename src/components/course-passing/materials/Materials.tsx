@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 interface MaterialsProps {
     role: TRole;
     course: ICourseInfoNullable;
+    isHiddenMobile?: boolean;
 }
 
-const Materials = ({ role, course }: MaterialsProps) => {
+const Materials = ({ role, course, isHiddenMobile = true }: MaterialsProps) => {
     const router = useRouter();
 
     if (!course || !course.chapters || !course.lessons) {
@@ -23,7 +24,11 @@ const Materials = ({ role, course }: MaterialsProps) => {
     }
 
     return (
-        <div className="materials-container">
+        <div
+            className={`materials-container ${
+                isHiddenMobile && "hidden-mobile"
+            }`}
+        >
             <div className="materials-title">Материалы курса</div>
 
             <ul className="materials">
