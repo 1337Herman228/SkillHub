@@ -1,7 +1,7 @@
 "use client";
 
 import WantToTeachForm from "@/components/forms/profile-forms/want-to-teach-form/WantToTeachForm";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { ConfigProvider, notification } from "antd";

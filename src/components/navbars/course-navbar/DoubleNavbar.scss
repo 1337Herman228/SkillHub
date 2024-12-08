@@ -4,6 +4,7 @@
 
 .double-header-wrapper {
     .double-header {
+        position: relative;
         height: 70px;
         width: 100%;
         z-index: 900;
@@ -12,9 +13,10 @@
 
         .double-navbar {
             height: 100%;
-            display: flex;
+            white-space: nowrap; /* Отключает перенос текста на новую строку */
+            overflow-x: auto; /* Включает горизонтальную прокрутку */
+            display: flex; /* Убедитесь, что это блоковый элемент */
             align-items: center;
-            justify-content: space-between;
 
             .header-inner {
                 display: flex;
@@ -102,8 +104,10 @@
             }
 
             .header-nav {
-                // display: flex;
-                // align-items: end;
+                display: inline-block; /* Размещает элементы в одну строку */
+                white-space: nowrap; /* Предотвращает перенос */
+                padding: 0;
+                margin: 0;
 
                 &__item {
                     position: relative;
@@ -111,6 +115,8 @@
                     font-weight: 500;
                     padding-block: 5px;
                     padding-inline: 12px;
+
+                    display: inline-block; /* Размещает ссылки в одну строку */
 
                     &.current-link {
                         color: var(--dark-purple) !important;

@@ -1,7 +1,7 @@
 "use client";
 
 import MainProfileForm from "@/components/forms/profile-forms/main-profile-form/MainProfileForm";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../../spinners/spinner/Spinner";
 import { NotificationType } from "@/interfaces/types";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";

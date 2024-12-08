@@ -2,7 +2,7 @@
 
 import "./Materials.scss";
 import Chapter from "./chapter/Chapter";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import { ICourseInfoNullable, TRole } from "@/interfaces/types";
 import { useRouter } from "next/navigation";
 

@@ -1,0 +1,33 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/media" as *;
+@use "../../../styles/mixins" as *;
+
+.certificate-container {
+    padding-top: 20px;
+
+    .certificate-title {
+        font-size: 14px;
+        font-weight: 600;
+        padding-bottom: 4px;
+    }
+
+    .certificate-submit-btn {
+        margin-top: 2px;
+        margin-bottom: 10px;
+    }
+
+    .certificate-iframe {
+        width: 50vw;
+        max-width: 1250px;
+        margin-bottom: 30px;
+        height: 700px;
+
+        @include tablet {
+            width: 70vw;
+        }
+
+        @include mobile {
+            width: 70vw;
+        }
+    }
+}

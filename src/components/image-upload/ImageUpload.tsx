@@ -2,14 +2,7 @@
 
 import "./ImageUpload.scss";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-    ConfigProvider,
-    GetProp,
-    Image,
-    Upload,
-    UploadFile,
-    UploadProps,
-} from "antd";
+import { ConfigProvider, GetProp, Image, Upload, UploadProps } from "antd";
 import { UploadListType } from "antd/es/upload/interface";
 import { useState } from "react";
 

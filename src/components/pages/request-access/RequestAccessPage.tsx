@@ -2,7 +2,7 @@
 
 import "../has-access/HasAccessPage.scss";
 import CustomSearch from "@/components/search/custom-search/CustomSearch";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import StubWithBtn from "@/components/stubs/stub-with-btn/StubWithBtn";
 import { useEffect, useState } from "react";
 import AccessCard from "@/components/cards/access-card/AccessCard";

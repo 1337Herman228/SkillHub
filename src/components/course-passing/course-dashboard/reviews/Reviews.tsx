@@ -10,7 +10,7 @@ import {
     IReview,
     NotificationType,
 } from "@/interfaces/types";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../spinners/spinner/Spinner";
 import ReviewCard from "./review-card/ReviewCard";
 import TextEditor from "@/components/text-editor/TextEditor";
 import { useAppSelector } from "@/lib/redux/store/store";

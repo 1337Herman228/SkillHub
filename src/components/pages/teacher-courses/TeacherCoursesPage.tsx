@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useFetch from "@/lib/hooks/useFetch";
 import { IAllCourse } from "@/interfaces/types";
 import CustomSearch from "@/components/search/custom-search/CustomSearch";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import CourseCard from "@/components/cards/course-card/CourseCard";
 import { useAppSelector } from "@/lib/redux/store/store";
 import Link from "next/link";

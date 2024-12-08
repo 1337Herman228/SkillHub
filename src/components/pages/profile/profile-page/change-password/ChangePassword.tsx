@@ -1,7 +1,7 @@
 "use client";
 
 import ChangePasswordForm from "@/components/forms/profile-forms/change-password-form/ChangePasswordForm";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../../spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 import { useAppSelector } from "@/lib/redux/store/store";
 import { ConfigProvider, notification } from "antd";

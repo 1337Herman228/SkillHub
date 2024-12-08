@@ -1,7 +1,7 @@
 "use client";
 
 import CreateLessonForm from "@/components/forms/create-lesson-form/CreateLessonForm";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import { ILessonWithLessonType, TLessonType } from "@/interfaces/types";
 import useFetch from "@/lib/hooks/useFetch";
 import { useSession } from "next-auth/react";
