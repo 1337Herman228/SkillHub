@@ -125,6 +125,33 @@ const useFetch = () => {
         }
     };
 
+    const changeCourseCertificate = async (
+        courseId: number,
+        certificatePath: string
+    ) => {
+        if (token) {
+            await requestJson(
+                token,
+                `http://localhost:8080/teacher/change-course-certificate`,
+                "PUT",
+                JSON.stringify({
+                    courseId: courseId,
+                    certificatePath: certificatePath,
+                })
+            );
+        }
+    };
+
+    const deleteCourseCertificate = async (courseId: number) => {
+        if (token) {
+            await requestJson(
+                token,
+                `http://localhost:8080/teacher/delete-course-certificate/${courseId}`,
+                "DELETE"
+            );
+        }
+    };
+
     const putAvatar = async (imgLink: string | null, user: IUser) => {
         if (token && user) {
             await requestJson(
@@ -728,6 +755,8 @@ const useFetch = () => {
         getTeacherCoursesByName,
         getHasAccessUsersByName,
         getReviewByCourseAndUser,
+        deleteCourseCertificate,
+        changeCourseCertificate,
         getUserInterestCourses,
         getRequestAccessUsers,
         getLessonPassedStatus,

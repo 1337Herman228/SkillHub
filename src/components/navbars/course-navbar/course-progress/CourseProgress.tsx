@@ -7,7 +7,7 @@ import useFetch from "@/lib/hooks/useFetch";
 import { useEffect, useRef, useState } from "react";
 import CourseProgress from "@/components/course-progress/CourseProgress";
 import { useAppSelector } from "@/lib/redux/store/store";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../spinners/spinner/Spinner";
 
 export interface IUserProgress {
     progressInPercents: number;

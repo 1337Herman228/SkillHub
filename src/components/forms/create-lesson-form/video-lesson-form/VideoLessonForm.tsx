@@ -4,7 +4,6 @@ import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import Resources from "@/components/inputs/resources/Resources";
 import {
     ILessonWithLessonType,
-    IResources,
     NotificationType,
 } from "@/interfaces/types";
 import { useAppSelector } from "@/lib/redux/store/store";

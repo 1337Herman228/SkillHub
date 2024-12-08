@@ -8,7 +8,7 @@ import { useAppSelector } from "@/lib/redux/store/store";
 import { useEffect, useState } from "react";
 import { IUserInterestCourse } from "@/interfaces/types";
 import CourseCard from "@/components/cards/course-card/CourseCard";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import useFetch from "@/lib/hooks/useFetch";
 
 const MyEducationPage = () => {

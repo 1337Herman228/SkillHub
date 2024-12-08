@@ -17,6 +17,41 @@ const useManageImg = () => {
         } catch (error) {}
     };
 
+    const savePdf = async (name: string, pdf: any) => {
+        const formData = new FormData();
+        formData.append("file", pdf);
+        formData.append("name", name.toLowerCase().replace(/\s/g, "-"));
+
+        try {
+            const response = await fetch("/api/upload-pdf", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+            } else {
+                throw new Error("Upload failed.");
+            }
+        } catch (error) {}
+    };
+
+    const deletePdf = async (name: string) => {
+        const formData = new FormData();
+        formData.append("name", name.toLowerCase().replace(/\s/g, "-"));
+
+        try {
+            const response = await fetch("/api/delete-pdf", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+            } else {
+                throw new Error("Delete failed.");
+            }
+        } catch (error) {}
+    };
+
     const deleteImg = async (imgName: string) => {
         const formData = new FormData();
         formData.append("name", imgName.toLowerCase().replace(/\s/g, "-"));
@@ -108,7 +143,9 @@ const useManageImg = () => {
         saveVideo,
         deleteVideo,
         saveImg,
+        savePdf,
         deleteImg,
+        deletePdf,
         saveSvgIcon,
         deleteSvgIcon,
     };

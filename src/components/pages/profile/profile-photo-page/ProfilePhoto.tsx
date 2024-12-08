@@ -1,6 +1,6 @@
 "use client";
 
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../spinners/spinner/Spinner";
 import "../../../forms/profile-forms/ProfileForms.scss";
 import "./ProfilePhoto.scss";
 import ImageUpload from "@/components/image-upload/ImageUpload";

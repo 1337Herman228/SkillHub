@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import "./Notes.scss";
 import useFetch from "@/lib/hooks/useFetch";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../../spinners/spinner/Spinner";
 import { INote, NotificationType } from "@/interfaces/types";
 import TextEditor from "@/components/text-editor/TextEditor";
 import { notification } from "antd";

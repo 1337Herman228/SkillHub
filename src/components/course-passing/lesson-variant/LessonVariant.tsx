@@ -5,7 +5,7 @@ import VideoPlayer from "../video-player/VideoPlayer";
 import useFetch from "@/lib/hooks/useFetch";
 import { ILessonWithLessonType } from "@/interfaces/types";
 import { useSession } from "next-auth/react";
-import Spinner from "@/components/spinners/spinner/Spinner";
+import Spinner from "../../spinners/spinner/Spinner";
 import "./LessonVariant.scss";
 import TextLesson from "../text-lesson/TextLesson";
 import TestLesson from "../testing/TestLesson";

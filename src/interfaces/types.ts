@@ -35,6 +35,7 @@ export interface ICourse {
     author: IUser;
     courseImg: string;
     courseName: string;
+    certificate: string;
     topic: string;
     skillLevel: "START" | "NORMAL" | "PRO" | "ALL";
     shortDescription: string;
