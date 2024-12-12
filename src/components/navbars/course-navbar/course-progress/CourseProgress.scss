@@ -1,3 +1,7 @@
+@use "../../../../styles/media" as *;
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+
 .course-progress-container {
     justify-self: end;
     display: grid;
@@ -10,5 +14,9 @@
             padding: 16px;
             font-weight: 700;
         }
+    }
+
+    .download-certificate {
+        margin-top: 10px;
     }
 }

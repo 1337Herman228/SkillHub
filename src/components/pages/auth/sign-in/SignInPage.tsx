@@ -43,14 +43,6 @@ const SignInPage = () => {
 
         if (response?.status === 200 && response.ok) {
             setIsOk(true);
-
-            // if (sessionData?.user?.role === "admin" && isOk) {
-            //     router.push("/admin");
-            // } else if (sessionData?.user?.role === "teacher" && isOk) {
-            //     router.push("/teacher");
-            // } else if (sessionData?.user?.role === "user" && isOk) {
-            //     router.push("/");
-            // }
         } else {
             errorAuthNotification();
         }
