@@ -13,10 +13,12 @@
 
         .double-navbar {
             height: 100%;
-            white-space: nowrap; /* Отключает перенос текста на новую строку */
-            overflow-x: auto; /* Включает горизонтальную прокрутку */
+            // white-space: nowrap; /* Отключает перенос текста на новую строку */
+            // overflow-x: auto; /* Включает горизонтальную прокрутку */
+            // overflow-y:hidden;
             display: flex; /* Убедитесь, что это блоковый элемент */
             align-items: center;
+            justify-content: space-between;
 
             .header-inner {
                 display: flex;

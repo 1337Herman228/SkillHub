@@ -17,7 +17,7 @@ const WrongAnswersInfo = ({ wrongAnswers }: WrongAnswersInfoProps) => {
                 {wrongAnswers.map((wrongAnswer) => (
                     <div key={wrongAnswer.testQuestionId} className="question">
                         <div className="question__title">
-                            {wrongAnswer.questionOrder}.
+                            {wrongAnswer.questionOrder + 1}.
                             <div className="html-block">
                                 {parse(
                                     DOMPurify.sanitize(wrongAnswer.questionText)

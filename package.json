@@ -25,6 +25,8 @@
         "html-react-parser": "^5.1.18",
         "next": "14.2.14",
         "next-auth": "^4.24.8",
+        "pdf-lib": "^1.17.1",
+        "pdfmake": "^0.2.15",
         "react": "^18",
         "react-dom": "^18",
         "react-hook-form": "^7.53.0",
@@ -38,6 +40,7 @@
         "@types/draft-convert": "^2.1.8",
         "@types/draft-js": "^0.11.18",
         "@types/node": "^20",
+        "@types/pdfmake": "^0.2.10",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "typescript": "^5"

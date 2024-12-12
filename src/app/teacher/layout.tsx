@@ -22,11 +22,6 @@ const courseNavLinks: INavLink[] = [
         name: "Редактировать курс",
     },
     {
-        id: "sertificate",
-        href: "/sertificate",
-        name: "Сертификат",
-    },
-    {
         id: "has-access",
         href: "/has-access",
         name: "Имеют доступ",
