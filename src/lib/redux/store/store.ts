@@ -6,6 +6,7 @@ import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import userSlice from "../slices/userSlice";
 import courseSlice from "../slices/courseSlice";
 import userProgressSlice from "../slices/userProgressSlice";
+import sessionSlice from "../slices/sessionSlice";
 
 export const makeStore = () =>
     configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () =>
             user: userSlice,
             course: courseSlice,
             userProgress: userProgressSlice,
+            session: sessionSlice,
         },
     });
 

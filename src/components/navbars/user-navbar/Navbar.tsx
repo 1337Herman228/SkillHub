@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import "./Navbar.scss";
 import { useMediaQuery } from "react-responsive";
-import { useSession } from "next-auth/react";
 import { useAppSelector } from "@/lib/redux/store/store";
 import UserNavbarSkeleton from "@/components/skeletons/user-navbar-skeleton/UserNavbarSkeleton";
 import Greetings from "@/components/profile/greetings/Greetings";
@@ -38,9 +37,14 @@ export const teacherNavLinks: INavLink[] = [
 
 export const adminNavLinks: INavLink[] = [
     {
-        id: "my-courses",
-        href: "/teacher/my-courses",
-        name: "Мои курсы",
+        id: "referal-keys",
+        href: "/admin/referal-keys",
+        name: "Реферальные ключи",
+    },
+    {
+        id: "accounts",
+        href: "/admin/accounts",
+        name: "Учетные записи",
     },
 ];
 
@@ -67,8 +71,6 @@ const Navbar = ({ role }: NavbarProps) => {
 
     const { getAndDispatchUser, isLoading } = useFetch();
 
-    const { data: session } = useSession();
-
     const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
 
     const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -86,13 +88,11 @@ const Navbar = ({ role }: NavbarProps) => {
     //Для единождой загрузки пользователя
     const isUserLoadedRef = useRef(true);
     useEffect(() => {
-        if (session) {
-            if (isUserLoadedRef.current) {
-                getAndDispatchUser();
-                isUserLoadedRef.current = false;
-            }
+        if (isUserLoadedRef.current) {
+            getAndDispatchUser();
+            isUserLoadedRef.current = false;
         }
-    }, [session]);
+    }, []);
 
     useEffect(() => {
         markCurrentLink(pathname);
