@@ -39,7 +39,6 @@ const SignUpForm = ({
             unregister("name");
             unregister("surname");
             unregister("email");
-            unregister("phone");
         };
     }, []);
 

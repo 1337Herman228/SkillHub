@@ -1,0 +1,36 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/media" as *;
+@use "../../../../styles/mixins" as *;
+
+.accounts-loading {
+    max-width: 1250px;
+    width: 90vw;
+    height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.table-btn {
+    @include reset-button;
+    transition-duration: var(--transition-duration);
+    padding: 5px;
+    border-radius: 5px;
+    @include hover {
+        background-color: var(--grey);
+        opacity: 0.7;
+    }
+    cursor: pointer;
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.modal-description {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}

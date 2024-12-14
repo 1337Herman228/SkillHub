@@ -181,7 +181,7 @@ const Navbar = ({ role }: NavbarProps) => {
                 </div>
 
                 <div className="header__inner-right">
-                    <div className="header-search">
+                    <div className="header-search visually-hidden">
                         <img
                             className="header-search__img"
                             loading="lazy"

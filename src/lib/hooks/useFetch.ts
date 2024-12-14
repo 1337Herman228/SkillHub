@@ -272,6 +272,16 @@ const useFetch = () => {
         }
     };
 
+    const getAllUsers = async () => {
+        if (token) {
+            const allusers = await requestJson(
+                token,
+                `http://localhost:8080/admin/get-all-users`
+            );
+            return allusers;
+        }
+    };
+
     const getCoursesByName = async (searchtext: string, user: IUser) => {
         if (token) {
             const coursesData = await requestJson(
@@ -281,6 +291,16 @@ const useFetch = () => {
                 JSON.stringify({ courseName: searchtext, userId: user.userId })
             );
             return coursesData;
+        }
+    };
+
+    const getAllRoles = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/admin/get-all-roles`
+            );
+            return data;
         }
     };
 
@@ -568,11 +588,45 @@ const useFetch = () => {
         }
     };
 
+    const editUser = async (
+        data: FieldValues,
+        roleId: string | number,
+        userId: number | string
+    ) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/edit-user`,
+                "PUT",
+                JSON.stringify({
+                    userId: userId,
+                    roleId,
+                    login: data.login,
+                    name: data.name,
+                    surname: data.surname,
+                    email: data.email,
+                })
+            );
+            return response;
+        }
+    };
+
     const deleteCourse = async (courseId: number) => {
         if (token) {
             const response = await requestJson(
                 token,
                 `http://localhost:8080/teacher/delete-course/${courseId}`,
+                "DELETE"
+            );
+            return response;
+        }
+    };
+
+    const deleteUser = async (userId: number | string) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/delete-user/${userId}`,
                 "DELETE"
             );
             return response;
@@ -830,12 +884,16 @@ const useFetch = () => {
         getAllCourses,
         deleteCourse,
         deleteLesson,
+        getAllUsers,
+        deleteUser,
         saveUserNote,
         addNewCourse,
         getUserNote,
+        getAllRoles,
         editCourse,
         putAvatar,
         isLoading,
+        editUser,
         error,
     };
 };
