@@ -11,10 +11,7 @@ import TextLesson from "../text-lesson/TextLesson";
 import TestLesson from "../testing/TestLesson";
 import { useParams } from "next/navigation";
 
-interface LessonVariantProps {}
-
 const LessonVariant = () => {
-    const { data: session } = useSession();
     const params = useParams();
     const { getLessonById, isLoading } = useFetch();
 
@@ -22,7 +19,7 @@ const LessonVariant = () => {
 
     useEffect(() => {
         fetchLesson();
-    }, [session]);
+    }, []);
 
     const fetchLesson = async () => {
         if (params && Number(params["lesson-id"])) {

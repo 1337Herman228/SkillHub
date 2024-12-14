@@ -1,8 +1,6 @@
 "use client";
 
-import { ExtendedSession } from "@/pages/api/auth/[...nextauth]";
-import { useSession } from "next-auth/react";
-import { useAppDispatch } from "../redux/store/store";
+import { useAppDispatch, useAppSelector } from "../redux/store/store";
 import useHttp from "./useHttp";
 import { setUser } from "../redux/slices/userSlice";
 import { setCourseState } from "../redux/slices/courseSlice";
@@ -12,7 +10,6 @@ import {
     IAddQuestion,
     IAddReview,
     INote,
-    IReview,
     IUser,
 } from "@/interfaces/types";
 import { IVideoLessonFormFields } from "@/components/forms/create-lesson-form/video-lesson-form/VideoLessonForm";
@@ -22,19 +19,15 @@ import { ITestQuestions } from "@/components/test-form/TestForm";
 import { setUserProgressState } from "../redux/slices/userProgressSlice";
 
 const useFetch = () => {
-    const { requestJson, isLoading, error } = useHttp();
     const dispatch = useAppDispatch();
-
-    const { data: session } = useSession();
-    const sessionData: ExtendedSession | null = session;
-    const token = sessionData?.user?.authenticationResponse?.token;
-    const user = sessionData?.user;
+    const { requestJson, isLoading, error } = useHttp();
+    const { session, token, user } = useAppSelector((state) => state.session);
 
     const getAndDispatchUser = async () => {
         if (token) {
             const userData = await requestJson(
                 token,
-                `http://localhost:8080/user/get-user/${sessionData?.user?.userId}`
+                `http://localhost:8080/user/get-user/${user?.userId}`
             );
             dispatch(setUser(userData));
         }
@@ -65,6 +58,49 @@ const useFetch = () => {
             const response = await requestJson(
                 token,
                 `http://localhost:8080/user/is-lesson-passed/${userId}/${lessonId}`
+            );
+            return response;
+        }
+    };
+
+    const getAllRegistrationKeys = async () => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/get-all-reg-keys`
+            );
+            return response;
+        }
+    };
+
+    const getRegistrationKeysByEmail = async (email: string) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/get-reg-keys-by-email/${email}`
+            );
+            return response;
+        }
+    };
+
+    const deleteRegistrationKey = async (id: number) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/delete-reg-key/${id}`,
+                "DELETE"
+            );
+            return response;
+        }
+    };
+
+    const addRegistrationKey = async (email: string) => {
+        if (token) {
+            const response = await requestJson(
+                token,
+                `http://localhost:8080/admin/add-reg-key`,
+                "POST",
+                JSON.stringify({ email: email })
             );
             return response;
         }
@@ -220,7 +256,7 @@ const useFetch = () => {
         if (token) {
             const allCoursesData = await requestJson(
                 token,
-                `http://localhost:8080/user/get-all-courses-for-user/${sessionData?.user?.userId}`
+                `http://localhost:8080/user/get-all-courses-for-user/${user?.userId}`
             );
             return allCoursesData;
         }
@@ -252,7 +288,7 @@ const useFetch = () => {
         if (token) {
             const userInterestCoursesData = await requestJson(
                 token,
-                `http://localhost:8080/user/get-user-interest-courses/${sessionData?.user?.userId}`
+                `http://localhost:8080/user/get-user-interest-courses/${user?.userId}`
             );
             return userInterestCoursesData;
         }
@@ -749,6 +785,7 @@ const useFetch = () => {
     return {
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
+        getRegistrationKeysByEmail,
         getAndDispatchUserProgress,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
@@ -758,8 +795,10 @@ const useFetch = () => {
         deleteCourseCertificate,
         changeCourseCertificate,
         getUserInterestCourses,
+        getAllRegistrationKeys,
         getRequestAccessUsers,
         getLessonPassedStatus,
+        deleteRegistrationKey,
         getQuestionsForLesson,
         markLessonAsUnpassed,
         addAnswerToQuestion,
@@ -771,6 +810,7 @@ const useFetch = () => {
         rejectCourseAccess,
         getAndDispatchUser,
         fetchRequestAccess,
+        addRegistrationKey,
         markLessonAsPassed,
         addNewVideoLesson,
         getTeacherCourses,

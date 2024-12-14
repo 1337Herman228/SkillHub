@@ -7,7 +7,6 @@ import useFetch from "@/lib/hooks/useFetch";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Greetings from "@/components/profile/greetings/Greetings";
-import { useSession } from "next-auth/react";
 import CourseProgressNav from "./course-progress/CourseProgress";
 
 interface DoubleNavbarProps {
@@ -24,7 +23,6 @@ const DoubleNavbar = ({
     const sidebarRef = useRef<HTMLDivElement | null>(null);
 
     const { getAndDispatchCourse, getAndDispatchUser, isLoading } = useFetch();
-    const { data: session } = useSession();
 
     const course = useAppSelector((state) => state.course);
     const user = useAppSelector((state) => state.user.user);
@@ -49,13 +47,11 @@ const DoubleNavbar = ({
     //Для единождой загрузки пользователя
     const isUserLoadedRef = useRef(true);
     useEffect(() => {
-        if (session) {
-            if (isUserLoadedRef.current) {
-                getAndDispatchUser();
-                isUserLoadedRef.current = false;
-            }
+        if (isUserLoadedRef.current) {
+            getAndDispatchUser();
+            isUserLoadedRef.current = false;
         }
-    }, [session]);
+    }, []);
 
     useEffect(() => {
         // Добавляем обработчик событий при монтировании
@@ -71,10 +67,10 @@ const DoubleNavbar = ({
     }, []);
 
     useEffect(() => {
-        if (courseId && session) {
+        if (courseId) {
             getAndDispatchCourse(courseId);
         }
-    }, [courseId, session]);
+    }, [courseId]);
 
     useEffect(() => {
         markCurrentLink(pathname);

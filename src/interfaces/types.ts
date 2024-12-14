@@ -30,6 +30,17 @@ export interface IRole {
     position: string;
 }
 
+export interface IUserSession {
+    name?: string;
+    email?: string;
+    image?: string;
+    userId?: number;
+    authenticationResponse?: {
+        token: string;
+    };
+    role?: string;
+}
+
 export interface ICourse {
     courseId: number;
     author: IUser;
@@ -172,6 +183,12 @@ export interface IAllCourse {
     rating: number;
     reviewsCount: number;
     status: "NO_REQUEST" | "PENDING" | "APPROVED" | "REJECTED";
+}
+
+export interface IRegKey {
+    regKeyId: number;
+    email: string;
+    regKey: string;
 }
 
 export interface IUserInterestCourse {

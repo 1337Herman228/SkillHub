@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import DoubleNavbar from "@/components/navbars/course-navbar/DoubleNavbar";
 import { INavLink } from "@/interfaces/types";
 import AntdConfigProvider from "@/components/providers/AntdConfigProvider";
+import GetSession from "@/components/providers/GetSessionProvider";
 
 const courseNavLinks: INavLink[] = [
     {
@@ -46,24 +47,26 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
             <head>
                 <title>SkillHub</title>
             </head>
-            <body>
-                <AntdConfigProvider>
-                    <StoreProvider>
-                        <MySessionProvider>
-                            {pathname?.match(comparePathname) ? (
-                                <DoubleNavbar
-                                    isCourseNavbar
-                                    secondNavLinks={courseNavLinks}
-                                />
-                            ) : (
-                                <Navbar role="teacher" />
-                            )}
-                            {children}
-                            <Footer role="teacher" />
-                        </MySessionProvider>
-                    </StoreProvider>
-                </AntdConfigProvider>
-            </body>
+            <StoreProvider>
+                <MySessionProvider>
+                    <body>
+                        <GetSession>
+                            <AntdConfigProvider>
+                                {pathname?.match(comparePathname) ? (
+                                    <DoubleNavbar
+                                        isCourseNavbar
+                                        secondNavLinks={courseNavLinks}
+                                    />
+                                ) : (
+                                    <Navbar role="teacher" />
+                                )}
+                                {children}
+                                <Footer role="teacher" />
+                            </AntdConfigProvider>
+                        </GetSession>
+                    </body>
+                </MySessionProvider>
+            </StoreProvider>
         </html>
     );
 }
