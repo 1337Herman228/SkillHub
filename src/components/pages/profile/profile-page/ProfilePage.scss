@@ -42,7 +42,6 @@
             .username {
                 font-size: 16px;
                 font-weight: 700;
-                // line-height: 1;
                 max-width: 200px;
                 overflow-x: hidden;
                 overflow-y: hidden;
@@ -50,6 +49,8 @@
                 white-space: nowrap;
                 padding-inline: 15px;
                 text-wrap: wrap;
+                text-align: center;
+                line-height: 1.3;
             }
         }
 

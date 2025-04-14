@@ -1,0 +1,13 @@
+.diamond-shop-dignities-catalog {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 50px;
+    margin-bottom: 70px;
+
+    .card-content {
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}

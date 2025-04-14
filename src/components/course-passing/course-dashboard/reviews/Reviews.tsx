@@ -106,7 +106,7 @@ const Reviews = ({ courseId }: ReviewsProps) => {
         }
     };
 
-    const isLoading = !courseRatingInfo;
+    const isLoading = !courseRatingInfo || !user;
 
     if (isLoading)
         return (
@@ -219,7 +219,7 @@ const Reviews = ({ courseId }: ReviewsProps) => {
                         <div key={review.reviewId} className="review-card">
                             <ReviewCard
                                 body={review.text}
-                                avatarImg={review.user.person?.avatarImg}
+                                user={review.user}
                                 name={review.user.person?.name}
                                 surname={review.user.person?.surname}
                                 rating={review.rating}

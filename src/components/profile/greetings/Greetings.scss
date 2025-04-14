@@ -8,7 +8,10 @@
     border-bottom: var(--border-grey);
     background-color: var(--light-grey);
 
-    &__img {
+    &__img-container {
+        flex-shrink: 0;
+        &__img {
+        }
     }
 
     &__text {

@@ -3,9 +3,12 @@ import "./ReviewCard.scss";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
 import { Rate } from "antd";
+import AvatarStroke from "@/components/avatar-stroke/AvatarStroke";
+import { IUser } from "@/interfaces/types";
+import UsernameDecoration from "@/components/username-decoration/UsernameDecoration";
 
 interface ReviewCardProps {
-    avatarImg?: string;
+    user: IUser;
     name?: string;
     surname?: string;
     createdAt?: Date;
@@ -13,30 +16,29 @@ interface ReviewCardProps {
     rating?: number;
 }
 
-const ReviewCard = ({
-    createdAt,
-    body,
-    name,
-    surname,
-    avatarImg,
-    rating,
-}: ReviewCardProps) => {
+const ReviewCard = ({ createdAt, body, user, rating }: ReviewCardProps) => {
     return (
         <div className="review">
-            <img
-                className="review__user-avatar"
-                src={
-                    avatarImg
-                        ? "/upload-images/" + avatarImg
-                        : "/svg/profile.svg"
-                }
-                alt=""
-                width={36}
-                height={36}
-            />
+            <AvatarStroke
+                size={43}
+                frameSrc={user?.avatarStroke?.url}
+                style={{ top: "-4%", left: "2%", translate: "0 0" }}
+            >
+                <img
+                    className="review__user-avatar"
+                    src={
+                        user.person?.avatarImg
+                            ? "/upload-images/" + user.person.avatarImg
+                            : "/svg/profile.svg"
+                    }
+                    alt=""
+                    width={36}
+                    height={36}
+                />
+            </AvatarStroke>
             <div className="review__body">
                 <div className="username">
-                    {name} {surname}
+                    <UsernameDecoration user={user as IUser} />
                 </div>
                 <div className="rating">
                     <div className="rating__stars rate">

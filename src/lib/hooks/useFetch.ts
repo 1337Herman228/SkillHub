@@ -836,7 +836,171 @@ const useFetch = () => {
         }
     };
 
+    const getUserPurchasedAvatarStrokes = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-user-purchased-avatar-strokes/${user?.userId}`
+            );
+            return data;
+        }
+    };
+
+    const changeUserAvatarStroke = async (avatarStrokeId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/change-user-avatar-stroke`,
+                "PUT",
+                JSON.stringify({
+                    userId: user?.userId,
+                    avatarStrokeId: avatarStrokeId,
+                })
+            );
+            return data;
+        }
+    };
+
+    const removeUserAvatarStroke = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/remove-user-avatar-stroke/${user.userId}`,
+                "PUT"
+            );
+            return data;
+        }
+    };
+
+    const getAvatarStrokesCatalog = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-avatar-strokes-catalog`
+            );
+            return data;
+        }
+    };
+
+    const getNicknameColorsCatalog = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-nickname-colors-catalog`
+            );
+            return data;
+        }
+    };
+
+    const getDignitiesCatalog = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/get-dignities-catalog`
+            );
+            return data;
+        }
+    };
+
+    const buyAvatarStroke = async (avatarStrokeId: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/buy-avatar-stroke`,
+                "POST",
+                JSON.stringify({
+                    userId: user?.userId,
+                    avatarStrokeId: avatarStrokeId,
+                })
+            );
+            return data;
+        }
+    };
+
+    const buyNicknameColor = async (id: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/buy-nickname-color`,
+                "POST",
+                JSON.stringify({
+                    userId: user?.userId,
+                    nicknameColorId: id,
+                })
+            );
+            return data;
+        }
+    };
+
+    const buyDignity = async (id: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/buy-dignity`,
+                "POST",
+                JSON.stringify({
+                    userId: user?.userId,
+                    dignityId: id,
+                })
+            );
+            return data;
+        }
+    };
+
+    const changeUserDignity = async (id: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/change-user-dignity`,
+                "PUT",
+                JSON.stringify({
+                    userId: user?.userId,
+                    dignityId: id,
+                })
+            );
+            return data;
+        }
+    };
+
+    const removeUserDignity = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/remove-user-dignity/${user.userId}`,
+                "PUT"
+            );
+            return data;
+        }
+    };
+
+    const changeUserNicknameColor = async (id: number | string) => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/change-user-nickname-color`,
+                "PUT",
+                JSON.stringify({
+                    userId: user?.userId,
+                    nicknameColorId: id,
+                })
+            );
+            return data;
+        }
+    };
+
+    const removeUserNicknameColor = async () => {
+        if (token) {
+            const data = await requestJson(
+                token,
+                `http://localhost:8080/user/remove-user-nickname-color/${user.userId}`,
+                "PUT"
+            );
+            return data;
+        }
+    };
+
     return {
+        getUserPurchasedAvatarStrokes,
         getUserInterestCoursesByName,
         getRequestAccessUsersByName,
         getRegistrationKeysByEmail,
@@ -847,34 +1011,45 @@ const useFetch = () => {
         getHasAccessUsersByName,
         getReviewByCourseAndUser,
         deleteCourseCertificate,
+        removeUserNicknameColor,
         changeCourseCertificate,
+        getNicknameColorsCatalog,
+        getAvatarStrokesCatalog,
+        changeUserNicknameColor,
         getUserInterestCourses,
+        changeUserAvatarStroke,
+        removeUserAvatarStroke,
         getAllRegistrationKeys,
         getRequestAccessUsers,
         getLessonPassedStatus,
         deleteRegistrationKey,
         getQuestionsForLesson,
         markLessonAsUnpassed,
-        addAnswerToQuestion,
+        getAndDispatchCourse,
         getAllCourseChapters,
+        addAnswerToQuestion,
         getCourseRatingInfo,
         addQuestionToLesson,
-        getAndDispatchCourse,
         approveCourseAccess,
+        getDignitiesCatalog,
         rejectCourseAccess,
         getAndDispatchUser,
         fetchRequestAccess,
         addRegistrationKey,
         markLessonAsPassed,
         addNewVideoLesson,
+        changeUserDignity,
         getTeacherCourses,
         getHasAccessUsers,
+        removeUserDignity,
         removeUserAccess,
         getCoursesByName,
         getCourseReviews,
         addNewTextLesson,
         addNewTestLesson,
+        buyNicknameColor,
         editVideoLesson,
+        buyAvatarStroke,
         editTextLesson,
         putProfileInfo,
         editTestLesson,
@@ -892,6 +1067,7 @@ const useFetch = () => {
         getAllRoles,
         editCourse,
         putAvatar,
+        buyDignity,
         isLoading,
         editUser,
         error,

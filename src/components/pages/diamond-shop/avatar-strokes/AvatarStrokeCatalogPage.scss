@@ -1,0 +1,6 @@
+.diamond-shop-avatar-strokes-catalog {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 70px;
+}

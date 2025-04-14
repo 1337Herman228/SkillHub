@@ -1,0 +1,51 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/media" as *;
+@use "../../../../../styles/mixins" as *;
+
+.purchased-nickname-colors-container {
+    .purchased-nickname-colors-catalog {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+
+        .purchased-nickname-colors-card {
+            box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.212);
+            transition-duration: var(--transition-duration);
+
+            &:hover {
+                transition-duration: var(--transition-duration);
+                translate: 0px -7px;
+                opacity: 0.9;
+            }
+
+            &__choose-btn {
+                @include reset-button;
+
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                padding-block: 10px;
+                border: var(--border-black);
+            }
+
+            &__content {
+                font-weight: 700;
+            }
+        }
+    }
+
+    .purchased-nickname-colors-catalog-empty {
+        margin-top: 150px;
+        text-align: center;
+        font-size: 16px;
+
+        h2 {
+            font-size: 30px;
+            font-weight: 700;
+        }
+    }
+}

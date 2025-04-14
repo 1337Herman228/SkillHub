@@ -1,9 +1,36 @@
+export interface IAvatarStroke {
+    avatarStrokeId: number;
+    label: string;
+    value: string;
+    price: number;
+    url: string;
+}
+
+export interface IDignity {
+    dignityId: number;
+    dignityName: string;
+    price: number;
+}
+
+export interface INicknameColor {
+    nicknameColorId: number;
+    name: string;
+    color: string;
+    price: number;
+}
+
 export interface IUser {
     userId: number | null;
     person: IPerson | null;
     role: IRole | null;
     login: string;
     diamonds: number | null;
+    avatarStroke?: IAvatarStroke | null;
+    purchasedStrokes?: IAvatarStroke[];
+    dignity?: IDignity | null;
+    purchasedDignities?: IDignity[];
+    nicknameColor?: INicknameColor | null;
+    purchasedNicknameColors?: INicknameColor[];
 }
 
 export interface INavLink {

@@ -1,0 +1,30 @@
+.diamond-shop-catalog-categories-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    .diamond-shop-catalog-category {
+        box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.212);
+        transition-duration: var(--transition-duration);
+        padding: 15px;
+        border: var(--border-black);
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        &:hover {
+            transition-duration: var(--transition-duration);
+            translate: 0px -7px;
+            opacity: 0.9;
+        }
+
+        &__name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+    }
+}

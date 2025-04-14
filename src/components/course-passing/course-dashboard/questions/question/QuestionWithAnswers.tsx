@@ -72,9 +72,7 @@ const QuestionWithAnswers = ({ question }: QuestionWithAnswersProps) => {
         <div className="question-and-answers-container">
             {contextHolder}
             <QuestionCard
-                avatarImg={question.user.person?.avatarImg}
-                name={question.user.person?.name}
-                surname={question.user.person?.surname}
+                user={question.user}
                 createdAt={question.createdAt}
                 body={question.body}
                 answersBtn={
@@ -101,9 +99,7 @@ const QuestionWithAnswers = ({ question }: QuestionWithAnswersProps) => {
                     <div className="answers__list">
                         {answers.map((answer) => (
                             <QuestionCard
-                                avatarImg={answer.user.person?.avatarImg}
-                                name={answer.user.person?.name}
-                                surname={answer.user.person?.surname}
+                                user={question.user}
                                 createdAt={answer.createdAt}
                                 body={answer.body}
                             />

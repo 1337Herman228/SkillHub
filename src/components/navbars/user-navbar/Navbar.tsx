@@ -13,6 +13,8 @@ import MessagesModal from "@/components/modals/messages-modal/MessagesModal";
 import { usePathname } from "next/navigation";
 import useFetch from "@/lib/hooks/useFetch";
 import { INavLink, TRole } from "@/interfaces/types";
+import AvatarStroke from "@/components/avatar-stroke/AvatarStroke";
+import { Gem, ShoppingBag } from "lucide-react";
 
 export const userNavLinks: INavLink[] = [
     {
@@ -199,6 +201,16 @@ const Navbar = ({ role }: NavbarProps) => {
                     </div>
 
                     <ul className="header-icons">
+                        <div className="diamonds">
+                            <span>{user.diamonds}</span>
+                            <Gem strokeWidth={1.6} size={23} />
+                        </div>
+                        <Link
+                            className="header-icons__link"
+                            href="/diamond-shop"
+                        >
+                            <ShoppingBag size={32} strokeWidth={2} />
+                        </Link>
                         <HoverModalOpenBtn
                             className="header-icons__button"
                             btnRef={btnMessagesRef}
@@ -226,19 +238,24 @@ const Navbar = ({ role }: NavbarProps) => {
                             stateSetter={setIsProfileModalOpen}
                         >
                             <Link href="/profile">
-                                <img
-                                    className="header-icons__button-img profile-img"
-                                    loading="lazy"
-                                    alt=""
-                                    src={
-                                        user.person?.avatarImg
-                                            ? "/upload-images/" +
-                                              user.person?.avatarImg
-                                            : "/svg/profile.svg"
-                                    }
-                                    width={35}
-                                    height={35}
-                                />
+                                <AvatarStroke
+                                    size={42}
+                                    frameSrc={user.avatarStroke?.url}
+                                >
+                                    <img
+                                        className="header-icons__button-img profile-img"
+                                        loading="lazy"
+                                        alt=""
+                                        src={
+                                            user.person?.avatarImg
+                                                ? "/upload-images/" +
+                                                  user.person?.avatarImg
+                                                : "/svg/profile.svg"
+                                        }
+                                        width={35}
+                                        height={35}
+                                    />
+                                </AvatarStroke>
                                 <ProfileModal
                                     role={user.role?.position as TRole}
                                     openBtnRef={btnProfileRef}
@@ -310,18 +327,24 @@ const Navbar = ({ role }: NavbarProps) => {
                         />
                     </button>
                     <button className="nav-mobile-part__button" type="button">
-                        <img
-                            className="nav-mobile-part__button-img profile-img"
-                            loading="lazy"
-                            alt=""
-                            src={
-                                user.person?.avatarImg
-                                    ? "/upload-images/" + user.person?.avatarImg
-                                    : "/svg/profile.svg"
-                            }
-                            width={24}
-                            height={24}
-                        />
+                        <AvatarStroke
+                            size={31}
+                            frameSrc={user.avatarStroke?.url}
+                        >
+                            <img
+                                className="nav-mobile-part__button-img profile-img"
+                                loading="lazy"
+                                alt=""
+                                src={
+                                    user.person?.avatarImg
+                                        ? "/upload-images/" +
+                                          user.person?.avatarImg
+                                        : "/svg/profile.svg"
+                                }
+                                width={24}
+                                height={24}
+                            />
+                        </AvatarStroke>
                     </button>
                 </div>
 
@@ -356,8 +379,7 @@ const Navbar = ({ role }: NavbarProps) => {
                             textBig={
                                 <>
                                     Здравствуйте,
-                                    <br /> {user.person?.name}{" "}
-                                    {user.person?.surname}!
+                                    <br />
                                 </>
                             }
                             textSmall="С возвращением!"
