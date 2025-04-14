@@ -17,7 +17,7 @@
 
     @include mobile {
         padding-inline: 10px;
-        height: 48px;
+        height: 56px;
     }
 
     &__inner {
@@ -188,6 +188,25 @@
 
             .header-icons {
                 display: flex;
+
+                .diamonds {
+                    display: flex;
+                    align-items: center;
+                    gap: 3px;
+                    font-size: 20px;
+                    padding-inline: 8px;
+                }
+
+                &__link {
+                    position: relative;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    padding-inline: 12px;
+                    @include hover {
+                        opacity: 0.7;
+                    }
+                }
 
                 &__button {
                     position: relative;

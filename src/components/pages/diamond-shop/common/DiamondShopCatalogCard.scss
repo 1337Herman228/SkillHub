@@ -1,0 +1,83 @@
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/media" as *;
+
+.diamond-shop-catalog-card {
+    box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.212);
+    transition-duration: var(--transition-duration);
+
+    &:hover {
+        transition-duration: var(--transition-duration);
+        translate: 0px -7px;
+        opacity: 0.9;
+    }
+
+    &__button {
+        @include reset-button;
+
+        padding: 20px;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+
+        padding-block: 10px;
+        border: var(--border-black);
+
+        &.purchased {
+            border: 1px solid var(--green);
+        }
+
+        .was-purchased {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--green);
+        }
+    }
+
+    &__title {
+        margin-bottom: 15px;
+
+        .name-and-price {
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: flex;
+            gap: 8px;
+
+            &.purchased {
+                color: var(--green);
+            }
+        }
+    }
+
+    .preview-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.diamond-shop-buy-modal-title {
+    line-height: 1.1;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.diamond-shop-buy-modal-title-description {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.diamond-shop-buy-btn {
+    background-color: var(--light-green-2);
+    color: var(--light-black);
+}

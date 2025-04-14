@@ -31,11 +31,6 @@ const ProfileModal = ({
                 <div style={{ width: 260 }}>
                     <Link className="main-profile-link" href={"/profile"}>
                         <Greetings
-                            textBig={
-                                <div className="user-name ellipse-text">
-                                    {user.person?.name} {user.person?.surname}
-                                </div>
-                            }
                             textSmall={
                                 <div className="user-email ellipse-text">
                                     {user.person?.email}

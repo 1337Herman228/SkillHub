@@ -77,12 +77,12 @@ const MainPage = () => {
         <div className="main-page container-reduced-medium ">
             <section className="main-page__greetings">
                 <Greetings
+                    textBigStyles={{ fontSize: 15, fontWeight: 700 }}
                     textBig={
-                        <div className="user-name">
+                        <>
                             С возвращением,
                             {rolePrefix(user.role?.position as TRole)}{" "}
-                            {user.person?.name}
-                        </div>
+                        </>
                     }
                     textSmall={
                         <div className="action-link">

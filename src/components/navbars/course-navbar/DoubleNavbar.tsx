@@ -225,8 +225,7 @@ const DoubleNavbar = ({
                                     textBig={
                                         <>
                                             Здравствуйте,
-                                            <br /> {user?.person?.name}{" "}
-                                            {user?.person?.surname}!
+                                            <br />
                                         </>
                                     }
                                     textSmall="С возвращением!"

@@ -8,9 +8,14 @@ import MainForm from "./main-form/MainForm";
 import ProfilePhoto from "../profile-photo-page/ProfilePhoto";
 import WantToTeach from "../want-to-teach/WantToTeach";
 import ChangePassword from "./change-password/ChangePassword";
-import { IProfileSectionInfo } from "@/interfaces/types";
+import { IProfileSectionInfo, IUser } from "@/interfaces/types";
 import ProfileNavButton from "@/components/profile/profile-nav-btn/ProfileNavButton";
 import Link from "next/link";
+import AvatarStroke from "@/components/avatar-stroke/AvatarStroke";
+import PurchasedAvatarStrokes from "./purchased-avatar-strokes/PurchasedAvatarStrokes";
+import UsernameDecoration from "@/components/username-decoration/UsernameDecoration";
+import PurchasedDignities from "./purchased-dignities/PurchasedDignities";
+import PurchasedNicknameColors from "./purchased-nickname-colors/PurchasedNicknameColors";
 
 const profileSectionsInfo: IProfileSectionInfo[] = [
     {
@@ -33,6 +38,27 @@ const profileSectionsInfo: IProfileSectionInfo[] = [
         linkName: "Изменить пароль",
         description: "Здесь мы можете поменять свой пароль",
         children: <ChangePassword />,
+    },
+    {
+        id: "purchased-avatar-strokes",
+        title: "Рамки аватара",
+        linkName: "Рамки аватара",
+        description: "Здесь вы можете изменить рамку аватара",
+        children: <PurchasedAvatarStrokes />,
+    },
+    {
+        id: "purchased-dignities",
+        title: "Титулы",
+        linkName: "Титулы",
+        description: "Здесь вы можете изменить свой титул",
+        children: <PurchasedDignities />,
+    },
+    {
+        id: "purchased-nickname-colors",
+        title: "Цвета никнейма",
+        linkName: "Цвета никнейма",
+        description: "Здесь вы можете изменить цвет для своего никнейма",
+        children: <PurchasedNicknameColors />,
     },
 ];
 
@@ -91,23 +117,27 @@ const ProfilePage = () => {
         }
     };
 
+    if (!user) return null;
+
     return (
         <div className="profile-page container-reduced-medium">
             <div className="profile-dashboard">
                 <div className="profile-dashboard__header">
-                    <img
-                        className="user-avatar"
-                        width={120}
-                        height={120}
-                        alt="avatar"
-                        src={
-                            user?.person?.avatarImg
-                                ? "upload-images/" + user?.person?.avatarImg
-                                : "svg/profile-large.svg"
-                        }
-                    />
+                    <AvatarStroke size={140} frameSrc={user?.avatarStroke?.url}>
+                        <img
+                            className="user-avatar"
+                            width={120}
+                            height={120}
+                            alt="avatar"
+                            src={
+                                user?.person?.avatarImg
+                                    ? "upload-images/" + user?.person?.avatarImg
+                                    : "svg/profile-large.svg"
+                            }
+                        />
+                    </AvatarStroke>
                     <div className="username">
-                        {user?.person?.name} {user?.person?.surname}
+                        <UsernameDecoration user={user as IUser} />
                     </div>
                 </div>
                 <div className="profile-dashboard__links">
