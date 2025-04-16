@@ -90,8 +90,6 @@ const MyEducationPage = () => {
                                     <CourseCard
                                         course={course}
                                         key={course.course.courseId}
-                                        user={user}
-                                        token={token}
                                         progressInPercents={
                                             course.completedLessonsCount
                                                 ? Number(

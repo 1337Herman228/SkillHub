@@ -5,7 +5,10 @@ import { ExtendedJWT } from "./pages/api/auth/[...nextauth]";
 
 export async function middleware(req: NextRequest) {
     try {
-        const secret = process.env.NEXTAUTH_SECRET;
+        // const secret = process.env.NEXTAUTH_SECRET;
+        const secret =
+            "356adb44883df62d6ef6ba54faf42945c9ca704f7069f975898d1f7210ad05f6";
+
         const token: ExtendedJWT | null = await getToken({ req, secret });
 
         if (!token) {

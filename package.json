@@ -23,6 +23,7 @@
         "draft-js": "^0.11.7",
         "formidable": "^3.5.1",
         "html-react-parser": "^5.1.18",
+        "lucide-react": "^0.488.0",
         "next": "14.2.14",
         "next-auth": "^4.24.8",
         "pdf-lib": "^1.17.1",

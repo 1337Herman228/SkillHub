@@ -1,0 +1,15 @@
+# docker-compose up --build
+
+version: "3.8"
+
+services:
+    skillhub:
+        image: skillhub:latest
+        ports:
+            - "3000:3000"
+        restart: unless-stopped
+        env_file:
+            - .env
+            # Так как докер не имеет доступа к localhost сети компьютера, то необходимо заменять доступ по http://localhost:8080 на host.docker.internal:8080
+        extra_hosts:
+            - "host.docker.internal:host-gateway"

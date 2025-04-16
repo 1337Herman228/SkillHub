@@ -38,15 +38,14 @@ const options: NextAuthOptions = {
             },
             async authorize(credentials) {
                 const res = await fetch(
-                    "http://localhost:8080/auth/authenticate",
+                    // "http://localhost:8080/auth/authenticate", // Для дэва
+                    "http://host.docker.internal:8080/auth/authenticate", // Для докер контейнера
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(credentials),
                     }
                 );
-
-                console.log("res", res);
 
                 if (res.ok) {
                     const user: ExtendedUser = await res.json();
