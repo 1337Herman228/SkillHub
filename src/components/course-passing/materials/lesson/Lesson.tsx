@@ -91,6 +91,7 @@ const Lesson = ({
                         <EditBtn
                             lessonId={lesson?.lessonId}
                             courseId={courseId}
+                            isAdmin={role === "admin"}
                         />
                     ) : (
                         <>

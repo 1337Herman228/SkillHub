@@ -9,7 +9,11 @@ import { ConfigProvider, notification } from "antd";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
-const EditCoursePage = () => {
+interface EditCoursePageProps {
+    isAdmin?: boolean;
+}
+
+const EditCoursePage = ({ isAdmin }: EditCoursePageProps) => {
     const course = useAppSelector((state) => state.course.course);
     const [api, contextHolder] = notification.useNotification();
 
@@ -104,6 +108,7 @@ const EditCoursePage = () => {
                 {contextHolder}
             </ConfigProvider>
             <CreateCourseForm
+                isAdmin={isAdmin}
                 defaultImage={[
                     {
                         uid: course?.courseImg,

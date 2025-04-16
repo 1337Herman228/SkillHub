@@ -55,9 +55,11 @@ export interface ITestLessonFormFields {
 interface TestLessonFormProps {
     isEditForm?: boolean;
     defaultLesson?: ILessonWithLessonType;
+    isAdmin?: boolean;
 }
 
 const TestLessonForm = ({
+    isAdmin = false,
     isEditForm = false,
     defaultLesson,
 }: TestLessonFormProps) => {
@@ -248,7 +250,9 @@ const TestLessonForm = ({
         await deleteLesson(defaultCourseLesson?.lessonId as number);
         await getAndDispatchCourse(course.course?.courseId ?? 0);
         router.push(
-            "/teacher/my-courses/" + params?.["course-id"] + "/lessons"
+            `/${isAdmin ? "admin/courses/" : "teacher/my-courses/"}` +
+                params?.["course-id"] +
+                "/lessons"
         );
     };
 

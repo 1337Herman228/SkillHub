@@ -13,11 +13,13 @@ interface DoubleNavbarProps {
     secondNavLinks?: INavLink[];
     isCourseNavbar?: boolean;
     isUserNavbar?: boolean;
+    isAdminNavbar?: boolean;
 }
 
 const DoubleNavbar = ({
     secondNavLinks,
     isCourseNavbar,
+    isAdminNavbar = false,
     isUserNavbar = false,
 }: DoubleNavbarProps) => {
     const sidebarRef = useRef<HTMLDivElement | null>(null);
@@ -25,13 +27,14 @@ const DoubleNavbar = ({
     const { getAndDispatchCourse, getAndDispatchUser, isLoading } = useFetch();
 
     const course = useAppSelector((state) => state.course);
-    const user = useAppSelector((state) => state.user.user);
 
     const params = useParams();
     const pathname = usePathname();
 
     const courseId = Number(params ? params["course-id"] : 0);
-    const TEACHER_PATHNAME = `/teacher/my-courses/${courseId}`;
+    const TEACHER_PATHNAME = isAdminNavbar
+        ? `/admin/courses/${courseId}`
+        : `/teacher/my-courses/${courseId}`;
 
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
@@ -114,6 +117,8 @@ const DoubleNavbar = ({
                                     href={
                                         isUserNavbar
                                             ? "/my-education"
+                                            : isAdminNavbar
+                                            ? "/admin/courses"
                                             : "/teacher/my-courses"
                                     }
                                 >

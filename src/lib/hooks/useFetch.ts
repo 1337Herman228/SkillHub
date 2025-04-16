@@ -262,6 +262,28 @@ const useFetch = () => {
         }
     };
 
+    const getAllCoursesForAdmin = async () => {
+        if (token) {
+            const allCoursesData = await requestJson(
+                token,
+                `http://localhost:8080/admin/get-all-courses`
+            );
+            return allCoursesData;
+        }
+    };
+
+    const findCoursesByNameForAdmin = async (name: string) => {
+        if (token) {
+            const allCoursesData = await requestJson(
+                token,
+                `http://localhost:8080/admin/find-admin-courses-by-name/${
+                    name || "all"
+                }`
+            );
+            return allCoursesData;
+        }
+    };
+
     const getAllCourseChapters = async (courseId: number) => {
         if (token) {
             const allCoursesChaptersData = await requestJson(
@@ -1005,6 +1027,7 @@ const useFetch = () => {
         getRequestAccessUsersByName,
         getRegistrationKeysByEmail,
         getAndDispatchUserProgress,
+        findCoursesByNameForAdmin,
         changeUserPasswordRequest,
         addBecomeTeacherRequest,
         getTeacherCoursesByName,
@@ -1023,6 +1046,7 @@ const useFetch = () => {
         getRequestAccessUsers,
         getLessonPassedStatus,
         deleteRegistrationKey,
+        getAllCoursesForAdmin,
         getQuestionsForLesson,
         markLessonAsUnpassed,
         getAndDispatchCourse,

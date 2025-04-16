@@ -59,7 +59,7 @@ const Materials = ({ role, course, isHiddenMobile = true }: MaterialsProps) => {
                             />
                         );
                     })}
-                {(role === "teacher" || role === "admin") && (
+                {role === "teacher" && (
                     <li className="add-lesson">
                         <button
                             onClick={() =>
