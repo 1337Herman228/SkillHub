@@ -15,6 +15,7 @@ interface CourseCardProps {
     completedLessonsCount?: number;
     allLessonsCount?: number;
     isTeacherCard?: boolean;
+    isAdminCard?: boolean;
 }
 
 const CourseCard = ({
@@ -23,11 +24,16 @@ const CourseCard = ({
     completedLessonsCount,
     allLessonsCount,
     isTeacherCard = false,
+    isAdminCard = false,
 }: CourseCardProps) => {
     return (
         <>
-            {isTeacherCard ? (
-                <Link href={`/teacher/my-courses/${course.course.courseId}`}>
+            {isTeacherCard || isAdminCard ? (
+                <Link
+                    href={`/${isAdminCard ? "admin" : "teacher"}/${
+                        isAdminCard ? "courses" : "my-courses"
+                    }/${course.course.courseId}`}
+                >
                     <Card
                         course={course}
                         progressInPercents={progressInPercents}

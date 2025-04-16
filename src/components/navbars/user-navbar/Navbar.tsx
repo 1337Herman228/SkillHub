@@ -48,6 +48,11 @@ export const adminNavLinks: INavLink[] = [
         href: "/admin/accounts",
         name: "Учетные записи",
     },
+    {
+        id: "Курсы",
+        href: "/admin/courses",
+        name: "Курсы",
+    },
 ];
 
 export const chooseNavLinks = (role: TRole): INavLink[] => {
@@ -238,24 +243,26 @@ const Navbar = ({ role }: NavbarProps) => {
                             stateSetter={setIsProfileModalOpen}
                         >
                             <Link href="/profile">
-                                <AvatarStroke
-                                    size={42}
-                                    frameSrc={user.avatarStroke?.url}
-                                >
-                                    <img
-                                        className="header-icons__button-img profile-img"
-                                        loading="lazy"
-                                        alt=""
-                                        src={
-                                            user.person?.avatarImg
-                                                ? "/upload-images/" +
-                                                  user.person?.avatarImg
-                                                : "/svg/profile.svg"
-                                        }
-                                        width={35}
-                                        height={35}
-                                    />
-                                </AvatarStroke>
+                                <div>
+                                    <AvatarStroke
+                                        size={42}
+                                        frameSrc={user.avatarStroke?.url}
+                                    >
+                                        <img
+                                            className="header-icons__button-img profile-img"
+                                            loading="lazy"
+                                            alt=""
+                                            src={
+                                                user.person?.avatarImg
+                                                    ? "/upload-images/" +
+                                                      user.person?.avatarImg
+                                                    : "/svg/profile.svg"
+                                            }
+                                            width={35}
+                                            height={35}
+                                        />
+                                    </AvatarStroke>
+                                </div>
                                 <ProfileModal
                                     role={user.role?.position as TRole}
                                     openBtnRef={btnProfileRef}

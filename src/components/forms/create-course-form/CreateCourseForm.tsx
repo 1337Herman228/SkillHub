@@ -40,6 +40,7 @@ const skillLevels: IOption[] = [
 ];
 
 interface CreateCourseFormProps {
+    isAdmin?: boolean;
     handleSubmit: (
         onValid: SubmitHandler<FieldValues>,
         onInvalid?: SubmitErrorHandler<FieldValues> | undefined
@@ -69,6 +70,7 @@ interface CreateCourseFormProps {
 }
 
 const CreateCourseForm = ({
+    isAdmin = false,
     handleSubmit,
     unregister,
     register,
@@ -110,7 +112,7 @@ const CreateCourseForm = ({
     const onDeleteCourse = async () => {
         await deleteCourse(courseId as number);
         await deleteImg(defaultValues?.courseImg ?? "");
-        router.push("/teacher/my-courses");
+        router.push(isAdmin ? "/admin/courses" : "/teacher/my-courses");
     };
 
     return (

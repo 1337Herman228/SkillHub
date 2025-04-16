@@ -6,14 +6,19 @@ import "./EditBtn.scss";
 interface EditBtnProps {
     courseId: number;
     lessonId: number;
+    isAdmin?: boolean;
 }
 
-const EditBtn = ({ courseId, lessonId }: EditBtnProps) => {
+const EditBtn = ({ courseId, lessonId, isAdmin = false }: EditBtnProps) => {
     const router = useRouter();
 
     const onHandleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        router.push(`/teacher/my-courses/${courseId}/edit-lesson/${lessonId}`);
+        router.push(
+            `/${isAdmin ? "admin" : "teacher"}/${
+                isAdmin ? "courses" : "my-courses"
+            }/${courseId}/edit-lesson/${lessonId}`
+        );
     };
 
     return (

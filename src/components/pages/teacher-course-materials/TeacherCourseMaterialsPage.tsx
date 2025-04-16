@@ -1,9 +1,15 @@
 import CoursePassing from "@/components/course-passing/CoursePassing";
 
-const TeacherCourseMaterialsPage = () => {
+interface TeacherCourseMaterialsPageProps {
+    isAdmin?: boolean;
+}
+
+const TeacherCourseMaterialsPage = ({
+    isAdmin = false,
+}: TeacherCourseMaterialsPageProps) => {
     return (
         <div>
-            <CoursePassing role="teacher" />
+            <CoursePassing role={isAdmin ? "admin" : "teacher"} />
         </div>
     );
 };

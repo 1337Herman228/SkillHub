@@ -8,7 +8,11 @@ import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const EditLesson = () => {
+interface EditLessonProps {
+    isAdmin?: boolean;
+}
+
+const EditLesson = ({ isAdmin = false }: EditLessonProps) => {
     const { data: session } = useSession();
     const params = useParams();
     const { getLessonById, isLoading } = useFetch();
@@ -39,6 +43,7 @@ const EditLesson = () => {
     return (
         <div>
             <CreateLessonForm
+                isAdmin={isAdmin}
                 defaultVideo={[
                     {
                         uid: lesson.lessonId,

@@ -2,10 +2,7 @@
 
 import CustomInput from "@/components/inputs/custom-input/CustomInput";
 import Resources from "@/components/inputs/resources/Resources";
-import {
-    ILessonWithLessonType,
-    NotificationType,
-} from "@/interfaces/types";
+import { ILessonWithLessonType, NotificationType } from "@/interfaces/types";
 import { useAppSelector } from "@/lib/redux/store/store";
 import React, { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -27,11 +24,13 @@ export interface IVideoLessonFormFields {
 
 interface VideoLessonFormProps {
     isEditForm?: boolean;
+    isAdmin?: boolean;
     defaultLesson?: ILessonWithLessonType;
     defaultVideo?: any;
 }
 
 const VideoLessonForm = ({
+    isAdmin = false,
     isEditForm = false,
     defaultLesson,
     defaultVideo,
@@ -222,7 +221,9 @@ const VideoLessonForm = ({
         await deleteVideo(defaultLesson?.videoLesson?.videoUrl ?? "");
         await getAndDispatchCourse(course.course?.courseId ?? 0);
         router.push(
-            "/teacher/my-courses/" + params?.["course-id"] + "/lessons"
+            `/${isAdmin ? "admin/courses/" : "teacher/my-courses/"}` +
+                params?.["course-id"] +
+                "/lessons"
         );
     };
 

@@ -23,10 +23,12 @@ export interface ITextLessonFormFields {
 
 interface TextLessonFormProps {
     isEditForm?: boolean;
+    isAdmin?: boolean;
     defaultLesson?: ILessonWithLessonType;
 }
 
 const TextLessonForm = ({
+    isAdmin = false,
     isEditForm = false,
     defaultLesson,
 }: TextLessonFormProps) => {
@@ -132,7 +134,9 @@ const TextLessonForm = ({
         await deleteLesson(defaultCourseLesson?.lessonId as number);
         await getAndDispatchCourse(course.course?.courseId ?? 0);
         router.push(
-            "/teacher/my-courses/" + params?.["course-id"] + "/lessons"
+            `/${isAdmin ? "admin/courses/" : "teacher/my-courses/"}` +
+                params?.["course-id"] +
+                "/lessons"
         );
     };
 

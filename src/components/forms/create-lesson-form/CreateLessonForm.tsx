@@ -25,6 +25,7 @@ const lessonTypeOptions: IOption[] = [
 
 interface CreateLessonFormProps {
     isEditForm?: boolean;
+    isAdmin?: boolean;
     setIsFormSubmitted: (isFormSubmitted: boolean) => void;
     isFormSubmitted: boolean;
 
@@ -36,6 +37,7 @@ interface CreateLessonFormProps {
 }
 
 const CreateLessonForm = ({
+    isAdmin = false,
     isEditForm,
     lessonType,
     defaultLesson,
@@ -67,6 +69,7 @@ const CreateLessonForm = ({
 
                 {lessonType === "VIDEO" && (
                     <VideoLessonForm
+                        isAdmin={isAdmin}
                         defaultVideo={defaultVideo}
                         defaultLesson={defaultLesson}
                         isEditForm={isEditForm}
@@ -74,12 +77,14 @@ const CreateLessonForm = ({
                 )}
                 {lessonType === "TEXT" && (
                     <TextLessonForm
+                        isAdmin={isAdmin}
                         defaultLesson={defaultLesson}
                         isEditForm={isEditForm}
                     />
                 )}
                 {lessonType === "TEST" && (
                     <TestLessonForm
+                        isAdmin={isAdmin}
                         defaultLesson={defaultLesson}
                         isEditForm={isEditForm}
                     />
